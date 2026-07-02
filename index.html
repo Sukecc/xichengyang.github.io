@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XICHENG YANG | Typeface Design & Research</title>
+    <style>
+        /* ==========================================================================
+           【Lyean Serif 核心家族系统 - 统一使用相对路径】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Italic.woff2') format('woff2');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean Optical';
+            src: url('fonts/Lyean-Optical.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-DisplayBold.woff2') format('woff2');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* ==========================================================================
+           核心样式与全宽布局定义
+           ========================================================================== */
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb; /* 完美的纸张米白色 */
+            color: #1a1a1a;
+            font-family: "Lyean", serif; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* 响应式宽屏容器：占屏幕宽度的 90% */
+        .container {
+            max-width: 90vw; 
+            margin: 0 auto; 
+            padding: 60px 0 0 0;
+        }
+
+        /* 顶部导航 */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
+            margin-bottom: 80px; text-transform: uppercase;
+        }
+        header a { text-decoration: none; color: #1a1a1a; margin-left: 20px; }
+        header a:hover { color: #b85a4b; }
+        
+        /* 标签与标题 */
+        .tag { font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 15px; }
+        h1 { font-size: 4rem; font-weight: normal; line-height: 1.1; margin: 0 0 30px 0; }
+        
+        /* Hero 区域：两栏拆分 */
+        .hero-section { display: grid; grid-template-columns: 1.4fr 1fr; gap: 100px; margin-bottom: 120px; }
+        .specimen-box { background-color: #ede9df; border-radius: 4px; padding: 40px; }
+
+        /* ==========================================================================
+           【上半部分的核心：动态横向滚动作品集区域】
+           ========================================================================== */
+        .projects-header {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 30px;
+        }
+        .section-title { font-size: 2.2rem; font-weight: normal; margin: 0; }
+        .more-link { font-family: 'Lyean Sans', sans-serif; font-size: 0.9rem; color: #b85a4b; text-decoration: none; letter-spacing: 0.05em; }
+        .more-link:hover { text-decoration: underline; }
+
+        /* 滚动条容器：通过 JS 控制平滑度 */
+        .scroll-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 24px;
+            padding-bottom: 30px;
+            margin-bottom: 100px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* 隐藏美化滚动条 */
+        .scroll-container::-webkit-scrollbar { height: 6px; }
+        .scroll-container::-webkit-scrollbar-track { background: #ede9df; }
+        .scroll-container::-webkit-scrollbar-thumb { background: #b85a4b; border-radius: 3px; }
+
+        /* 单个项目卡片样式 */
+        .project-card {
+    flex: 0 0 320px; /* 略微缩窄宽度，让图片展示更紧凑 */
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+}
+.project-card:hover {
+    transform: translateY(-8px); /* 悬停时整个卡片往上提，非常灵动 */
+}
+
+/* 新增：作品缩略图容器（完美正方形） */
+.project-image-box {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 强制保持 1:1 正方形 */
+    background-color: #ede9df; /* 加载前的占位底色 */
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px; /* 和下方文字的间距 */
+}
+.project-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 保证图片完美铺满不变形 */
+    transition: transform 0.5s ease;
+}
+.project-card:hover .project-image-box img {
+    transform: scale(1.05); /* 悬停时图片微微放大 */
+}
+
+/* 调整卡片内标题的大小，使其更克制、不抢图的风头 */
+.project-card h3 {
+    font-size: 1.8rem;
+    font-weight: normal;
+    margin: 5px 0 0 0;
+}
+
+        /* ==========================================================================
+           【下半部分的核心：Talks & Publications 列表】
+           ========================================================================== */
+        .public-work-section { margin-bottom: 120px; }
+        .public-work-title { font-size: 3rem; font-weight: normal; max-width: 800px; line-height: 1.2; margin-bottom: 50px; }
+        
+        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .list-box { background-color: #faf9f5; border: 1px solid #e0dbcf; padding: 40px; border-radius: 4px; }
+        .list-box h4 { font-size: 1.8rem; font-weight: normal; margin: 0 0 20px 0; }
+        
+        .list-item { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid #e0dbcf; font-size: 1.05rem; line-height: 1.4; }
+        .list-year { font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; color: #b85a4b; font-weight: bold; }
+
+        /* ==========================================================================
+           【最底部：深色 Footer (Bio) 区域】
+           ========================================================================== */
+        footer {
+            background-color: #1a1917; 
+            color: #f6f3eb;
+            padding: 80px 5vw;
+            margin-top: 60px;
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 100px; margin-bottom: 80px; }
+        .footer-bio h2 { font-family: 'Lyean'; font-style: italic; font-weight: normal; font-size: 3rem; line-height: 1.2; margin: 0 0 30px 0; }
+        .footer-bio p { color: #ccc; font-size: 1.1rem; line-height: 1.6; }
+        
+        .footer-contact { background-color: #262421; border: 1px solid #363430; padding: 40px; border-radius: 4px; }
+        .footer-contact h4 { font-size: 1.5rem; font-weight: normal; margin: 0 0 20px 0; }
+        .footer-contact p a { color: #f6f3eb; text-decoration: none; border-bottom: 1px solid #666; padding-bottom: 2px; }
+        .footer-contact p a:hover { border-color: #b85a4b; color: #b85a4b; }
+        
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #363430; padding-top: 40px; font-size: 0.9rem; color: #888; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div style="font-weight: bold;"><a href="index.html" style="margin:0; text-decoration: none; color: inherit;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <main class="hero-section">
+            <div>
+                <div class="tag">Typeface Design · Research</div>
+                <h1>Hi :)<br>I’m Xicheng</h1>
+                <p style="font-size: 1.15rem; line-height: 1.6; color: #444;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
+            </div>
+            <div class="specimen-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <div class="tag" style="color: #888; font-size: 0.65rem; margin-bottom: 20px;">Click text below to test font</div>
+            
+            <div contenteditable="true" spellcheck="false" style="font-family: 'Lyean'; font-weight: 800; font-size: 6.5rem; line-height: 1; outline: none; margin-bottom: 10px;">Aa</div>
+        </div>
+        
+        <div>
+            <hr style="border: none; border-top: 1px solid #dcd7ca; margin: 20px 0;">
+            
+            <div contenteditable="true" spellcheck="false" style="font-family: 'Lyean'; font-size: 1.25rem; line-height: 1.4; outline: none; color: #1a1a1a; min-height: 1.5em;">
+                Try here · 字体 · 012345
+            </div>
+            
+            <p style="font-family: 'Lyean', serif; font-size: 0.8rem; color: #888; margin-top: 15px; margin-bottom: 0;">
+                Lyean Serif System Live Preview
+            </p>
+        </div>
+    </div>
+</main>
+
+        <section id="scrollSection">
+            <div class="projects-header">
+                <div class="section-title">Selected type projects</div>
+                <a href="projects.html" class="more-link"> &nbsp;MORE →</a>
+            </div>
+            
+            <div class="scroll-container" id="projectScroller">
+                <a href="Lyean.html" class="project-card">
+                    <div class="project-image-box">
+                    	<img src="images/Lyean.jpg" alt="Lyean">
+                    </div>
+                    <h3>Lyean</h3>
+                    <div class="tag" style="margin-bottom: 5px;">Multi-script type family · 2022</div>
+                </a>
+                <div class="project-card">
+                    <div class="tag">Custom Sans · 2025</div>
+                    <h3>Signal</h3>
+                    <p style="font-family: 'Lyean Sans', sans-serif; color:#555; font-size:0.95rem; line-height:1.4;">A compact interface sans built around signage clarity, strong numerals, and flexible multilingual expansion.</p>
+                </div>
+                <div class="project-card">
+                    <div class="tag">Lettering · Ongoing</div>
+                    <h3>Lyean</h3>
+                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Sketches and finished wordmarks studying gesture, contrast, and expressive spacing outside the font editor.</p>
+                </div>
+                <div class="project-card">
+                    <div class="tag">Display · 2026</div>
+                    <h3>Project 4</h3>
+                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Description of your fourth amazing typeface project. Double-click in code to change text.</p>
+                </div>
+                <div class="project-card">
+                    <div class="tag">Script · 2025</div>
+                    <h3>Project 5</h3>
+                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Description of your fifth amazing typeface project. Double-click in code to change text.</p>
+                </div>
+                <div class="project-card">
+                    <div class="tag">Research · 2024</div>
+                    <h3>Project 6</h3>
+                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Description of your sixth amazing typeface project. Double-click in code to change text.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="public-work-section">
+            <div class="tag">Speaking & Writing</div>
+            <div class="public-work-title">Public work around letters, tools, and reading culture.</div>
+            
+            <div class="list-grid">
+                <div class="list-box">
+                    <h4>Presentations</h4>
+                    <div class="list-item">
+                        <div class="list-year">2026</div>
+                        <div>Variable rhythm in multiscript text faces · Typographics</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-year">2025</div>
+                        <div>Drawing type between screen and paper · TypeLab</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-year">2024</div>
+                        <div>Workshop: spacing as drawing · Reading School of Art</div>
+                    </div>
+                </div>
+                
+                <div class="list-box" style="background-color: #ede9df;">
+                    <h4>Publications</h4>
+                    <div class="list-item">
+                        <div class="list-year">2026</div>
+                        <div>Notes on optical size and editorial tone · Journal of Type</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-year">2025</div>
+                        <div>The quiet labor of spacing · Letterform Archive blog</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="list-year">2024</div>
+                        <div>Interview: designing type for atmosphere · Type Today</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container" style="max-width: 90vw; padding: 0;">
+            <div class="footer-grid">
+                <div class="footer-bio">
+                    <div class="tag" style="color: #b85a4b;">Bio</div>
+                    <h2>A practice centered<br>on typographic voice.</h2>
+                    <p>Xicheng Yang is a typeface designer working across retail type families, custom systems, lettering, and research. The work balances drawing, spacing, technical detail, and cultural context — from early sketches to production-ready fonts and public writing.</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>For licensing, commissions, lectures, or collaborations.</h4>
+                    <p style="font-size: 1.1rem; margin: 30px 0 10px 0;"><a href="mailto:hello@example.com">hello@example.com</a></p>
+                    <p style="font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; color: #888;">
+                        <a href="#" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 1px solid #666;">Instagram</a>
+                        <a href="#" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 1px solid #666;">LinkedIn</a>
+                        <a href="#" style="color: #f6f3eb; text-decoration: none; border-bottom: 1px solid #666;">X</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>© 2026 Xicheng Yang</div>
+                <div style="font-family: 'Lyean Sans', sans-serif; color: #aaa;">Type, spacing, reading.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const scroller = document.getElementById('projectScroller');
+        const scrollSection = document.getElementById('scrollSection');
+        
+        let isHovered = false;
+        let mouseX = 0;
+        let speed = 0;
+        let animationFrame;
+
+        scrollSection.addEventListener('mouseenter', () => { isHovered = true; startLoop(); });
+        scrollSection.addEventListener('mouseleave', () => { isHovered = false; speed = 0; cancelAnimationFrame(animationFrame); });
+        
+        scrollSection.addEventListener('mousemove', (e) => {
+            const rect = scrollSection.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            const width = rect.width;
+            
+            // 计算鼠标相对于滚动区域中轴的位置
+            const threshold = 0.25; // 靠近两端 25% 范围内触发自动滚动
+            if (mouseX > width * (1 - threshold)) {
+                // 鼠标靠右，向右滑动
+                speed = ((mouseX - width * (1 - threshold)) / (width * threshold)) * 8; 
+            } else if (mouseX < width * threshold) {
+                // 鼠标靠左，向左滑动
+                speed = ((mouseX - width * threshold) / (width * threshold)) * 8;
+            } else {
+                speed = 0;
+            }
+        });
+
+        function startLoop() {
+            function update() {
+                if (!isHovered) return;
+                scroller.scrollLeft += speed;
+                animationFrame = requestAnimationFrame(update);
+            }
+            cancelAnimationFrame(animationFrame);
+            animationFrame = requestAnimationFrame(update);
+        }
+    </script>
+</body>
+</html>
