@@ -127,7 +127,7 @@
     transition: transform 0.3s ease;
 }
 .project-card:hover {
-    transform: translateY(-8px); /* 悬停时整个卡片往上提，非常灵动 */
+    transform: translateY(-3px); /* 悬停时整个卡片往上提，非常灵动 */
 }
 
 /* 新增：作品缩略图容器（完美正方形） */
@@ -137,7 +137,7 @@
     background-color: #ede9df; /* 加载前的占位底色 */
     border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 20px; /* 和下方文字的间距 */
+    margin-bottom: 10px; /* 和下方文字的间距 */
 }
 .project-image-box img {
     width: 100%;
@@ -146,7 +146,7 @@
     transition: transform 0.5s ease;
 }
 .project-card:hover .project-image-box img {
-    transform: scale(1.05); /* 悬停时图片微微放大 */
+    transform: scale(1.02); /* 悬停时图片微微放大 */
 }
 
 /* 调整卡片内标题的大小，使其更克制、不抢图的风头 */
@@ -212,7 +212,7 @@
         <div>
             <div class="tag" style="color: #888; font-size: 0.65rem; margin-bottom: 20px;">Click text below to test font</div>
             
-            <div contenteditable="true" spellcheck="false" style="font-family: 'Lyean'; font-weight: 800; font-size: 6.5rem; line-height: 1; outline: none; margin-bottom: 10px;">Aa</div>
+            <div contenteditable="true" spellcheck="false" style="font-family: 'Lyean'; font-weight: 800; font-size: 6.5rem; line-height: 1; outline: none; margin-bottom: 5px;">Type here</div>
         </div>
         
         <div>
@@ -223,92 +223,126 @@
             </div>
             
             <p style="font-family: 'Lyean', serif; font-size: 0.8rem; color: #888; margin-top: 15px; margin-bottom: 0;">
-                Lyean Serif System Live Preview
+                Lyean Typeface Live Preview
             </p>
         </div>
     </div>
 </main>
 
-        <section id="scrollSection">
-            <div class="projects-header">
-                <div class="section-title">Selected type projects</div>
-                <a href="projects.html" class="more-link"> &nbsp;MORE →</a>
+      
+<section id="scrollSection">
+    <div class="projects-header">
+        <div class="section-title">Selected type projects</div>
+        <a href="projects.html" class="more-link">MORE →</a>
+    </div>
+    
+    <div class="scroll-container" id="projectScroller">
+        <a href="Lyean.html" class="project-card">
+            <div class="project-image-box">
+                <img src="images/Lyean.jpg" alt="Lyean Typeface">
             </div>
-            
-            <div class="scroll-container" id="projectScroller">
-                <a href="Lyean.html" class="project-card">
-                    <div class="project-image-box">
-                    	<img src="images/Lyean.jpg" alt="Lyean">
-                    </div>
-                    <h3>Lyean</h3>
-                    <div class="tag" style="margin-bottom: 5px;">Multi-script type family · 2022</div>
-                </a>
-                <div class="project-card">
-                    <div class="tag">Custom Sans · 2025</div>
-                    <h3>Signal</h3>
-                    <p style="font-family: 'Lyean Sans', sans-serif; color:#555; font-size:0.95rem; line-height:1.4;">A compact interface sans built around signage clarity, strong numerals, and flexible multilingual expansion.</p>
-                </div>
-                <div class="project-card">
-                    <div class="tag">Lettering · Ongoing</div>
-                    <h3>Lyean</h3>
-                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Sketches and finished wordmarks studying gesture, contrast, and expressive spacing outside the font editor.</p>
-                </div>
-                <div class="project-card">
-                    <div class="tag">Display · 2026</div>
-                    <h3>Project 4</h3>
-                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Description of your fourth amazing typeface project. Double-click in code to change text.</p>
-                </div>
-                <div class="project-card">
-                    <div class="tag">Script · 2025</div>
-                    <h3>Project 5</h3>
-                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Description of your fifth amazing typeface project. Double-click in code to change text.</p>
-                </div>
-                <div class="project-card">
-                    <div class="tag">Research · 2024</div>
-                    <h3>Project 6</h3>
-                    <p style="color:#555; font-size:0.95rem; line-height:1.4;">Description of your sixth amazing typeface project. Double-click in code to change text.</p>
-                </div>
+            <h3>Lyean</h3>
+            <div class="tag" style="margin-bottom: 6px;">Multi-script type family · 2022</div>
+        </a>
+
+        <a href="AraTangut.html" class="project-card">
+            <div class="project-image-box">
+                <img src="images/AraTangut.jpg" alt="Lyean Typeface">
             </div>
-        </section>
+            <h3>AraTangut</h3>
+            <div class="tag" style="margin-bottom: 6px;">Custom font · 2023–present</div>
+        </a>
+        
+        <a href="NotoSerifTangut.html" class="project-card">
+            <div class="project-image-box">
+                <img src="images/NotoSerifTangut.jpg" alt="Lyean Typeface">
+            </div>
+            <h3>Noto Serif Tangut</h3>
+            <div class="tag" style="margin-bottom: 6px;">Google font · 2021</div>
+        </a>
+        
+        <a href="Shanghaisky.html" class="project-card">
+            <div class="project-image-box">
+                <img src="images/Shanghaisky.jpg" alt="Lyean Typeface">
+            </div>
+            <h3>Shanghai Sky</h3>
+            <div class="tag" style="margin-bottom: 6px;">Custom font · 2025</div>
+        </a>
+        
+        <a href="Guqin.html" class="project-card">
+            <div class="project-image-box">
+                <img src="images/Guqin.jpg" alt="Lyean Typeface">
+            </div>
+            <h3>Guqin notation</h3>
+            <div class="tag" style="margin-bottom: 6px;">Cultural preservation · 2024</div>
+        </a>
+        
+        <a href="HJyakai.html" class="project-card">
+            <div class="project-image-box">
+                <img src="images/HJyakai.jpg" alt="Lyean Typeface">
+            </div>
+            <h3>HanJiangYaKai</h3>
+            <div class="tag" style="margin-bottom: 6px;">Personal project · 2026</div>
+        </a>
+        
+        </div> </section>
 
         <section class="public-work-section">
             <div class="tag">Speaking & Writing</div>
             <div class="public-work-title">Public work around letters, tools, and reading culture.</div>
             
             <div class="list-grid">
+                <!-- 左盒：Presentations (精选3个最顶级国际会议) -->
                 <div class="list-box">
-                    <h4>Presentations</h4>
-                    <div class="list-item">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
+                        <h4 style="margin: 0;">Presentations</h4>
+                        <a href="talks.html" class="more-link" style="font-size: 0.8rem;">MORE ↗</a>
+                    </div>
+                    
+                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: top;">
                         <div class="list-year">2026</div>
-                        <div>Variable rhythm in multiscript text faces · Typographics</div>
+                        <div>From archival forms to digital typeface: a systematic framework for reviving extinct sinoform scripts — the Tangut case · <i>Grapholinguistics in the 21st century</i></div>
+                    	<div><a href="https://grafematik2026.sciencesconf.org/?lang=en" target="_blank" style="font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
-                    <div class="list-item">
-                        <div class="list-year">2025</div>
-                        <div>Drawing type between screen and paper · TypeLab</div>
+                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: top;">
+                        <div class="list-year">2026</div>
+                        <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>ATypI Stanford</i></div>
                     </div>
-                    <div class="list-item">
+                   <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: top;">
                         <div class="list-year">2024</div>
-                        <div>Workshop: spacing as drawing · Reading School of Art</div>
+                        <div>The development of modern Chinese punctuation and challenges in typography · <i>Typography Theory Practice</i></div>
+                    	<div><a href="https://youtu.be/AYHgPJtJV1Y" style="font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                 </div>
                 
+                <!-- 右盒：Publications (精选3个，带链接提示) -->
                 <div class="list-box" style="background-color: #ede9df;">
-                    <h4>Publications</h4>
-                    <div class="list-item">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
+                        <h4 style="margin: 0;">Publications</h4>
+                        <a href="talks.html" class="more-link" style="font-size: 0.8rem;">MORE ↗</a>
+                    </div>
+                    
+                    <!-- 带有链接的文章，点击可直接跳转，右侧有优雅的 [Link ↗] -->
+                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: center;">
                         <div class="list-year">2026</div>
-                        <div>Notes on optical size and editorial tone · Journal of Type</div>
+                        <div>Hanzi - Chinese Characters · <i>Granshan</i></div>
+                        <!-- 💡 记得把下面的 href="#" 换成你这篇文章的真实网址 -->
+                        <div><a href="https://granshan.com/insights/hanzi-chinese-characters" target="_blank" style="font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
-                    <div class="list-item">
+                    
+                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: center;">
                         <div class="list-year">2025</div>
-                        <div>The quiet labor of spacing · Letterform Archive blog</div>
+                        <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>LetterSeed 28. Ahn Graphics</i></div>
                     </div>
+                    
                     <div class="list-item">
                         <div class="list-year">2024</div>
-                        <div>Interview: designing type for atmosphere · Type Today</div>
+                        <div>The development of modern Chinese punctuation and challenges in typography · <i>Print culture, China Printing Museum, issue 2, 2023.</i></div>
                     </div>
                 </div>
             </div>
         </section>
+        
     </div>
 
     <footer>
@@ -321,17 +355,17 @@
                 </div>
                 <div class="footer-contact">
                     <h4>For licensing, commissions, lectures, or collaborations.</h4>
-                    <p style="font-size: 1.1rem; margin: 30px 0 10px 0;"><a href="mailto:hello@example.com">hello@example.com</a></p>
+                    <p style="font-size: 1.1rem; margin: 30px 0 10px 0;"><a href="mailto:threecczhu@gmail.com">threecczhu@gmail.com</a></p>
                     <p style="font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; color: #888;">
-                        <a href="#" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 1px solid #666;">Instagram</a>
-                        <a href="#" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 1px solid #666;">LinkedIn</a>
-                        <a href="#" style="color: #f6f3eb; text-decoration: none; border-bottom: 1px solid #666;">X</a>
+                        <a href="https://www.instagram.com/sukecc0206/" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 0px solid #666;">Instagram</a>
+                        <a href="https://www.linkedin.com/in/xicheng-yang-946343227/" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 0px solid #666;">LinkedIn</a>
+                        <a href="https://x.com/threecczhu?s=21&t=TUlvxIVUFUdTaBI_Rd-r8A" style="color: #f6f3eb; text-decoration: none; border-bottom: 0px solid #666;">X</a>
                     </p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <div>© 2026 Xicheng Yang</div>
+                <div style="font-family: 'Lyean Sans', sans-serif; color: #aaa;">© 2026 Xicheng Yang</div>
                 <div style="font-family: 'Lyean Sans', sans-serif; color: #aaa;">Type, spacing, reading.</div>
             </div>
         </div>

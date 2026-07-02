@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talks & Writings | XICHENG YANG</title>
+    <style>
+    /* ==========================================================================
+           【Lyean Serif 核心家族系统 - 统一使用相对路径】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Italic.woff2') format('woff2');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean Optical';
+            src: url('fonts/Lyean-Optical.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-DisplayBold.woff2') format('woff2');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+            font-family: "Lyean", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0;
+            display: grid;
+            grid-template-columns: 1fr 450px; /* 左侧文字，右侧预留 350px 动态图 */
+            gap: 80px;
+        }
+        
+        header {
+            grid-column: 1 / span 2;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
+            margin-bottom: 60px; text-transform: uppercase;
+        }
+        header a { text-decoration: none; color: #1a1a1a; margin-left: 20px; }
+        header a:hover { color: #b85a4b; }
+        header a.active { color: #b85a4b; font-weight: bold; }
+
+        .page-title-area { grid-column: 1 / span 2; margin-bottom: 60px; }
+        .tag { font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 15px; }
+        h1 { font-size: 3.5rem; font-weight: normal; line-height: 1.2; max-width: 900px; margin: 0; }
+        
+        .academic-section { margin-bottom: 80px; }
+        .section-subtitle {
+            font-size: 1.2rem; font-weight: normal; border-bottom: 2px solid #1a1a1a; padding-bottom: 15px; margin-bottom: 20px;
+            text-transform: uppercase; font-family: 'Lyean Sans', sans-serif; letter-spacing: 0.05em;
+        }
+
+        .item-block {
+            padding: 35px 0;
+            border-bottom: 1px solid #e0dbcf;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        .item-block:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .item-title {
+            font-size: 1.35rem;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            max-width: 800px;
+        }
+        
+        .venue-list { margin: 0; padding: 0; list-style: none; }
+        .venue-row { display: flex; align-items: center; gap: 15px; font-size: 1.05rem; color: #444; margin-bottom: 10px; }
+        .venue-row:last-child { margin-bottom: 0; }
+
+        /* ==========================================================================
+           【全新升级：温暖的高级深棕色徽章体系】
+           ========================================================================== */
+        /* 普通年份小框 */
+        .year-badge {
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #6e5d4f; font-weight: bold;
+            border: 1px solid #c4b9ae; padding: 2px 6px; border-radius: 3px; display: inline-block;
+        }
+        
+        /* 🚨 顶级重磅学术殿堂：极具克制美感的【深棕色】实色块徽章 */
+        .star-badge {
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #f6f3eb; font-weight: bold;
+            background-color: #2b231d; /* 奢华咖啡深棕色 */
+            padding: 3px 8px; border-radius: 3px; display: inline-block;
+            letter-spacing: 0.05em;
+        }
+        
+        .link-btn { font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; color: #b85a4b; text-decoration: none; }
+        .link-btn:hover { text-decoration: underline; }
+
+        /* 右侧悬浮大照片展位 */
+        .sticky-image-preview {
+            position: sticky;
+            top: 60px;
+            height: 450px;
+            background-color: #ede9df;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0dbcf;
+        }
+        .sticky-image-preview img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.95);
+            position: absolute;
+        }
+        .sticky-image-preview img.active {
+            opacity: 1; transform: scale(1);
+        }
+        .placeholder-text {
+            color: #888; font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; text-align: center; padding: 20px; line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 顶部导航 -->
+        <header>
+            <div style="font-weight: bold;"><a href="index.html" style="margin:0; text-decoration: none; color: inherit;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html">PROJECTS</a>
+                <a href="talks.html" class="active">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <!-- 大标题 -->
+        <div class="page-title-area">
+            <div class="tag">Archive</div>
+            <h1>Lectures, workshops, written essays, and academic practice.</h1>
+        </div>
+
+        <!-- 左边主栏：信息全保留版 -->
+        <main>
+            <!-- ========================== SECTION 1: PRESENTATIONS ========================== -->
+            <section class="academic-section">
+                <div class="section-subtitle">Presentations</div>
+
+                <!-- Block 1 -->
+                <div class="item-block" data-img="images/grapholinguistics.jpg">
+                    <div class="item-title">From archival forms to digital typeface: a systematic framework for reviving extinct sinoform scripts — the Tangut case.</div>
+                    <div class="venue-row">
+                        <span class="star-badge">🗣️Grapholinguistics · 2026</span>
+                        <div>International Conference on Grapholinguistics in the 21st century <a href="https://grafematik2026.sciencesconf.org/?lang=en" target="_blank" class="link-btn" style="margin-left: 8px;">[Watch ↗]</a></div>
+                    </div>
+                </div>
+
+                <!-- Block 2：同名合并，殿堂级国际邀请全部高亮 -->
+                <div class="item-block" data-img="images/remaking_tangut_talk.jpg">
+                    <div class="item-title" style="color: #b85a4b;">Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems.</div>
+                    <ul class="venue-list">
+                        <li class="venue-row">
+                            <span class="star-badge">🔥 ATypI STANFORD · 2026</span>
+                            <div>Annual Conference of the Association Typographique Internationale </div>
+                        </li>
+                        <li class="venue-row">
+                        	<span class="year-badge">✨2025✨</span>
+                            <div>PhD research in typography, typeface design, and characters · <i> University of Reading & Tsinghua University </i>  </div>
+                        </li>
+                        <li class="venue-row">
+                            <span class="year-badge">✨2025✨</span>
+                            <div>9th International Conference on Professional & Practice Based Doctorates · <i> Royal College of Art, UK </i> <a href="https://ukcge.ac.uk/assets/pdfs/ICPPD9-Xicheng-Yang-poster.pdf" target="_blank" class="link-btn" style="margin-left: 8px;">[Poster ↗]</a></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Block 3 -->
+                <div class="item-block" data-img="images/embassy.jpg">
+                    <div class="item-title">Exploring the Tangut Script: a brief overview.</div>
+                    <div class="venue-row">
+                        <span class="year-badge">✨2024✨</span>
+                        <div>Talk on diverse writing systems in China, special event of “Evolution of Chinese character exhibition” · Embassy of the People's Republic of China, London</div>
+                    </div>
+                </div>
+
+                <!-- Block 4 -->
+                <div class="item-block" data-img="images/punctuation_talk.jpg">
+                    <div class="item-title">The development of modern Chinese punctuation and challenges in typography.</div>
+                    <ul class="venue-list">
+                        <li class="venue-row">
+                            <span class="year-badge">✨2024✨</span>
+                            <div>Typography Theory Practice · <i> Leeds Beckett University, UK </i> <a href="https://youtu.be/AYHgPJtJV1Y" target="_blank" class="link-btn" style="margin-left: 8px;">[Watch Talk ↗]</a> </div>
+                        </li>
+                        <li class="venue-row">
+                            <span class="year-badge">✨2023✨</span>
+                            <div>China (Anyang) International Conference of Chinese Characters</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Block 5 -->
+                <div class="item-block" data-img="images/noto_tangut_talk.jpg">
+                    <div class="item-title">Tangut typefaces research and the redesign of Noto Serif Tangut.</div>
+                    <ul class="venue-list">
+                        <li class="venue-row">
+                            <span class="star-badge">🔥 ATypI ALL OVER · 2021 </span>
+                            <div><a href="https://youtu.be/81q1p4_-quw?si=DwgBvSs52Am6M70o" target="_blank" class="link-btn" style="margin-left: 8px;">[Watch Talk ↗]</a></div>
+                        </li>
+                        <li class="venue-row">
+                            <span class="year-badge">✨2021✨</span>
+                            <div>China (Anyang) International Conference of Chinese Characters</div>
+                        </li>
+                        <li class="venue-row">
+                            <span class="year-badge">✨2021✨</span>
+                            <div>The 13th Printing Culture Symposium, Beijing, China</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ========================== SECTION 2: PUBLICATIONS ========================== -->
+            <section class="academic-section">
+                <div class="section-subtitle">Publications & Articles</div>
+
+                <!-- Pub 1 -->
+                <div class="item-block" data-img="images/granshan.jpg">
+                    <div class="item-main">
+                        <div class="item-title">Hanzi - Chinese Characters.</div>
+                   
+                    </div>
+                    <div class="venue-row">
+                        <span class="star-badge">✍️GRANSHAN · 2026</span>
+                        <div>Published Exhibition Paper / Core Article <a href="https://granshan.com/insights/hanzi-chinese-characters" target="_blank" class="link-btn">[Read Article ↗]</a></div>
+                    </div>
+                </div>
+
+                <!-- Pub 2 -->
+                <div class="item-block" data-img="images/letterseed.jpg">
+                    <div class="item-main">
+                        <div class="item-title">Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems.</div>
+                    </div>
+                    <div class="venue-row">
+                        <span class="year-badge">✨2025✨</span>
+                        <div>LetterSeed 28 · <i>Korean Society of Typography. Ahn Graphics</i></div>
+                    </div>
+                </div>
+
+                <!-- Pub 3 -->
+                <div class="item-block" data-img="images/punctuation_paper.jpg">
+                    <div class="item-title">The development of modern Chinese punctuation and challenges in typography.</div>
+                    <div class="venue-row">
+                        <span class="year-badge">✨2023✨</span>
+                        <div>Print culture · <i>China Printing Museum, Issue 2, 2023</i> <a href="https://oversea.cnki.net/kcms2/article/abstract?v=QP2K49WHhilaDYujVU_Vafg1zqrxmxsT2hKwMiz2563yJIhWMa1VT1fOteXZwvns3zmcSNfiy6qif11WuSMuRYgFxAAIRLlSaslAHajHieow1jW-aa7te_ebSSi_J0XOgeHQKmPZ2DPa6lwE8R3p40N3uStZKspyCKHUTLvkkdkJT31sF_J0Dw==&uniplatform=OVERSEA&language=EN" target="_blank" class="link-btn">[Link ↗]</a> </div>
+                    </div>
+                </div>
+
+                <!-- Pub 4 -->
+                <div class="item-block" data-img="images/noto_tangut_paper.jpg">
+                    <div class="item-title">Tangut typefaces research and the redesign of Noto Serif Tangut (Second author).</div>
+                    <ul class="venue-list">
+                        <li class="venue-row">
+                        <span class="year-badge">✨2021✨</span>
+                        <div>Print culture · <i>China Printing Museum, Issue 3, 2021</i> <a href="https://oversea.cnki.net/kcms2/article/abstract?v=QP2K49WHhilVc2iWBVgBGab4Z3GXi8QD1AL-oYB9eiisyZy6dSp9g2qm7UXmdBdMMgZAj5CKeVHd2G8Qk4twBQTwDmg1NqZpTwTPafE2uSiDWX4HTF3AJqKM4Yz5glrR9A1D01TP1nOA2ntabgne7acIwjAH8iLir3mfiPnNZ4AI5fbqUoVlNw==&uniplatform=OVERSEA&language=EN" target="_blank" class="link-btn">[Link ↗]</a></div>
+                         </li>
+                         
+                        <li class="venue-row">
+                        <span class="year-badge">✨2024✨</span>
+                        <div><i>The Elegance of Hanzi</i>,CITIC Press Corporation, pp. 99–122</div>
+                        </li>
+                    </ul>
+                </div>
+                   
+               
+                <!-- Pub 5 -->
+                <div class="item-block" data-img="images/grid_book.jpg">
+                    <div class="item-title">Second translator: The Chinese version of <i>The Typographic Grid</i>.</div>
+                    <div class="venue-row">
+                        <span class="year-badge">✨2024✨</span>
+                        <div>Shanghai People's Fine Art Publishing House</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================== SECTION 3: TEACHING ========================== -->
+            <section class="academic-section">
+                <div class="section-subtitle">Teaching & Academic Service</div>
+
+                <div class="item-block" data-img="images/cafa_teaching.jpg">
+                    <div class="item-title">Assistant Teacher · Latin Typeface Design Courses</div>
+                    <div style="font-size:1.1rem; color:#555; margin-bottom:15px;">
+                        Assisted Associate Professor Liuzhao's Latin typeface design courses at the Central Academy of Fine Arts (CAFA), China.
+                    </div>
+                    <ul class="venue-list">
+                        <li class="venue-row">
+                            <span class="year-badge">✨2023✨</span>
+                            <div>CAFA Academic Term &nbsp;[Sep]</div>
+                        </li>
+                        <li class="venue-row">
+                            <span class="year-badge">✨2022✨</span>
+                            <div>CAFA Academic Term &nbsp;[Sep]</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- 右边固定的动态照片投射区 -->
+        <aside style="padding-top: 20px;">
+            <div class="sticky-image-preview" id="previewContainer">
+                <div class="placeholder-text" id="placeholder">
+                    Hover over an item<br>
+                    to slide open poster, document<br>
+                    or lecture archive.
+                </div>
+                
+                <!-- 预埋的所有联动切图接口（名字均已核对，对应上面每栏的 data-img） -->
+                <img src="images/grapholinguistics.jpg" id="img-grapholinguistics.jpg">
+                <img src="images/remaking_tangut_talk.jpg" id="img-remaking_tangut_talk.jpg">
+                <img src="images/sidebar_placeholder.jpg" id="img-sidebar_placeholder.jpg">
+                <img src="images/embassy.jpg" id="img-embassy.jpg">
+                <img src="images/punctuation_talk.jpg" id="img-punctuation_talk.jpg">
+                <img src="images/noto_tangut_talk.jpg" id="img-noto_tangut_talk.jpg">
+                <img src="images/granshan.jpg" id="img-granshan.jpg">
+                <img src="images/letterseed.jpg" id="img-letterseed.jpg">
+                <img src="images/punctuation_paper.jpg" id="img-punctuation_paper.jpg">
+                <img src="images/noto_tangut_paper.jpg" id="img-noto_tangut_paper.jpg">
+                <img src="images/elegance_hanzi.jpg" id="img-elegance_hanzi.jpg">
+                <img src="images/grid_book.jpg" id="img-grid_book.jpg">
+                <img src="images/cafa_teaching.jpg" id="img-cafa_teaching.jpg">
+            </div>
+        </aside>
+    </div>
+
+    <!-- JS 联动监听器 -->
+    <script>
+        const blocks = document.querySelectorAll('.item-block');
+        const placeholder = document.getElementById('placeholder');
+
+        blocks.forEach(block => {
+            block.addEventListener('mouseenter', () => {
+                const imgAttr = block.getAttribute('data-img');
+                if(!imgAttr) return;
+                const imgName = imgAttr.replace('images/', '');
+                const targetImg = document.getElementById('img-' + imgName);
+                
+                if (targetImg) {
+                    placeholder.style.display = 'none';
+                    document.querySelectorAll('.sticky-image-preview img').forEach(img => img.classList.remove('active'));
+                    targetImg.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
