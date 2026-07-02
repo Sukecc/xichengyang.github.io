@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selected Projects | XICHENG YANG</title>
+    <style>
+    /* ==========================================================================
+           【Lyean Serif 核心家族系统 - 统一使用相对路径】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Italic.woff2') format('woff2');
+            font-weight: normal;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Bold.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean Optical';
+            src: url('fonts/Lyean-Optical.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-DisplayBold.woff2') format('woff2');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+            font-family: "Lyean", "Georgia", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0;
+        }
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
+            margin-bottom: 80px; text-transform: uppercase;
+        }
+        header a { text-decoration: none; color: #1a1a1a; margin-left: 20px; }
+        header a:hover { color: #b85a4b; }
+        header a.active { color: #b85a4b; font-weight: bold; }
+
+        .tag { font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 15px; }
+        h1 { font-size: 3.5rem; font-weight: normal; line-height: 1.2; max-width: 900px; margin: 0 0 60px 0; }
+        
+        /*作品分类小标签 */
+        .project-filter {
+            display: flex; gap: 30px;
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.05em;
+            border-bottom: 1px solid #e0dbcf; padding-bottom: 20px; margin-bottom: 60px;
+            color: #888;
+        }
+        .filter-item { cursor: pointer; transition: color 0.2s, font-weight 0.2s; }
+        .filter-item:hover, .filter-item.active { color: #1a1a1a; font-weight: bold; }
+
+        /* ==========================================================================
+           【大师级错落网格布局 - 动态过滤适配版】
+           ========================================================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 80px 50px;
+        }
+        
+        /* 💡 核心机制：平时显示的卡片，保持优雅的 asymmetries 错落 */
+        .gallery-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        
+        /* 当被过滤隐藏时，卡片淡出并彻底不占空间 */
+        .gallery-card.hidden {
+            display: none !important;
+        }
+
+        .gallery-image-box {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background-color: #ede9df;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 1px solid #e0dbcf;
+        }
+        .gallery-image-box img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gallery-card:hover .gallery-image-box img {
+            transform: scale(1.03);
+        }
+        
+        .gallery-card h3 {
+            font-size: 2rem;
+            font-weight: normal;
+            margin: 5px 0 10px 0;
+            line-height: 1.2;
+        }
+        .gallery-desc {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.5;
+            max-width: 500px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 顶部导航 -->
+        <header>
+            <div style="font-weight: bold;"><a href="index.html" style="margin:0; text-decoration: none; color: inherit;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html" class="active">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="tag">Archive</div>
+            <h1>Selected typefaces, revivals, and typographic tools.</h1>
+
+            <!-- 💡 核心改动 1：为按钮加上 data-filter 属性，点击时告诉 JS 要筛选什么 -->
+            <div class="project-filter">
+                <span class="filter-item active" data-filter="all">ALL</span>
+                <span class="filter-item" data-filter="design">TYPEFACE DESIGN</span>
+                <span class="filter-item" data-filter="research">RESEARCH</span>
+                <span class="filter-item" data-filter="tools">TOOLS</span>
+            </div>
+
+            <!-- 作品画廊网格 -->
+            <div class="projects-grid" id="galleryGrid">
+                
+                <!-- 💡 核心改动 2：在每个卡片上加上 data-category 烙印 -->
+                
+                <!-- Project 1: Lyean -->
+                <a href="Lyean.html" class="gallery-card" data-category="design">
+                    <div class="gallery-image-box">
+                        <img src="images/Lyean.jpg" alt="Lyean Typeface Family">
+                    </div>
+                    <div class="tag" style="margin-bottom: 5px;">Multi-script Type Family · 2022</div>
+                    <h3>Lyean</h3>
+                    <p class="gallery-desc">An award-winning expansive typeface family harmonizing Latin, Arabic, and Simplified Chinese scripts under a unified typographic voice.</p>
+                </a>
+
+                <!-- Project 2: AraTangut -->
+                <a href="AraTangut.html" class="gallery-card" data-category="research">
+                    <div class="gallery-image-box">
+                        <img src="images/AraTangut.jpg" alt="AraTangut Custom Font">
+                    </div>
+                    <div class="tag" style="margin-bottom: 5px;">Custom Font & Revival · 2023–Present</div>
+                    <h3>AraTangut</h3>
+                    <p class="gallery-desc">A research-grade custom revival typeface designed for Professor Arakawa Shintarō, breaking new paradigms in digital typography for the extinct Tangut script.</p>
+                </a>
+
+                <!-- Project 3: Noto Serif Tangut -->
+                <a href="NotoSerifTangut.html" class="gallery-card" data-category="research">
+                    <div class="gallery-image-box">
+                        <img src="images/NotoSerifTangut.jpg" alt="Noto Serif Tangut">
+                    </div>
+                    <div class="tag" style="margin-bottom: 5px;">Google Fonts · 2021</div>
+                    <h3>Noto Serif Tangut</h3>
+                    <p class="gallery-desc">A massive systemic redesign and technical overhaul of the official Google Fonts Tangut repertoire, optimizing digital readability and architectural balance.</p>
+                </a>
+
+                <!-- Project 4: Shanghai Sky -->
+                <a href="Shanghaisky.html" class="gallery-card" data-category="design">
+                    <div class="gallery-image-box">
+                        <img src="images/Shanghaisky.jpg" alt="Shanghai Sky">
+                    </div>
+                    <div class="tag" style="margin-bottom: 5px;">Custom Display · 2025</div>
+                    <h3>Shanghai Sky</h3>
+                    <p class="gallery-desc">An award-winning display typeface blending expressive geometry with classic strokes, engineered for high-impact editorial headlines.</p>
+                </a>
+
+                <!-- Project 5: Tangut Tool -->
+                <a href="tangut-tool.html" class="gallery-card" data-category="tools">
+                    <div class="gallery-image-box">
+                        <img src="images/tangut_tool.jpg" alt="Tangut Input Tool">
+                    </div>
+                    <div class="tag" style="margin-bottom: 5px;">Type Tech & Functional Tool · 2025</div>
+                    <h3>Tangut Character Composition & Search Utility</h3>
+                    <p class="gallery-desc">A custom-coded functional search engine and input interface designed to solve radical decomposition and indexing bottlenecks for digital Tangut research.</p>
+                </a>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+       【优雅的动态分类 JavaScript 脚本】
+       ========================================================================== -->
+    <script>
+        const filterItems = document.querySelectorAll('.filter-item');
+        const cards = document.querySelectorAll('.gallery-card');
+
+        filterItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // 1. 切换标签的激活高亮状态
+                filterItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // 2. 获取当前点击的过滤类型
+                const targetFilter = item.getAttribute('data-filter');
+
+                // 3. 执行过滤核心逻辑
+                cards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+
+                    if (targetFilter === 'all' || cardCategory === targetFilter) {
+                        card.classList.remove('hidden'); // 显示符合条件的
+                    } else {
+                        card.classList.add('hidden');    // 隐藏不符合条件的
+                    }
+                });
+
+                // 4. 重新动态调整幸存卡片的“左右错落”视觉呼吸感
+                recalculateLayout();
+            });
+        });
+
+        // 💡 这是一个高级算法：因为卡片被隐藏后，剩下的卡片如果还是死板地按原样错落会很难看。
+        // 这个函数会自动计算当前“活着”的卡片，重新让它们左、右、左、右优雅交替错开！
+        function recalculateLayout() {
+            const visibleCards = document.querySelectorAll('.gallery-card:not(.hidden)');
+            visibleCards.forEach((card, index) => {
+                if (index % 2 === 1) {
+                    card.style.transform = 'translateY(40px)'; // 奇数项（右列）往下压
+                } else {
+                    card.style.transform = 'translateY(0)';     // 偶数项（左列）保持归零
+                }
+            });
+        }
+
+        // 初始化时跑一遍错落计算
+        recalculateLayout();
+    </script>
+</body>
+</html>

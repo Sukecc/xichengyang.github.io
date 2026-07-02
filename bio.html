@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bio & Practice | XICHENG YANG</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+            font-family: "Lyean", "Georgia", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0;
+        }
+        
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
+            margin-bottom: 80px; text-transform: uppercase;
+        }
+        header a { text-decoration: none; color: #1a1a1a; margin-left: 20px; }
+        header a:hover { color: #b85a4b; }
+        header a.active { color: #b85a4b; font-weight: bold; }
+
+        .tag { font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 15px; }
+        
+        /* ==========================================================================
+           【上半部分：叙事级 Bio 与真实联络卡】
+           ========================================================================== */
+        .bio-hero {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 100px;
+            margin-bottom: 100px;
+        }
+        .bio-text p {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+        .bio-text p:last-child { margin-bottom: 0; }
+        
+        .contact-box {
+            background-color: #ede9df;
+            border: 1px solid #e0dbcf;
+            padding: 40px;
+            border-radius: 4px;
+            align-self: start;
+        }
+        .contact-box h3 { font-size: 1.6rem; font-weight: normal; margin-top: 0; margin-bottom: 20px; }
+        .contact-box p { font-size: 1.05rem; line-height: 1.6; color: #444; margin-bottom: 12px; }
+        .contact-box a { color: #b85a4b; text-decoration: none; border-bottom: 1px solid #b85a4b; padding-bottom: 2px; }
+        .contact-box a:hover { color: #1a1a1a; border-color: #1a1a1a; }
+
+        /* ==========================================================================
+           【下半部分：全量硬核矩阵网格 (CV System)】
+           ========================================================================== */
+        .cv-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            border-top: 2px solid #1a1a1a;
+            padding-top: 40px;
+            margin-bottom: 80px;
+        }
+        .cv-column h2 {
+            font-family: 'Lyean Sans', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #b85a4b;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+        .cv-block {
+            margin-bottom: 35px;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .cv-time {
+            font-family: 'Lyean Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #6e5d4f;
+            margin-bottom: 6px;
+        }
+        .cv-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .cv-institution {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+        .cv-details {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* ==========================================================================
+           【底端专设：大型商业与委任项目列表】
+           ========================================================================== */
+        .projects-section {
+            border-top: 1px solid #e0dbcf;
+            padding-top: 40px;
+        }
+        .projects-section h2 {
+            font-family: 'Lyean Sans', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: #b85a4b; margin-top: 0; margin-bottom: 30px;
+        }
+        .project-row {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0dbcf;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .project-row:last-child { border-bottom: none; }
+        .proj-meta { font-family: 'Lyean Sans', sans-serif; font-size: 0.9rem; font-weight: bold; color: #6e5d4f; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 顶部导航 -->
+        <header>
+            <div style="font-weight: bold;"><a href="index.html" style="margin:0; text-decoration: none; color: inherit;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html" class="active">BIO</a>
+            </nav>
+        </header>
+
+        <!-- 上半部分：叙事级故事 Bio 与联系卡 -->
+        <main class="bio-hero">
+            <div class="bio-text">
+                <div class="tag">About & Practice</div>
+                <p><strong>Xicheng Yang</strong> is an award-winning typeface designer and researcher from China, currently based in the UK. She graduated with distinction from the MA in Typeface Design at the University of Reading, where she subsequently completed her doctorate.</p>
+                <p>Her specialized research bridges historical script analysis with contemporary digital production, focusing on the development of digital typefaces for the <strong>Tangut script</strong>—an extinct writing system used in northwestern China between the 11th and 13th centuries.</p>
+                <p>Specialising in <strong>Chinese, Tangut, Latin scripts</strong> and complex multi-script type design and typography, Xicheng’s practice focuses on multi-script visual harmony, meticulous glyph craftsmanship, and systemic typeface expansion across retail and custom typeface projects.</p>
+            </div>
+
+            <!-- 右侧：真实、高清晰度的完整联络盒子 -->
+            <div class="contact-box">
+                <h3>Contact & Info</h3>
+                <p>Available for large-scale custom type families, multi-script expansion, technical font debugging, and lectures.</p>
+                <p style="margin-top: 20px; font-size: 1rem;">
+                    <strong>Email:</strong> <a href="mailto:threecczhu@gmail.com">threecczhu@gmail.com</a><br>
+        
+                </p>
+                <p style="font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; margin-top: 25px; margin-bottom: 0;">
+                    <a href="https://www.instagram.com/sukecc0206/" style="margin-right: 15px; border: none;">Instagram</a>
+                    <a href="https://www.linkedin.com/in/xicheng-yang-946343227/" style="margin-right: 15px; border: none;">LinkedIn</a>
+                    <a href="https://x.com/threecczhu?s=21&t=TUlvxIVUFUdTaBI_Rd-r8A" style="border: none;">X (Twitter)</a>
+                </p>
+            </div>
+        </main>
+
+        <!-- 中间网格：Education, Work, Recognitions -->
+        <section class="cv-grid">
+            
+            <!-- 1. Education -->
+            <div class="cv-column">
+                <h2>Education</h2>
+                <div class="cv-block">
+                    <div class="cv-time">2023 – 2026</div>
+                    <div class="cv-title">PhD in Typography and Graphic Communication</div>
+                    <div class="cv-institution">University of Reading</div>
+                    <div class="cv-details">
+                        Thesis: "Reviving the Tangut script: new paradigms in designing digital typefaces for extinct writing systems"<br>
+                        Supervisors: Prof. Gerry Leonidas & Dr. Borna Izadpanah
+                    </div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2021 – 2022</div>
+                    <div class="cv-title">MA in Typeface Design (Distinction)</div>
+                    <div class="cv-institution">University of Reading</div>
+                    <div class="cv-details">
+                        Dissertation: The development of modern Chinese punctuation and challenges in typography<br>
+                        Project: Lyean typeface family (Latin, Arabic, Simplified Chinese).
+                    </div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2017 – 2021</div>
+                    <div class="cv-title">BA in Graphic Design</div>
+                    <div class="cv-institution">Beijing Institute of Graphic Communication</div>
+                    <div class="cv-details">Graduation project: Cultural and creative design focusing on Tangut fonts.</div>
+                </div>
+            </div>
+
+            <!-- 2. Work Experience -->
+            <div class="cv-column">
+                <h2>Work Experience</h2>
+                <div class="cv-block">
+                    <div class="cv-time">Nov 2025 – May 2026</div>
+                    <div class="cv-title">Font Technician Apprentice</div>
+                    <div class="cv-institution">The Northern Block Ltd</div>
+                    <div class="cv-details">Lead designer on matching Simplified Chinese to suit an existing Latin typeface family.</div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2017 – Present</div>
+                    <div class="cv-title">Typeface and Graphic Designer (Freelance)</div>
+                    <div class="cv-institution">Liuzhao Studio</div>
+                    <div class="cv-details">Noto Serif Tangut redesign for Google Fonts. Handled technical typeface debugging, multi-script system coordination, and project deliveries.</div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">09. 2022 & 09. 2023</div>
+                    <div class="cv-title">Assistant Teacher</div>
+                    <div class="cv-institution">Central Academy of Fine Arts (CAFA)</div>
+                    <div class="cv-details">Teaching Latin typeface design and multi-script matching methods for Chinese typefaces.</div>
+                </div>
+            </div>
+
+            <!-- 3. Selected Recognition -->
+            <div class="cv-column">
+                <h2>Selected Recognition</h2>
+                <div class="cv-block">
+                    <div class="cv-time">2025</div>
+                    <div class="cv-title">Certificate of Typographic Excellence</div>
+                    <div class="cv-institution">New York TDC · Typeface: <i>Shanghai Sky</i></div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2024</div>
+                    <div class="cv-title">Deemed as Excellent Work</div>
+                    <div class="cv-institution">Tokyo TDC Award · Typeface: <i>AraTangut</i></div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2024</div>
+                    <div class="cv-title">Certificate of Typographic Excellence</div>
+                    <div class="cv-institution">New York TDC · <i>AraTangut</i></div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2024</div>
+                    <div class="cv-title">Young Ones Award</div>
+                    <div class="cv-institution">New York TDC · Typeface: <i>Lyean</i></div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-time">2024</div>
+                    <div class="cv-title">The Malee Scholarship Finalist</div>
+                    <div class="cv-institution">The Malee Scholarship</div>
+                </div>
+                <div class="cv-block">
+                    <div class="cv-title">Excellent Creative Director Award</div>
+                    <div class="cv-institution">HANYI The 5th FONTSTAR Design Competition</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 底端专用板块：大面积陈列极其重要的商业委任与项目历史 -->
+        <section class="projects-section">
+            <h2>Selected Commissions & Research Projects</h2>
+            
+            <div class="project-row">
+                <div class="proj-meta">2025 – Present</div>
+                <div><strong>Global Typeface Family Project</strong> | <i>Indie European Type Foundry [Confidential]</i><br><span style="color:#666; font-size:0.95rem;">Designing Simplified Chinese to harmoniously suit an existing Latin typeface family and 23 other global scripts (2 masters), including client-facing presentations.</span></div>
+            </div>
+
+            <div class="project-row">
+                <div class="proj-meta">2024 – 2025</div>
+                <div><strong>Latin Typeface Expansion Project</strong> | <i>Indie Chinese Type Foundry [Confidential]</i><br><span style="color:#666; font-size:0.95rem;">Designing Latin script to suit an existing Chinese typeface system across 3 masters; designed matching Chinese punctuation marks and programmed their OpenType features.</span></div>
+            </div>
+
+            <div class="project-row">
+                <div class="proj-meta">2024</div>
+                <div><strong>Custom Font for Japanese Kanji</strong> | <i>Indie Japanese Type Foundry [Confidential]</i><br><span style="color:#666; font-size:0.95rem;">Systemic development and character set expansion for custom Japanese Kanji.</span></div>
+            </div>
+
+            <div class="project-row">
+                <div class="proj-meta">2024</div>
+                <div><strong>Corporate Custom Type System</strong> | <i>Large Chinese Type Foundry [Confidential]</i><br><span style="color:#666; font-size:0.95rem;">Designed custom Latin script to harmoniously suit a flagship existing Chinese typeface, leading direct client presentations.</span></div>
+            </div>
+
+            <div class="project-row">
+                <div class="proj-meta">2022 – Present</div>
+                <div><strong>AraTangut Custom Font Paradigm</strong> | <i>Prof. Arakawa Shintarō, Tokyo University of Foreign Studies</i><br><span style="color:#666; font-size:0.95rem;">Development of a dedicated research-grade custom typeface for the extinct Tangut script system.</span></div>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
