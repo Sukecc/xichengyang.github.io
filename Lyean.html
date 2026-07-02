@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyean — Project Detail | XICHENG YANG</title>
+    <style>
+        /* ==========================================================================
+           【Lyean Serif 核心家族系统】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Italic.woff2') format('woff2');
+            font-weight: normal; font-style: italic; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Bold.woff2') format('woff2');
+            font-weight: bold; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside {
+            font-family: "Lyean", "Georgia", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0 0 0;
+        }
+        
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 60px; text-transform: uppercase;
+        }
+        header div, header nav a {
+            font-family: 'Lyean Sans', sans-serif !important;
+            font-size: 0.8rem; letter-spacing: 0.1em;
+            text-decoration: none; color: #1a1a1a; 
+        }
+        header nav a { margin-left: 20px; }
+        header nav a:hover { color: #b85a4b; }
+
+        /* ==========================================================================
+           【全宽 Hero 大图 + 悬浮荣誉抽屉】
+           ========================================================================== */
+        .project-hero-cover {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            height: 65vh;
+            background-color: #ede9df;
+            position: relative;
+            border-bottom: 1px solid #e0dbcf;
+        }
+        .project-hero-cover img.hero-main-img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-floating-awards {
+            position: absolute;
+            bottom: -35px;
+            right: 5vw;
+            z-index: 100;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .award-stamp-trigger {
+            width: 70px; height: 70px;
+            background-color: #2b231d;
+            color: #f6f3eb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 4px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .award-stamp-trigger span {
+            font-family: 'Lyean Sans', sans-serif !important;
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+        .award-stamp-trigger svg {
+            width: 16px; height: 16px;
+            fill: none; stroke: currentColor; stroke-width: 2;
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+
+        .award-expanded-panel {
+            position: absolute;
+            bottom: 85px; 
+            right: 0;
+            background-color: #f6f3eb;
+            border: 1px solid #c4b9ae;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(43,35,29,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px) scale(0.95);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        visibility 0.4s;
+            width: 260px; 
+        }
+        .award-expanded-panel img {
+            width: 100%; height: auto; display: block; border-radius: 2px;
+        }
+
+        .hero-floating-awards:hover .award-stamp-trigger,
+        .hero-floating-awards:focus .award-stamp-trigger {
+            background-color: #b85b4b; 
+            transform: scale(1.05) rotate(3deg); 
+        }
+        .hero-floating-awards:hover .award-expanded-panel,
+        .hero-floating-awards:focus .award-expanded-panel {
+            opacity: 1; visibility: visible; transform: translateY(0) scale(1);
+        }
+
+        .hero-floating-awards .badge-label {
+            font-family: 'Lyean Sans', sans-serif !important;
+            font-size: 0.65rem; font-weight: bold; line-height: 1.3;
+            color: #6e5d4f; text-align: center;
+            display: block; margin-top: 8px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
+        /* ==========================================================================
+           【🚨 绝杀 1：完美硬核绝对五等分元数据网格】
+           ========================================================================== */
+        .metadata-grid {
+            display: grid; 
+            /* 💡 使用 minmax(0, 1fr) 锁死空间，防止任何过长内容强行挤偏其他格子 */
+            grid-template-columns: repeat(5, minmax(0, 1fr)); 
+            gap: 40px;
+            border-bottom: 1px solid #1a1a1a; 
+            padding: 40px 0;
+            margin-top: 60px; 
+            margin-bottom: 60px;
+        }
+        .meta-label {
+            font-family: 'Lyean Sans', sans-serif !important; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            color: #b85a4b; 
+            letter-spacing: 0.05em; 
+            margin-bottom: 12px;
+        }
+        .meta-value { 
+            font-size: 1.05rem; 
+            line-height: 1.5; 
+            font-weight: bold; 
+            word-wrap: break-word; /* 允许单词内部换行，防止长英文把格子撑开 */
+        }
+
+        /* ==========================================================================
+           【🚨 绝杀 2：精准像素级横向对齐网格（与上方第 4、5 栏完美贴合）】
+           ========================================================================== */
+        .project-intro-container {
+            display: grid;
+            /* 💡 改写fr份额比例，使其（3.2 + 0.8 + 1）完美复刻上方 5 栏网格中（3栏 : 2栏）的交界线！ */
+            grid-template-columns: 3.2fr 1.8fr; 
+            gap: 40px;
+            margin-bottom: 100px;
+            align-items: flex-start;
+        }
+       /* 找到对应的 .project-intro-container 区域，替换为以下代码： */
+.project-intro-container {
+    display: grid;
+    grid-template-columns: 3.2fr 1.8fr; 
+    gap: 50px; /* 拉大两栏间距，更透气 */
+    margin-bottom: 120px;
+    align-items: flex-start;
+}
+
+.intro-text {
+    max-width: 800px; /* 💡 锁死黄金视线宽度（全屏时最舒适、最大气的大小） */
+}
+.intro-text h2 { 
+    font-size: 2.8rem; 
+    font-weight: normal; 
+    margin-top: 0; 
+    margin-bottom: 30px; 
+}
+.intro-text p { 
+    font-size: 1.2rem; 
+    line-height: 1.7; /* 稍微加深行高，在大屏幕下字里行间更有呼吸感 */
+    color: #333; 
+    margin-bottom: 25px; 
+}
+
+
+        /* ==========================================================================
+           【画廊：大型全页样张陈列区】
+           ========================================================================== */
+        .specimen-gallery h3 {
+            font-family: 'Lyean Sans', sans-serif !important; font-size: 1.1rem; text-transform: uppercase; color: #1a1a1a; border-top: 1px solid #e0dbcf; padding-top: 40px; margin-top: 0; margin-bottom: 40px;
+        }
+        .specimen-full-img {
+    width: 100vw; /* 💡 强制图片的容器达到物理屏幕的 100% 宽度 */
+    
+    /* 💡 黑魔法核心：向左强行拉伸，正好抵消外层 container 留出的左右白边 */
+    margin-left: calc(-50vw + 50%); 
+    
+    margin-bottom: 0; /* 删掉以前的图片间距，让三张大样张像画卷一样无缝相接 */
+    background-color: #ede9df;
+    border-bottom: 1px solid #e0dbcf; /* 图片之间留一条极其克制的极细分界线，如果不想要线可以删掉 */
+}
+
+.specimen-full-img img { 
+    width: 100%; 
+    display: block; /* 🚨 必须加这个：杜绝图片底部默认自带的 3 像素神秘白边 */
+}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 导航 -->
+        <header>
+            <div><a href="index.html" style="margin:0; text-decoration: none; color: inherit; font-weight: normal;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html" style="color: #b85a4b; font-weight: bold;">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <!-- 全宽大图 -->
+        <div class="project-hero-cover">
+            <img class="hero-main-img" src="images/Lyean_hero_massive.webp" alt="Lyean Massive Typographic Showcase">
+            
+            <!-- 🏆 右下角骑缝交互荣誉章 -->
+            <aside class="hero-floating-awards" tabindex="0" aria-label="Lyean Awards Room">
+                <div class="award-stamp-trigger">
+                    <span>NY</span>
+                    <span style="font-size:0.75rem; margin-top:-2px;">TDC</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 4h8v3.2c0 3.4-1.6 5.6-4 6.3-2.4-.7-4-2.9-4-6.3V4Z"></path>
+                        <path d="M8 6H4.8c0 2.5 1.3 4.3 3.5 4.8"></path>
+                        <path d="M16 6h3.2c0 2.5-1.3 4.3-3.5 4.8"></path>
+                        <path d="M12 13.5V17"></path>
+                        <path d="M8.5 20h7"></path>
+                        <path d="M10 17h4"></path>
+                    </svg>
+                </div>
+
+                <div class="award-expanded-panel">
+                    <img src="images/lyean-awards-expanded.webp" alt="New York TDC Official Certificate Repertoire">
+                </div>
+
+                <span class="badge-label">Young Ones<br>2024</span>
+            </aside>
+        </div>
+
+        <!-- 5项元数据五栏网格：现在在 minmax(0, 1fr) 的加持下强制重工业级绝对五等分 -->
+        <section class="metadata-grid">
+            <div>
+                <div class="meta-label">Scripts</div>
+                <div class="meta-value">Simplified Chinese (Hanzi), Latin, Arabic</div>
+            </div>
+            <div>
+                <div class="meta-label">Award</div>
+                <div class="meta-value">New York TDC Young Ones Award (2023)</div>
+            </div>
+            <div>
+                <div class="meta-label">Purpose</div>
+                <div class="meta-value">University of Reading (MA Project)</div>
+            </div>
+            <div>
+                <div class="meta-label">Designer</div>
+                <div class="meta-value">Xicheng Yang</div>
+            </div>
+            <div>
+                <div class="meta-label">Period</div>
+                <div class="meta-value">Oct 2021 to Sep 2022</div>
+            </div>
+        </section>
+
+        <!-- 文字介绍区：通过 3.2fr : 1.8fr 算法，让右侧的 family-scope-box 实现了与上方第四栏 Designers 的左边缘像素级精准对齐！ -->
+        <section class="project-intro-container">
+            <div class="intro-text">
+                <h2>The Unified Voice across Scripts.</h2>
+                <p>Lyean (Lián 连), which translates to ‘connection’ in Chinese, is a screen-reading typeface family containing three scripts, Latin, Chinese simplified Hanzi and Arabic. The aim of this typeface is to build a connection between each Chinese ethnic minority script, exchanging cultures and building a comfortable, warm cultural space.</p>
+                <p>Lyean brings a new atmosphere to screen reading, with slightly crunchy serif, organic shapes. From optical to display to sans, Lyean can adapt many typographic genres including small text on smart watches or outstanding titles on website pages.</p>
+                <p>This is a project for the typeface design master’s course in the University of Reading, but it is still on-going and involves the expansion of Hangeul, Japanese Kana and Greek.</p>
+            </div>
+
+        </section>
+
+        <!-- 巨幅整页大样张 -->
+        <section class="specimen-gallery">
+            <div class="specimen-full-img"><img src="images/Lyean_specimen_01.webp" alt="Lyean Poster Text Texture"></div>
+            <div class="specimen-full-img"><img src="images/Lyean_specimen_02.webp" alt="Lyean Multi-script Alignment Blueprint"></div>
+            <div class="specimen-full-img"><img src="images/Lyean_character_set.webp" alt="Lyean Full Character Set Display"></div>
+        </section>
+        
+    </div>
+
+</body>
+</html>
