@@ -293,16 +293,16 @@
        ========================================================================== -->
     <script>
       // ==========================================================================
-        // 【像素矩阵点阵对齐版：西夏字形精准粒子引擎】
+        // 【100% 修复版：西夏字形精准网格点阵引擎】
         // ==========================================================================
         const CONFIG = {
             imageSrc: "images/tangut_particle_src.webp", 
-            sampleGap: 6,             // 💡 步长：每隔 6 像素踩点一次。数值越小粒子越密越精细，图二那种颗粒感通常是 5~7
-            particleSize: 3.5,        // 💡 粒子直径。当直径略小于 sampleGap 时，就会形成图二那种整齐透气的点阵感
+            sampleGap: 5,             // 💡 步长：5 像素。完美的科技感 LED 点阵跨度
+            particleSize: 3,          // 💡 粒子直径：3 像素。比步长小，能拉出绝佳的颗粒透气感
             repulsionRadius: 80,      
             repulsionForce: 10,       
             roamOpacity: 0.20,        
-            returnSpeed: 0.1,         // 💡 加快吸附速度，让它更硬朗地砸回完美的网格上
+            returnSpeed: 0.08,        // 吸附归位的阻尼感
         };
 
         const canvas = document.getElementById("particleCanvas");
@@ -359,20 +359,20 @@
                     return; 
                 }
 
-                // 💡 核心改动：严格按照固定的 sampleGap 网格化扫描，彻底杜绝粒子位置重叠
+                // 💡 严格按照固定的 sampleGap 网格化扫描
                 for (let y = 0; y < height; y += CONFIG.sampleGap) {
                     for (let x = 0; x < width; x += CONFIG.sampleGap) {
                         const idx = (y * width + x) * 4;
                         
-                        // 判定高亮像素
-                        if (imgData[idx] > 120) { 
-                            // 每一个网格点生成唯一一个粒子，它的 home 坐标完美锁死在网格交点上
+                        // 🚨 核心修复：把阈值从 120 暴降到 20！
+                        // 只要这个像素点有一丝丝偏白（哪怕是浅灰或边缘抗锯齿晕染），就统统捕捉进来！
+                        if (imgData[idx] > 20) { 
                             const rx = Math.random() * width;
                             const ry = Math.random() * height;
                             
                             particles.push({
                                 x: rx, y: ry,
-                                homeX: x, homeY: y,     // 锁死在完美的网格坐标上
+                                homeX: x, homeY: y,     // 锁死在绝对的网格坐标上
                                 idleX: rx, idleY: ry,
                                 vx: (Math.random() - 0.5) * 0.8,
                                 vy: (Math.random() - 0.5) * 0.8,
@@ -470,10 +470,14 @@
                 const finalX = p.x + p.repX;
                 const finalY = p.y + p.repY;
 
-                // 💡 还原图二高级的方块网格质感（或者喜欢圆点的话把 ctx.fillRect 改回 ctx.arc）
-                // 采用方块 (fillRect) 能最大程度还原极具数字雕刻感的严谨对齐
+                // 💡 采用高级的方块 (fillRect) 绘制，并完美居中，彻底复刻图二的矩阵对齐高级感
                 ctx.fillStyle = `rgba(43, 35, 29, ${p.alpha})`;
-                ctx.fillRect(finalX - CONFIG.particleSize/2, finalY - CONFIG.particleSize/2, CONFIG.particleSize, CONFIG.particleSize);
+                ctx.fillRect(
+                    Math.round(finalX) - CONFIG.particleSize / 2, 
+                    Math.round(finalY) - CONFIG.particleSize / 2, 
+                    CONFIG.particleSize, 
+                    CONFIG.particleSize
+                );
             }
         }
         // ==========================================================================
