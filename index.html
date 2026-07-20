@@ -166,7 +166,7 @@
                 <p style="font-size: 1.15rem; line-height: 1.6; color: #444; max-width: 560px;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
             </div>
             
-            <!-- 🚨 右侧核心变动：西夏文字形交互粒子画布 -->
+            <!-- 🚨 右侧画布 -->
             <div class="particle-stage-box" id="particleStage">
                 <canvas id="particleCanvas"></canvas>
             </div>
@@ -289,20 +289,17 @@
     </footer>
 
     <!-- ==========================================================================
-       【🚨 注入：原生 JS 重工业级西夏字形粒子物理演算法引擎】
-       ========================================================================== -->
+       【🚨 真正注入并执行的粒子网格对齐引擎】
+       ========================================================================== */ -->
     <script>
-      // ==========================================================================
-        // 【100% 修复版：西夏字形精准网格点阵引擎】
-        // ==========================================================================
         const CONFIG = {
             imageSrc: "images/tangut_particle_src.webp", 
-            sampleGap: 5,             // 💡 步长：5 像素。完美的科技感 LED 点阵跨度
-            particleSize: 3,          // 💡 粒子直径：3 像素。比步长小，能拉出绝佳的颗粒透气感
+            sampleGap: 5,             // 💡 完美的 5 像素间距
+            particleSize: 3,          // 💡 3 像素小方块，拉出高冷矩阵感
             repulsionRadius: 80,      
             repulsionForce: 10,       
             roamOpacity: 0.20,        
-            returnSpeed: 0.08,        // 吸附归位的阻尼感
+            returnSpeed: 0.08,        
         };
 
         const canvas = document.getElementById("particleCanvas");
@@ -359,20 +356,16 @@
                     return; 
                 }
 
-                // 💡 严格按照固定的 sampleGap 网格化扫描
                 for (let y = 0; y < height; y += CONFIG.sampleGap) {
                     for (let x = 0; x < width; x += CONFIG.sampleGap) {
                         const idx = (y * width + x) * 4;
-                        
-                        // 🚨 核心修复：把阈值从 120 暴降到 20！
-                        // 只要这个像素点有一丝丝偏白（哪怕是浅灰或边缘抗锯齿晕染），就统统捕捉进来！
                         if (imgData[idx] > 20) { 
                             const rx = Math.random() * width;
                             const ry = Math.random() * height;
                             
                             particles.push({
                                 x: rx, y: ry,
-                                homeX: x, homeY: y,     // 锁死在绝对的网格坐标上
+                                homeX: x, homeY: y,     // 完璧锁死网格座标
                                 idleX: rx, idleY: ry,
                                 vx: (Math.random() - 0.5) * 0.8,
                                 vy: (Math.random() - 0.5) * 0.8,
@@ -470,7 +463,6 @@
                 const finalX = p.x + p.repX;
                 const finalY = p.y + p.repY;
 
-                // 💡 采用高级的方块 (fillRect) 绘制，并完美居中，彻底复刻图二的矩阵对齐高级感
                 ctx.fillStyle = `rgba(43, 35, 29, ${p.alpha})`;
                 ctx.fillRect(
                     Math.round(finalX) - CONFIG.particleSize / 2, 
@@ -480,8 +472,29 @@
                 );
             }
         }
+
+        stage.addEventListener("mousemove", function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            if (prevMouse.x > -9999) mouseSpeed = Math.sqrt((mx - prevMouse.x)**2 + (my - prevMouse.y)**2);
+            prevMouse = { x: mx, y: my };
+            mouse = { x: mx, y: my, active: true };
+        });
+
+        stage.addEventListener("mouseenter", function() { isHovered = true; });
+        stage.addEventListener("mouseleave", function() {
+            isHovered = false;
+            mouse = { x: -9999, y: -9999, active: false };
+        });
+
+        // 🚨 核心修复：在这里注入车钥匙，让整个引擎正式运转！
+        window.addEventListener("resize", initScene);
+        initScene();
+        drawLoop();
+
         // ==========================================================================
-        // 【原本底下的横向鼠标滚轮互动逻辑】
+        // 【横向鼠标滚轮互动逻辑】
         // ==========================================================================
         const scroller = document.getElementById('projectScroller');
         const scrollSection = document.getElementById('scrollSection');
