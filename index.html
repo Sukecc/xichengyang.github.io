@@ -292,17 +292,17 @@
        【🚨 注入：原生 JS 重工业级西夏字形粒子物理演算法引擎】
        ========================================================================== -->
     <script>
-       // ==========================================================================
-        // 【升级改良版：原生 JS 西夏字形粒子物理演算法引擎】
+      // ==========================================================================
+        // 【像素矩阵点阵对齐版：西夏字形精准粒子引擎】
         // ==========================================================================
         const CONFIG = {
             imageSrc: "images/tangut_particle_src.webp", 
-            particleCount: 2200,      // 稍微精简数量，让汇聚速度更有爆发力
-            particleSize: 3.5,          
-            repulsionRadius: 85,      
-            repulsionForce: 12,       
-            roamOpacity: 0.18,        
-            returnSpeed: 0.06,        // 更加优雅的吸附阻尼
+            sampleGap: 6,             // 💡 步长：每隔 6 像素踩点一次。数值越小粒子越密越精细，图二那种颗粒感通常是 5~7
+            particleSize: 3.5,        // 💡 粒子直径。当直径略小于 sampleGap 时，就会形成图二那种整齐透气的点阵感
+            repulsionRadius: 80,      
+            repulsionForce: 10,       
+            roamOpacity: 0.20,        
+            returnSpeed: 0.1,         // 💡 加快吸附速度，让它更硬朗地砸回完美的网格上
         };
 
         const canvas = document.getElementById("particleCanvas");
@@ -329,7 +329,6 @@
             particles = [];
             const img = new Image();
             
-            // 🚨 核心修复 1：兼容本地 file:// 协议和线上 https:// 协议的跨域流氓机制
             if (!window.location.href.startsWith('file://')) {
                 img.crossOrigin = "anonymous"; 
             }
@@ -341,10 +340,10 @@
                 const oCtx = offscreen.getContext("2d");
                 
                 const imgRatio = img.width / img.height;
-                let targetW = width * 0.7; 
+                let targetW = width * 0.75; 
                 let targetH = targetW / imgRatio;
-                if (targetH > height * 0.7) {
-                    targetH = height * 0.7;
+                if (targetH > height * 0.75) {
+                    targetH = height * 0.75;
                     targetW = targetH * imgRatio;
                 }
                 const tx = (width - targetW) / 2;
@@ -356,69 +355,57 @@
                 try {
                     imgData = oCtx.getImageData(0, 0, width, height).data;
                 } catch(e) { 
-                    // 🚨 核心修复 2：如果本地还是被浏览器拦截了，启动【极简硬核备用文字阵】打底，绝不让画面空白！
                     createFallbackParticles();
                     return; 
                 }
 
-                let validPoints = [];
-                const sampleGap = 2; 
-                for (let y = 0; y < height; y += sampleGap) {
-                    for (let x = 0; x < width; x += sampleGap) {
+                // 💡 核心改动：严格按照固定的 sampleGap 网格化扫描，彻底杜绝粒子位置重叠
+                for (let y = 0; y < height; y += CONFIG.sampleGap) {
+                    for (let x = 0; x < width; x += CONFIG.sampleGap) {
                         const idx = (y * width + x) * 4;
-                        // 💡 针对黑底白字优化：只要 R 通道大于 100（即像素偏白），就判定为字形骨架
-                        if (imgData[idx] > 100) { 
-                            validPoints.push({ homeX: x, homeY: y });
+                        
+                        // 判定高亮像素
+                        if (imgData[idx] > 120) { 
+                            // 每一个网格点生成唯一一个粒子，它的 home 坐标完美锁死在网格交点上
+                            const rx = Math.random() * width;
+                            const ry = Math.random() * height;
+                            
+                            particles.push({
+                                x: rx, y: ry,
+                                homeX: x, homeY: y,     // 锁死在完美的网格坐标上
+                                idleX: rx, idleY: ry,
+                                vx: (Math.random() - 0.5) * 0.8,
+                                vy: (Math.random() - 0.5) * 0.8,
+                                repX: 0, repY: 0,
+                                alpha: CONFIG.roamOpacity,
+                                roamTargetX: Math.random() * width,
+                                roamTargetY: Math.random() * height
+                            });
                         }
                     }
                 }
 
-                if(validPoints.length === 0) { createFallbackParticles(); return; }
-
-                validPoints.sort(() => Math.random() - 0.5);
-                const limit = Math.min(validPoints.length, CONFIG.particleCount);
-
-                for (let i = 0; i < limit; i++) {
-                    const pt = validPoints[i];
-                    const rx = Math.random() * width;
-                    const ry = Math.random() * height;
-                    
-                    particles.push({
-                        x: rx, y: ry,
-                        homeX: pt.homeX, homeY: pt.homeY,
-                        idleX: rx, idleY: ry,
-                        vx: (Math.random() - 0.5) * 0.6,
-                        vy: (Math.random() - 0.5) * 0.6,
-                        repX: 0, repY: 0,
-                        alpha: CONFIG.roamOpacity,
-                        roamTargetX: Math.random() * width,
-                        roamTargetY: Math.random() * height
-                    });
-                }
+                if(particles.length === 0) createFallbackParticles();
             };
             
             img.onerror = function() { createFallbackParticles(); };
             img.src = CONFIG.imageSrc;
         }
 
-        // 💡 备用救援机制：如果本地图片实在出不来，直接用代码绘制字形锚点，确保本地调试也能看到震撼效果
         function createFallbackParticles() {
             particles = [];
-            // 在画布中央生成一个由粒子组成的完美字形方阵作为调试基地
-            const count = 400; 
-            for (let i = 0; i < count; i++) {
-                const angle = (i / count) * Math.PI * 2;
-                const r = 60 + Math.sin(angle * 4) * 20; // 产生一个类似几何活字的花样轮廓
-                const hX = width / 2 + Math.cos(angle) * r;
-                const hY = height / 2 + Math.sin(angle) * r;
-                const rx = Math.random() * width;
-                const ry = Math.random() * height;
-                particles.push({
-                    x: rx, y: ry, homeX: hX, homeY: hY, idleX: rx, idleY: ry,
-                    vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
-                    repX: 0, repY: 0, alpha: CONFIG.roamOpacity,
-                    roamTargetX: Math.random() * width, roamTargetY: Math.random() * height
-                });
+            const gap = 8;
+            for (let y = height * 0.3; y < height * 0.7; y += gap) {
+                for (let x = width * 0.3; x < width * 0.7; x += gap) {
+                    const rx = Math.random() * width;
+                    const ry = Math.random() * height;
+                    particles.push({
+                        x: rx, y: ry, homeX: x, homeY: y, idleX: rx, idleY: ry,
+                        vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+                        repX: 0, repY: 0, alpha: CONFIG.roamOpacity,
+                        roamTargetX: Math.random() * width, roamTargetY: Math.random() * height
+                    });
+                }
             }
         }
 
@@ -450,7 +437,7 @@
                 if (isHovered) {
                     targetX = p.homeX;
                     targetY = p.homeY;
-                    targetAlpha = 0.85;
+                    targetAlpha = 0.95;
                 } else {
                     const dtx = p.roamTargetX - p.x;
                     const dty = p.roamTargetY - p.y;
@@ -483,32 +470,12 @@
                 const finalX = p.x + p.repX;
                 const finalY = p.y + p.repY;
 
-                ctx.beginPath();
-                ctx.arc(finalX, finalY, CONFIG.particleSize / 2, 0, Math.PI * 2);
-                // 🎨 换成你高定个人站的主题深色 (#2b231d) 的 RGB 颜色值
+                // 💡 还原图二高级的方块网格质感（或者喜欢圆点的话把 ctx.fillRect 改回 ctx.arc）
+                // 采用方块 (fillRect) 能最大程度还原极具数字雕刻感的严谨对齐
                 ctx.fillStyle = `rgba(43, 35, 29, ${p.alpha})`;
-                ctx.fill();
+                ctx.fillRect(finalX - CONFIG.particleSize/2, finalY - CONFIG.particleSize/2, CONFIG.particleSize, CONFIG.particleSize);
             }
         }
-
-        stage.addEventListener("mousemove", function(e) {
-            const rect = canvas.getBoundingClientRect();
-            const mx = e.clientX - rect.left;
-            const my = e.clientY - rect.top;
-            if (prevMouse.x > -9999) mouseSpeed = Math.sqrt((mx - prevMouse.x)**2 + (my - prevMouse.y)**2);
-            prevMouse = { x: mx, y: my };
-            mouse = { x: mx, y: my, active: true };
-        });
-
-        stage.addEventListener("mouseenter", function() { isHovered = true; });
-        stage.addEventListener("mouseleave", function() {
-            isHovered = false;
-            mouse = { x: -9999, y: -9999, active: false };
-        });
-
-        window.addEventListener("resize", initScene);
-        initScene();
-        drawLoop();
         // ==========================================================================
         // 【原本底下的横向鼠标滚轮互动逻辑】
         // ==========================================================================
