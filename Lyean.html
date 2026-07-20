@@ -29,7 +29,7 @@
             font-weight: normal; font-style: normal; font-display: swap;
         }
 
-        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside {
+        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside, figcaption {
             font-family: "Lyean", "Georgia", serif;
             -webkit-font-smoothing: antialiased;
         }
@@ -38,6 +38,7 @@
             margin: 0; padding: 0;
             background-color: #f6f3eb;
             color: #1a1a1a;
+            overflow-x: hidden; /* 锁死横向滚动，防止全屏大图错位 */
         }
         .container {
             max-width: 90vw; margin: 0 auto; padding: 60px 0 0 0;
@@ -59,174 +60,165 @@
            【全宽 Hero 大图 + 悬浮荣誉抽屉】
            ========================================================================== */
         .project-hero-cover {
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            height: 65vh;
-            background-color: #ede9df;
-            position: relative;
-            border-bottom: 1px solid #e0dbcf;
+            width: 100vw; margin-left: calc(-50vw + 50%); height: 65vh;
+            background-color: #ede9df; position: relative; border-bottom: 1px solid #e0dbcf;
         }
-        .project-hero-cover img.hero-main-img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
+        .project-hero-cover img.hero-main-img { width: 100%; height: 100%; object-fit: cover; }
 
-        .hero-floating-awards {
-            position: absolute;
-            bottom: -35px;
-            right: 5vw;
-            z-index: 100;
-            cursor: pointer;
-            outline: none;
-        }
-
+        .hero-floating-awards { position: absolute; bottom: -35px; right: 5vw; z-index: 100; cursor: pointer; outline: none; }
         .award-stamp-trigger {
-            width: 70px; height: 70px;
-            background-color: #2b231d;
-            color: #f6f3eb;
+            width: 70px; height: 70px; background-color: #2b231d; color: #f6f3eb;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border-radius: 4px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 4px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .award-stamp-trigger span {
-            font-family: 'Lyean Sans', sans-serif !important;
-            font-weight: 900;
-            font-size: 1.1rem;
-        }
-        .award-stamp-trigger svg {
-            width: 16px; height: 16px;
-            fill: none; stroke: currentColor; stroke-width: 2;
-            margin-top: 4px;
-            opacity: 0.7;
-        }
+        .award-stamp-trigger span { font-family: 'Lyean Sans', sans-serif !important; font-weight: 900; font-size: 1.1rem; }
+        .award-stamp-trigger svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; margin-top: 4px; opacity: 0.7; }
 
         .award-expanded-panel {
-            position: absolute;
-            bottom: 85px; 
-            right: 0;
-            background-color: #f6f3eb;
-            border: 1px solid #c4b9ae;
-            padding: 15px;
-            border-radius: 6px;
-            box-shadow: 0 10px 30px rgba(43,35,29,0.15);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px) scale(0.95);
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
-                        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        visibility 0.4s;
+            position: absolute; bottom: 85px; right: 0; background-color: #f6f3eb; border: 1px solid #c4b9ae;
+            padding: 15px; border-radius: 6px; box-shadow: 0 10px 30px rgba(43,35,29,0.15);
+            opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
             width: 260px; 
         }
-        .award-expanded-panel img {
-            width: 100%; height: auto; display: block; border-radius: 2px;
-        }
+        .award-expanded-panel img { width: 100%; height: auto; display: block; border-radius: 2px; }
 
-        .hero-floating-awards:hover .award-stamp-trigger,
-        .hero-floating-awards:focus .award-stamp-trigger {
-            background-color: #b85b4b; 
-            transform: scale(1.05) rotate(3deg); 
-        }
-        .hero-floating-awards:hover .award-expanded-panel,
-        .hero-floating-awards:focus .award-expanded-panel {
-            opacity: 1; visibility: visible; transform: translateY(0) scale(1);
-        }
-
-        .hero-floating-awards .badge-label {
-            font-family: 'Lyean Sans', sans-serif !important;
-            font-size: 0.65rem; font-weight: bold; line-height: 1.3;
-            color: #6e5d4f; text-align: center;
-            display: block; margin-top: 8px;
-            text-transform: uppercase; letter-spacing: 0.05em;
-        }
+        .hero-floating-awards:hover .award-stamp-trigger, .hero-floating-awards:focus .award-stamp-trigger { background-color: #b85b4b; transform: scale(1.05) rotate(3deg); }
+        .hero-floating-awards:hover .award-expanded-panel, .hero-floating-awards:focus .award-expanded-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .hero-floating-awards .badge-label { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.65rem; font-weight: bold; line-height: 1.3; color: #6e5d4f; text-align: center; display: block; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
 
         /* ==========================================================================
-           【🚨 绝杀 1：完美硬核绝对五等分元数据网格】
+           【五栏元数据网格】
            ========================================================================== */
         .metadata-grid {
-            display: grid; 
-            /* 💡 使用 minmax(0, 1fr) 锁死空间，防止任何过长内容强行挤偏其他格子 */
-            grid-template-columns: repeat(5, minmax(0, 1fr)); 
-            gap: 40px;
-            border-bottom: 1px solid #1a1a1a; 
-            padding: 40px 0;
-            margin-top: 60px; 
-            margin-bottom: 60px;
+            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 40px;
+            border-bottom: 1px solid #1a1a1a; padding: 40px 0; margin-top: 60px; margin-bottom: 60px;
         }
-        .meta-label {
-            font-family: 'Lyean Sans', sans-serif !important; 
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
-            color: #b85a4b; 
-            letter-spacing: 0.05em; 
-            margin-bottom: 12px;
-        }
-        .meta-value { 
-            font-size: 1.05rem; 
-            line-height: 1.5; 
-            font-weight: bold; 
-            word-wrap: break-word; /* 允许单词内部换行，防止长英文把格子撑开 */
-        }
+        .meta-label { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; text-transform: uppercase; color: #b85a4b; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .meta-value { font-size: 1.05rem; line-height: 1.5; font-weight: bold; word-wrap: break-word; }
 
         /* ==========================================================================
-           【🚨 绝杀 2：精准像素级横向对齐网格（与上方第 4、5 栏完美贴合）】
+           【简介文字区】
            ========================================================================== */
-        .project-intro-container {
-            display: grid;
-            /* 💡 改写fr份额比例，使其（3.2 + 0.8 + 1）完美复刻上方 5 栏网格中（3栏 : 2栏）的交界线！ */
-            grid-template-columns: 3.2fr 1.8fr; 
-            gap: 40px;
-            margin-bottom: 100px;
-            align-items: flex-start;
-        }
-       /* 找到对应的 .project-intro-container 区域，替换为以下代码： */
-.project-intro-container {
-    display: grid;
-    grid-template-columns: 3.2fr 1.8fr; 
-    gap: 50px; /* 拉大两栏间距，更透气 */
-    margin-bottom: 120px;
-    align-items: flex-start;
-}
-
-.intro-text {
-    max-width: 800px; /* 💡 锁死黄金视线宽度（全屏时最舒适、最大气的大小） */
-}
-.intro-text h2 { 
-    font-size: 2.8rem; 
-    font-weight: normal; 
-    margin-top: 0; 
-    margin-bottom: 30px; 
-}
-.intro-text p { 
-    font-size: 1.2rem; 
-    line-height: 1.7; /* 稍微加深行高，在大屏幕下字里行间更有呼吸感 */
-    color: #333; 
-    margin-bottom: 25px; 
-}
-
+        .project-intro-container { display: grid; grid-template-columns: 3.2fr 1.8fr; gap: 50px; margin-bottom: 80px; align-items: flex-start; }
+        .intro-text { max-width: 800px; }
+        .intro-text h2 { font-size: 2.8rem; font-weight: normal; margin-top: 0; margin-bottom: 30px; }
+        .intro-text p { font-size: 1.2rem; line-height: 1.7; color: #333; margin-bottom: 25px; }
 
         /* ==========================================================================
-           【画廊：大型全页样张陈列区】
+           【智能吸顶固定导航栏】
            ========================================================================== */
-        .specimen-gallery h3 {
-            font-family: 'Lyean Sans', sans-serif !important; font-size: 1.1rem; text-transform: uppercase; color: #1a1a1a; border-top: 1px solid #e0dbcf; padding-top: 40px; margin-top: 0; margin-bottom: 40px;
+        .specimen-tabs-wrapper {
+            position: relative;
+            z-index: 500;
+            margin: 40px 0 20px 0;
+        }
+        .specimen-tabs-nav {
+            display: flex; justify-content: space-between; gap: 16px; 
+            border-bottom: 1px solid #c4b9ae; padding-bottom: 20px;
+            background-color: #f6f3eb;
+            transition: padding 0.3s, box-shadow 0.3s;
+        }
+        
+        .specimen-tabs-nav.is-sticky {
+            position: fixed;
+            top: 0;
+            left: 5vw;
+            width: 90vw;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(246, 243, 235, 0.95);
+        }
+        
+        .tab-item {
+            flex: 1; display: flex; flex-direction: column; padding: 14px 20px; cursor: pointer;
+            background: #ede9df; border: 1px solid #e0dbcf; border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: bottom center;
+        }
+        .tab-num {
+            font-family: 'Lyean Sans', sans-serif !important; font-size: 0.7rem; color: #6e5d4f; letter-spacing: 0.05em; margin-bottom: 4px;
+        }
+        .tab-name {
+            font-family: 'Lyean Sans', sans-serif !important; font-weight: bold; font-size: 1rem; color: #1a1a1a;
+        }
+        .tab-item:hover {
+            transform: scale(1.04); background: #e3ded2; box-shadow: 0 6px 20px rgba(43,35,29,0.08);
+        }
+        .tab-item.active {
+            background: #2b231d; border-color: #2b231d; transform: scale(1.01);
+        }
+        .tab-item.active .tab-num { color: #c4b9ae; }
+        .tab-item.active .tab-name { color: #f6f3eb; }
+
+        .gallery-genre-content {
+            display: block;
+            opacity: 1;
+        }
+
+        /* 画廊公共布局 */
+        .gallery-chapter-title {
+            font-family: 'Lyean Sans', sans-serif !important; font-size: 0.8rem; text-transform: uppercase;
+            color: #b85a4b; border-top: 1px solid #e0dbcf; padding-top: 40px; margin-top: 100px; margin-bottom: 40px;
+            letter-spacing: 0.1em; display: flex; justify-content: space-between;
+            scroll-margin-top: 140px;
         }
         .specimen-full-img {
-    width: 100vw; /* 💡 强制图片的容器达到物理屏幕的 100% 宽度 */
-    
-    /* 💡 黑魔法核心：向左强行拉伸，正好抵消外层 container 留出的左右白边 */
-    margin-left: calc(-50vw + 50%); 
-    
-    margin-bottom: 0; /* 删掉以前的图片间距，让三张大样张像画卷一样无缝相接 */
-    background-color: #ede9df;
-    border-bottom: 1px solid #e0dbcf; /* 图片之间留一条极其克制的极细分界线，如果不想要线可以删掉 */
-}
+            width: 100vw; margin-left: calc(-50vw + 50%); margin-bottom: 0; background-color: #ede9df; border-bottom: 1px solid #e0dbcf;
+        }
+        .specimen-full-img img { width: 100%; display: block; }
 
-.specimen-full-img img { 
-    width: 100%; 
-    display: block; /* 🚨 必须加这个：杜绝图片底部默认自带的 3 像素神秘白边 */
-}
+        /* ==========================================================================
+           【🚨 升级版交互样式：智能物理居中长廊】
+           ========================================================================== */
+        .type-in-use-section {
+            width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: 80px 0 120px 0; background: #2b231d;
+        }
+        .type-in-use-section .gallery-chapter-title {
+            width: 90vw; margin: 0 auto 50px auto; border-top: 1px solid #6e5d4f; color: #f6f3eb; padding-top: 30px;
+        }
+        
+        /* 跑马灯主视窗 */
+        .marquee-container {
+            overflow: hidden; width: 100%; display: flex; position: relative;
+        }
+        
+        /* 核心改动：移除了纯 CSS 动画，全部转由 JS 物理引擎接管控制，实现完美缓动 */
+        .marquee-track {
+            display: flex; width: max-content; will-change: transform;
+        }
+        
+        .marquee-item {
+            width: 55vw; flex-shrink: 0; padding: 0 25px; box-sizing: border-box;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .marquee-img-box {
+            width: 100%; aspect-ratio: 16 / 10; background-color: #ede9df; overflow: hidden; border: 1px solid #6e5d4f; margin-bottom: 20px;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s;
+        }
+        .marquee-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .marquee-caption {
+            font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #c4b9ae; line-height: 1.5; padding: 0 4px;
+            transition: opacity 0.6s;
+        }
+        .marquee-caption strong { color: #f6f3eb; font-family: 'Lyean Sans', sans-serif !important; }
+
+        /* 💡 顶级氛围感：当某张图被鼠标选上时，其他卡片稍微弱化，突出正在聚焦的卡片 */
+        .marquee-track.is-focusing .marquee-item {
+            opacity: 0.4;
+            transform: scale(0.95);
+        }
+        .marquee-track.is-focusing .marquee-item:hover {
+            opacity: 1;
+            transform: scale(1.02); /* 居中的图微微放大 */
+        }
+        .marquee-track.is-focusing .marquee-item:hover .marquee-img-box {
+            border-color: #b85a4b; /* 边框变亮红色衬托 */
+        }
+
     </style>
 </head>
 <body>
@@ -242,15 +234,14 @@
             </nav>
         </header>
 
-        <!-- 全宽大图 -->
+        <!-- 全宽 Cover -->
         <div class="project-hero-cover">
             <img class="hero-main-img" src="images/Lyean_hero_massive.webp" alt="Lyean Massive Typographic Showcase">
             
-            <!-- 🏆 右下角骑缝交互荣誉章 -->
+            <!-- 右下角火漆互动章 -->
             <aside class="hero-floating-awards" tabindex="0" aria-label="Lyean Awards Room">
                 <div class="award-stamp-trigger">
-                    <span>NY</span>
-                    <span style="font-size:0.75rem; margin-top:-2px;">TDC</span>
+                    <span>NY</span><span style="font-size:0.75rem; margin-top:-2px;">TDC</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M8 4h8v3.2c0 3.4-1.6 5.6-4 6.3-2.4-.7-4-2.9-4-6.3V4Z"></path>
                         <path d="M8 6H4.8c0 2.5 1.3 4.3 3.5 4.8"></path>
@@ -260,40 +251,23 @@
                         <path d="M10 17h4"></path>
                     </svg>
                 </div>
-
                 <div class="award-expanded-panel">
                     <img src="images/lyean-awards-expanded.webp" alt="New York TDC Official Certificate Repertoire">
                 </div>
-
-                <span class="badge-label">Young Ones<br>2024</span>
+                <span class="badge-label">Young Ones<br>2023</span>
             </aside>
         </div>
 
-        <!-- 5项元数据五栏网格：现在在 minmax(0, 1fr) 的加持下强制重工业级绝对五等分 -->
+        <!-- 五栏元数据 -->
         <section class="metadata-grid">
-            <div>
-                <div class="meta-label">Scripts</div>
-                <div class="meta-value">Simplified Chinese (Hanzi), Latin, Arabic</div>
-            </div>
-            <div>
-                <div class="meta-label">Award</div>
-                <div class="meta-value">New York TDC Young Ones Award (2023)</div>
-            </div>
-            <div>
-                <div class="meta-label">Purpose</div>
-                <div class="meta-value">University of Reading (MA Project)</div>
-            </div>
-            <div>
-                <div class="meta-label">Designer</div>
-                <div class="meta-value">Xicheng Yang</div>
-            </div>
-            <div>
-                <div class="meta-label">Period</div>
-                <div class="meta-value">Oct 2021 to Sep 2022</div>
-            </div>
+            <div><div class="meta-label">Scripts</div><div class="meta-value">Simplified Chinese, Latin, Arabic</div></div>
+            <div><div class="meta-label">Award</div><div class="meta-value">New York TDC Young Ones Award (2023)</div></div>
+            <div><div class="meta-label">Purpose</div><div class="meta-value">University of Reading (MA Project)</div></div>
+            <div><div class="meta-label">Designer</div><div class="meta-value">Xicheng Yang</div></div>
+            <div><div class="meta-label">Period</div><div class="meta-value">Oct 2021 to Sep 2022</div></div>
         </section>
 
-        <!-- 文字介绍区：通过 3.2fr : 1.8fr 算法，让右侧的 family-scope-box 实现了与上方第四栏 Designers 的左边缘像素级精准对齐！ -->
+        <!-- 简介文字 -->
         <section class="project-intro-container">
             <div class="intro-text">
                 <h2>The Unified Voice across Scripts.</h2>
@@ -301,17 +275,237 @@
                 <p>Lyean brings a new atmosphere to screen reading, with slightly crunchy serif, organic shapes. From optical to display to sans, Lyean can adapt many typographic genres including small text on smart watches or outstanding titles on website pages.</p>
                 <p>This is a project for the typeface design master’s course in the University of Reading, but it is still on-going and involves the expansion of Hangeul, Japanese Kana and Greek.</p>
             </div>
-
         </section>
 
-        <!-- 巨幅整页大样张 -->
+        <!-- ==========================================================================
+            【智能吸顶 + 滚动监听双向画廊系统】
+            ========================================================================== */ -->
+        <div class="specimen-tabs-wrapper" id="tabsWrapper">
+            <div class="specimen-tabs-nav" id="stickyNav">
+                <div class="tab-item active" data-target="genre-text">
+                    <span class="tab-num">Genre 01</span>
+                    <span class="tab-name">Lyean Text</span>
+                </div>
+                <div class="tab-item" data-target="genre-micro">
+                    <span class="tab-num">Genre 02</span>
+                    <span class="tab-name">Lyean Micro</span>
+                </div>
+                <div class="tab-item" data-target="genre-display">
+                    <span class="tab-num">Genre 03</span>
+                    <span class="tab-name">Lyean Display</span>
+                </div>
+                <div class="tab-item" data-target="genre-sans">
+                    <span class="tab-num">Genre 04</span>
+                    <span class="tab-name">Lyean Sans</span>
+                </div>
+            </div>
+        </div>
+
         <section class="specimen-gallery">
-            <div class="specimen-full-img"><img src="images/Lyean_specimen_01.webp" alt="Lyean Poster Text Texture"></div>
-            <div class="specimen-full-img"><img src="images/Lyean_specimen_02.webp" alt="Lyean Multi-script Alignment Blueprint"></div>
-            <div class="specimen-full-img"><img src="images/Lyean_character_set.webp" alt="Lyean Full Character Set Display"></div>
+            <div class="specimen-full-img"><img src="images/Lyean_main_01.webp" alt="Lyean Specimen Overview"></div>
+           
+            <!-- 01. Lyean Text -->
+            <div id="genre-text" class="gallery-genre-content">
+                <div class="gallery-chapter-title" id="title-text">
+                    <span>Genre 01 // Lyean Text</span>
+                    <span style="color:#aaa;">Standard Body & Proportions</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/Lyean_text_01.webp" alt="Lyean Text Specimen Sheet 1"></div>
+                <div class="specimen-full-img"><img src="images/Lyean_text_02.webp" alt="Lyean Text Specimen Sheet 2"></div>
+                <div class="specimen-full-img"><img src="images/Lyean_text_03.webp" alt="Lyean Text Specimen Sheet 3"></div>
+            </div>
+
+            <!-- 02. Lyean Micro -->
+            <div id="genre-micro" class="gallery-genre-content">
+                <div class="gallery-chapter-title" id="title-micro">
+                    <span>Genre 02 // Lyean Micro</span>
+                    <span style="color:#aaa;">High-Density Screen Legibility</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/Lyean_micro_01.webp" alt="Lyean Micro Specimen Sheet 1"></div>
+                <div class="specimen-full-img"><img src="images/Lyean_micro_02.webp" alt="Lyean Micro Specimen Sheet 2"></div>
+            </div>
+
+            <!-- 03. Lyean Display -->
+            <div id="genre-display" class="gallery-genre-content">
+                <div class="gallery-chapter-title" id="title-display">
+                    <span>Genre 03 // Lyean Display</span>
+                    <span style="color:#aaa;">Headline Textures & Dynamic Shapes</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/Lyean_display_01.webp" alt="Lyean Display Specimen Sheet 1"></div>
+            </div>
+
+            <!-- 04. Lyean Sans -->
+            <div id="genre-sans" class="gallery-genre-content">
+                <div class="gallery-chapter-title" id="title-sans">
+                    <span>Genre 04 // Lyean Sans</span>
+                    <span style="color:#aaa;">Interface & Badges System</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/Lyean_sans_01.webp" alt="Lyean Sans Specimen Sheet 1"></div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+            【🎨 升级重构：Type in Use 全屏沉浸式物理缓动吸附长廊】
+            ========================================================================== -->
+        <section class="type-in-use-section">
+            <div class="gallery-chapter-title">
+                <span>Selected Type in Use</span>
+                <span>Hover Any Card to Center Smoothly</span>
+            </div>
+
+            <div class="marquee-container" id="marqueeWindow">
+                <div class="marquee-track" id="marqueeTrack">
+                    <!-- 【第一组卡片群】 -->
+                    <div class="marquee-item" data-index="0">
+                        <div class="marquee-img-box"><img src="images/lyean_use_smartwatch.webp" alt="Lyean Font on Smartwatch"></div>
+                        <div class="marquee-caption"><strong>Context UI Mockup</strong> — Lyean Sans applied to high-density smart watch interface rendering small text legibility study.</div>
+                    </div>
+                    <div class="marquee-item" data-index="1">
+                        <div class="marquee-img-box"><img src="images/lyean_use_website.webp" alt="Lyean Font on Website Headlines"></div>
+                        <div class="marquee-caption"><strong>Web Editorial Layout</strong> — Lyean Display Bold utilized in outstanding headline hierarchy for editorial web platform.</div>
+                    </div>
+                    <div class="marquee-item" data-index="2">
+                        <div class="marquee-img-box"><img src="images/lyean_tdc_trophy.webp" alt="New York TDC Trophy Real Photo"></div>
+                        <div class="marquee-caption"><strong>Official Recognition</strong> — The New York Type Directors Club 2023 certificate and official medal awarded to Lyean Typeface System.</div>
+                    </div>
+                    <div class="marquee-item" data-index="3">
+                        <div class="marquee-img-box"><img src="images/lyean_use_book.webp" alt="Lyean Font on Book Layout"></div>
+                        <div class="marquee-caption"><strong>Print Publication</strong> — Layout rendering test of Lyean Text on editorial book interior margins.</div>
+                    </div>
+
+                    <!-- 【第二组卡片群（供无缝首尾相连循环滚动使用）】 -->
+                    <div class="marquee-item" data-index="4">
+                        <div class="marquee-img-box"><img src="images/lyean_use_smartwatch.webp" alt="Lyean Font on Smartwatch"></div>
+                        <div class="marquee-caption"><strong>Context UI Mockup</strong> — Lyean Sans applied to high-density smart watch interface rendering small text legibility study.</div>
+                    </div>
+                    <div class="marquee-item" data-index="5">
+                        <div class="marquee-img-box"><img src="images/lyean_use_website.webp" alt="Lyean Font on Website Headlines"></div>
+                        <div class="marquee-caption"><strong>Web Editorial Layout</strong> — Lyean Display Bold utilized in outstanding headline hierarchy for editorial web platform.</div>
+                    </div>
+                    <div class="marquee-item" data-index="6">
+                        <div class="marquee-img-box"><img src="images/lyean_tdc_trophy.webp" alt="New York TDC Trophy Real Photo"></div>
+                        <div class="marquee-caption"><strong>Official Recognition</strong> — The New York Type Directors Club 2023 certificate and official medal awarded to Lyean Typeface System.</div>
+                    </div>
+                    <div class="marquee-item" data-index="7">
+                        <div class="marquee-img-box"><img src="images/lyean_use_book.webp" alt="Lyean Font on Book Layout"></div>
+                        <div class="marquee-caption"><strong>Print Publication</strong> — Layout rendering test of Lyean Text on editorial book interior margins.</div>
+                    </div>
+                </div>
+            </div>
         </section>
         
     </div>
 
+    <!-- 交互脚本核心逻辑 -->
+    <script>
+        /* ==========================================================================
+           1. 吸顶导航与高亮联动脚本
+           ========================================================================== */
+        const tabsWrapper = document.getElementById('tabsWrapper');
+        const stickyNav = document.getElementById('stickyNav');
+        const sections = [
+            { tab: document.querySelector('[data-target="genre-text"]'), element: document.getElementById('genre-text') },
+            { tab: document.querySelector('[data-target="genre-micro"]'), element: document.getElementById('genre-micro') },
+            { tab: document.querySelector('[data-target="genre-display"]'), element: document.getElementById('genre-display') },
+            { tab: document.querySelector('[data-target="genre-sans"]'), element: document.getElementById('genre-sans') }
+        ];
+
+        window.addEventListener('scroll', function() {
+            const wrapperTop = tabsWrapper.getBoundingClientRect().top;
+            if (wrapperTop <= 0) {
+                stickyNav.classList.add('is-sticky');
+                tabsWrapper.style.paddingBottom = stickyNav.offsetHeight + 'px';
+            } else {
+                stickyNav.classList.remove('is-sticky');
+                tabsWrapper.style.paddingBottom = '0px';
+            }
+
+            let currentActive = sections[0].tab;
+            sections.forEach(sec => {
+                const rect = sec.element.getBoundingClientRect();
+                if (rect.top <= 200) { currentActive = sec.tab; }
+            });
+            sections.forEach(sec => {
+                if(sec.tab === currentActive) { sec.tab.classList.add('active'); } 
+                else { sec.tab.classList.remove('active'); }
+            });
+        });
+
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    const titleElement = targetContent.querySelector('.gallery-chapter-title');
+                    titleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        /* ==========================================================================
+           2. 🚨 核心高级算法：高性能物理缓动吸附居中无缝跑马灯引擎
+           ========================================================================== */
+        const track = document.getElementById('marqueeTrack');
+        const win = document.getElementById('marqueeWindow');
+        const items = document.querySelectorAll('.marquee-item');
+        
+        let currentX = 0;       // 当前轨道渲染的横向坐标
+        let targetX = 0;        // 目标期望横向坐标
+        const baseSpeed = 1.2;  // 默认自动滚动的速度（数字越大越快）
+        let isHovered = false;  // 鼠标是否进入了卡片区
+        
+        // 核心缓动公式参数：0.06 的物理磨损度，能带出非常平滑的果冻吸附感（高级网页必备）
+        const ease = 0.06; 
+
+        // 核心渲染循环函数 (利用 requestAnimationFrame 确保超高帧率不卡顿)
+        function animate() {
+            if (!isHovered) {
+                // 如果没有鼠标触碰，持续往前自然匀速滚动
+                targetX -= baseSpeed;
+                currentX = targetX;
+                
+                // 计算半长临界点，当滚完第一套卡片时，瞬间无缝把坐标拉回 0 点
+                const halfWidth = track.scrollWidth / 2;
+                if (Math.abs(currentX) >= halfWidth) {
+                    currentX = 0;
+                    targetX = 0;
+                }
+            } else {
+                // 💡 鼠标处于悬停锁定态：执行高端物理缓动（Easing）计算，让当前图平滑吸附到中间
+                currentX += (targetX - currentX) * ease;
+            }
+            
+            // 实时渲染矩阵位移
+            track.style.transform = `translateX(${currentX}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        // 监听每一张大图卡片的鼠标滑入事件
+        items.forEach((item) => {
+            item.addEventListener('mouseenter', () => {
+                isHovered = true;
+                track.classList.add('is-focusing'); // 激活全局其余卡片变暗样式
+                
+                // 🎯 黄金数学公式：计算让当前卡片精准居中所需要移动的绝对横向偏差距离
+                const winWidth = win.offsetWidth;         // 浏览器舞台视窗总宽
+                const itemWidth = item.offsetWidth;       // 当前卡片的绝对宽度
+                const itemLeft = item.offsetLeft;         // 当前卡片在超长轨道内的原生绝对起点
+                
+                // 将轨道的目标位置定位到：视窗中心线 减去 卡片自身的中心线起点
+                targetX = (winWidth / 2) - (itemLeft + itemWidth / 2);
+            });
+        });
+
+        // 监听鼠标移出轨道事件，恢复原本的均匀滚动
+        win.addEventListener('mouseleave', () => {
+            isHovered = false;
+            track.classList.remove('is-focusing');
+            // 将目标期望值无缝同步回当前坐标，防止画面瞬间发生跳变闪动
+            targetX = currentX;
+        });
+
+        // 启动高性能渲染引擎
+        requestAnimationFrame(animate);
+    </script>
 </body>
 </html>

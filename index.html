@@ -68,10 +68,10 @@
             grid-template-columns: 1fr 1.1fr; /* 略微调整比例让右侧画布施展拳脚 */
             gap: 60px; 
             margin-bottom: 120px; 
-            align-items: center;
+            align-items: flex-start; /* 改为 flex-start 让左边对齐顶端 */
         }
 
-        /* 🚨 右侧全新粒子舞台容器 */
+        /* 右侧全新粒子舞台容器 */
         .particle-stage-box {
             width: 100%;
             aspect-ratio: 1.1 / 1;
@@ -82,14 +82,49 @@
             border: none;
             box-sizing: border-box;
             border-left: 1px solid #e0dbcf; 
-    padding-left: 60px;
+            padding-left: 60px;
         }
         .particle-stage-box canvas {
-            position: absolute;
-            top: 0; left: 0;
+            position: relative;
             width: 100%; height: 100%;
             display: block;
             cursor: pointer;
+        }
+
+        /* 🚨 新增：Hero 底部切换信息看版样式 */
+        .hero-specimen-info-panel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            margin-top: 35px;
+            border-top: 1px solid #1a1a1a;
+            padding-top: 20px;
+            box-sizing: border-box;
+        }
+        .info-block {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-family: 'Lyean Sans', sans-serif !important;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #b85a4b;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+        .info-value {
+            font-size: 0.95rem;
+            color: #1a1a1a;
+            font-weight: 500;
+            line-height: 1.4;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity;
+        }
+        /* 用于切换时的平滑淡出 */
+        .info-value.fade-out {
+            opacity: 0;
         }
 
         /* ==========================================================================
@@ -168,9 +203,27 @@
                 <p style="font-size: 1.15rem; line-height: 1.6; color: #444; max-width: 560px;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
             </div>
             
-            <!-- 🚨 右侧画布 -->
-            <div class="particle-stage-box" id="particleStage">
-                <canvas id="particleCanvas"></canvas>
+            <!-- 右侧画布以及新增的联动看版 -->
+            <div>
+                <div class="particle-stage-box" id="particleStage">
+                    <canvas id="particleCanvas"></canvas>
+                </div>
+
+                <!-- 🚨 完美整合：元数据参数看板 DOM 节点 -->
+                <div class="hero-specimen-info-panel">
+                    <div class="info-block">
+                        <span class="info-label">Specimen Style</span>
+                        <span class="info-value" id="info-name">Lyean Hanzi Regular</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="info-label">Script System</span>
+                        <span class="info-value" id="info-script">Simplified Chinese</span>
+                    </div>
+                    <div class="info-block">
+                        <span class="info-label">Glyph Translation</span>
+                        <span class="info-value" id="info-translation">“Connection / To Link”</span>
+                    </div>
+                </div>
             </div>
         </main>
 
@@ -229,11 +282,12 @@
                     <div class="list-item">
                         <div class="list-year">2026</div>
                         <div>From archival forms to digital typeface: a framework for reviving extinct sinoform scripts — the Tangut case · <i>Grapholinguistics in the 21st century</i></div>
-                        <div><a href="https://grafematik2026.sciencesconf.org/?lang=en" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
+                        <div><a href="https://youtu.be/mMsx2mtu3QA?si=TTCHAoGwNBVPLM19" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                     <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2026</div>
                         <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>ATypI Stanford</i></div>
+                         <div><a href="https://youtu.be/Mn0K85HsV6w?si=_YwD1TjQIrwzrhcl" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                     <div class="list-item">
                         <div class="list-year">2024</div>
@@ -290,18 +344,59 @@
         </div>
     </footer>
 
-   <!-- ==========================================================================
-       【🚨 终极 debug 对齐修复版：西夏字形精准网格点阵引擎】
-       ========================================================================== */ -->
+    <!-- ==========================================================================
+        【西夏字形精准网格点阵引擎 + 🚨 多语系多图平滑切换联动系统】
+        ========================================================================== */ -->
     <script>
+        // 🚨 多图数据源配置（共 4 套样张信息，完全映射 Lyean 的核心文种及愿景）
+        const SPECIMEN_DATA = [
+            { 
+                imageSrc: "images/tangut_particle_src.webp", // 图1：默认图
+                name: "TangutBux", 
+                script: "Tangut", 
+                translation: "“Speak”" 
+            },
+            { 
+                imageSrc: "images/tangut_particle_src_02.webp", // 图2：汉字特写
+                name: "Lyean Regular", 
+                script: "Simplified Chinese (Hanzi)", 
+                translation: "“Forever”" 
+            },
+            { 
+                imageSrc: "images/tangut_particle_src_03.webp", // 图3：拉丁文特写
+                name: "Lyean Regular Italic", 
+                script: "Latin script", 
+                 
+            },
+            { 
+                imageSrc: "images/tangut_particle_src_04.webp", // 图4：阿拉伯文特写
+                name: "Lyean Regular", 
+                script: "Arabic Script (Naskh Base)", 
+           
+            }
+            { 
+                imageSrc: "images/tangut_particle_src_05.webp", // 图5：日文特写
+                name: "Lyean Regular", 
+                script: "Japanese hiragana", 
+               
+            }
+             { 
+                imageSrc: "images/tangut_particle_src_06.webp", // 图6：汉字特写
+                name: "HanJiangYaKai", 
+                script: "Simplified Chinese (Hanzi)", 
+                translation: "“Feel”" 
+            }
+        ];
+
+        let currentDataIndex = 0; // 当前正在渲染的数据索引
+
         const CONFIG = {
-            imageSrc: "images/tangut_particle_src.webp", 
-            sampleGap: 4,             // 💡 采样步长：6像素。
-            particleSize: 2.5,        // 💡 粒子大小：3.5像素。比步长略小，能形成完美的 LED 整齐点阵感
+            sampleGap: 4,             
+            particleSize: 2.5,        
             repulsionRadius: 90,      
             repulsionForce: 12,       
             roamOpacity: 0.15,        
-            returnSpeed: 0.1,         // 💡 加快砸回网格的速度，呈现硬朗的西夏文字骨架
+            returnSpeed: 0.1,         
         };
 
         const canvas = document.getElementById("particleCanvas");
@@ -317,14 +412,12 @@
         let prevMouse = { x: -9999, y: -9999 };
         let mouseSpeed = 0;
 
-        function initScene() {
+        // 🚨 升级版：场景初始化核心，能动态吸收不同的图片数据并打碎生成点阵
+        function initScene(dataIndex = 0) {
             width = stage.clientWidth;
             height = stage.clientHeight;
             
-            // 确保物理舞台尺寸正确
-            if (width === 0 || height === 0) {
-                width = 400; height = 400; // 安全兜底尺寸
-            }
+            if (width === 0 || height === 0) { width = 400; height = 400; }
 
             const dpr = window.devicePixelRatio || 1;
             canvas.width = width * dpr;
@@ -334,20 +427,16 @@
             particles = [];
             const img = new Image();
             
-            // 解除跨域流氓机制
             if (!window.location.href.startsWith('file://')) {
                 img.crossOrigin = "anonymous"; 
             }
             
             img.onload = function() {
-                console.log("Tangut source image loaded successfully. Size:", img.width, "x", img.height);
-                
                 const offscreen = document.createElement("canvas");
                 offscreen.width = width;
                 offscreen.height = height;
                 const oCtx = offscreen.getContext("2d");
                 
-                // 等比缩放居中
                 const imgRatio = img.width / img.height;
                 let targetW = width * 1.2; 
                 let targetH = targetW / imgRatio;
@@ -364,26 +453,20 @@
                 try {
                     imgData = oCtx.getImageData(0, 0, width, height).data;
                 } catch(e) { 
-                    console.error("Canvas pixel data access blocked by CORS. Starting backup grid.", e);
                     createFallbackParticles();
                     return; 
                 }
 
-                // 💡 网格化扫描
-                let count = 0;
                 for (let y = 0; y < height; y += CONFIG.sampleGap) {
                     for (let x = 0; x < width; x += CONFIG.sampleGap) {
                         const idx = (y * width + x) * 4;
-                        
-                        // 🚨 阈值修复：只要任意通道有颜色（说明不是纯黑背景），就统统判定为西夏文像素！
                         if (imgData[idx] > 15 || imgData[idx+1] > 15 || imgData[idx+2] > 15) { 
-                            count++;
                             const rx = Math.random() * width;
                             const ry = Math.random() * height;
                             
                             particles.push({
                                 x: rx, y: ry,
-                                homeX: x, homeY: y,     // 完璧锁死无重叠网格座标
+                                homeX: x, homeY: y,     
                                 idleX: rx, idleY: ry,
                                 vx: (Math.random() - 0.5) * 0.8,
                                 vy: (Math.random() - 0.5) * 0.8,
@@ -395,20 +478,56 @@
                         }
                     }
                 }
-
-                console.log(`Successfully generated ${count} grid particles for Tangut script.`);
-                if (particles.length === 0) {
-                    console.warn("No bright pixels found in image. Checking fallback.");
-                    createFallbackParticles();
-                }
+                if (particles.length === 0) { createFallbackParticles(); }
             };
             
-            img.onerror = function(err) { 
-                console.error("Failed to load image from paths:", CONFIG.imageSrc, err);
-                createFallbackParticles(); 
-            };
-            img.src = CONFIG.imageSrc;
+            img.onerror = function(err) { createFallbackParticles(); };
+            img.src = SPECIMEN_DATA[dataIndex].imageSrc; // 加载对应索引的图片
         }
+
+        // 🚨 新增：文字看板过渡切换引擎（加入防抖延时淡入淡出）
+        function switchSpecimenTexts(nextIndex) {
+            const nameEl = document.getElementById('info-name');
+            const scriptEl = document.getElementById('info-script');
+            const translationEl = document.getElementById('info-translation');
+
+            // 1. 让旧文字隐身
+            nameEl.classList.add('fade-out');
+            scriptEl.classList.add('fade-out');
+            translationEl.classList.add('fade-out');
+
+            // 2. 延迟 300ms 待完全透明后，偷换核心文字并重新显影
+            setTimeout(() => {
+                nameEl.textContent = SPECIMEN_DATA[nextIndex].name;
+                scriptEl.textContent = SPECIMEN_DATA[nextIndex].script;
+                translationEl.textContent = SPECIMEN_DATA[nextIndex].translation;
+
+                nameEl.classList.remove('fade-out');
+                scriptEl.classList.remove('fade-out');
+                translationEl.classList.remove('fade-out');
+            }, 300);
+        }
+
+        // 🚨 新增：防抖切图函数（防止鼠标晃动过快导致高频闪烁切换）
+        let switchTimeout;
+        function handleStageClickOrHover() {
+            clearTimeout(switchTimeout);
+            switchTimeout = setTimeout(() => {
+                // 循环切换索引：0 -> 1 -> 2 -> 3 -> 0
+                currentDataIndex = (currentDataIndex + 1) % SPECIMEN_DATA.length;
+                
+                // 粒子流打碎并加载新图重建
+                initScene(currentDataIndex);
+                // 文字看板无缝跟随淡入淡出更换
+                switchSpecimenTexts(currentDataIndex);
+            }, 50); 
+        }
+
+        // 绑定鼠标移入（Hover）触发换图的动作
+        stage.addEventListener("mouseenter", function() {
+            isHovered = true;
+            handleStageClickOrHover(); // 每次鼠标挪进舞台，平滑换下一张图
+        });
 
         function createFallbackParticles() {
             particles = [];
@@ -488,7 +607,6 @@
                 const finalX = p.x + p.repX;
                 const finalY = p.y + p.repY;
 
-                // 💡 严格遵循像素硬对齐渲染，还原图二的高清点阵质感
                 ctx.fillStyle = `rgba(43, 35, 29, ${p.alpha})`;
                 ctx.fillRect(
                     Math.round(finalX) - CONFIG.particleSize / 2, 
@@ -508,15 +626,13 @@
             mouse = { x: mx, y: my, active: true };
         });
 
-        stage.addEventListener("mouseenter", function() { isHovered = true; });
         stage.addEventListener("mouseleave", function() {
             isHovered = false;
             mouse = { x: -9999, y: -9999, active: false };
         });
 
-        // 🚨 叫醒整个执行循环
-        window.addEventListener("resize", initScene);
-        initScene();
+        window.addEventListener("resize", () => initScene(currentDataIndex));
+        initScene(0); // 默认初始化第 0 张图
         drawLoop();
 
         // ==========================================================================
