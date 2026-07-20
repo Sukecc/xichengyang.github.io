@@ -288,18 +288,18 @@
         </div>
     </footer>
 
-    <!-- ==========================================================================
-       【🚨 真正注入并执行的粒子网格对齐引擎】
+   <!-- ==========================================================================
+       【🚨 终极 debug 对齐修复版：西夏字形精准网格点阵引擎】
        ========================================================================== */ -->
     <script>
         const CONFIG = {
             imageSrc: "images/tangut_particle_src.webp", 
-            sampleGap: 5,             // 💡 完美的 5 像素间距
-            particleSize: 3,          // 💡 3 像素小方块，拉出高冷矩阵感
+            sampleGap: 6,             // 💡 采样步长：6像素。
+            particleSize: 3.5,        // 💡 粒子大小：3.5像素。比步长略小，能形成完美的 LED 整齐点阵感
             repulsionRadius: 80,      
             repulsionForce: 10,       
             roamOpacity: 0.20,        
-            returnSpeed: 0.08,        
+            returnSpeed: 0.1,         // 💡 加快砸回网格的速度，呈现硬朗的西夏文字骨架
         };
 
         const canvas = document.getElementById("particleCanvas");
@@ -316,9 +316,15 @@
         let mouseSpeed = 0;
 
         function initScene() {
-            const dpr = window.devicePixelRatio || 1;
             width = stage.clientWidth;
             height = stage.clientHeight;
+            
+            // 确保物理舞台尺寸正确
+            if (width === 0 || height === 0) {
+                width = 400; height = 400; // 安全兜底尺寸
+            }
+
+            const dpr = window.devicePixelRatio || 1;
             canvas.width = width * dpr;
             canvas.height = height * dpr;
             ctx.scale(dpr, dpr);
@@ -326,16 +332,20 @@
             particles = [];
             const img = new Image();
             
+            // 解除跨域流氓机制
             if (!window.location.href.startsWith('file://')) {
                 img.crossOrigin = "anonymous"; 
             }
             
             img.onload = function() {
+                console.log("Tangut source image loaded successfully. Size:", img.width, "x", img.height);
+                
                 const offscreen = document.createElement("canvas");
                 offscreen.width = width;
                 offscreen.height = height;
                 const oCtx = offscreen.getContext("2d");
                 
+                // 等比缩放居中
                 const imgRatio = img.width / img.height;
                 let targetW = width * 0.75; 
                 let targetH = targetW / imgRatio;
@@ -352,20 +362,26 @@
                 try {
                     imgData = oCtx.getImageData(0, 0, width, height).data;
                 } catch(e) { 
+                    console.error("Canvas pixel data access blocked by CORS. Starting backup grid.", e);
                     createFallbackParticles();
                     return; 
                 }
 
+                // 💡 网格化扫描
+                let count = 0;
                 for (let y = 0; y < height; y += CONFIG.sampleGap) {
                     for (let x = 0; x < width; x += CONFIG.sampleGap) {
                         const idx = (y * width + x) * 4;
-                        if (imgData[idx] > 20) { 
+                        
+                        // 🚨 阈值修复：只要任意通道有颜色（说明不是纯黑背景），就统统判定为西夏文像素！
+                        if (imgData[idx] > 15 || imgData[idx+1] > 15 || imgData[idx+2] > 15) { 
+                            count++;
                             const rx = Math.random() * width;
                             const ry = Math.random() * height;
                             
                             particles.push({
                                 x: rx, y: ry,
-                                homeX: x, homeY: y,     // 完璧锁死网格座标
+                                homeX: x, homeY: y,     // 完璧锁死无重叠网格座标
                                 idleX: rx, idleY: ry,
                                 vx: (Math.random() - 0.5) * 0.8,
                                 vy: (Math.random() - 0.5) * 0.8,
@@ -378,10 +394,17 @@
                     }
                 }
 
-                if(particles.length === 0) createFallbackParticles();
+                console.log(`Successfully generated ${count} grid particles for Tangut script.`);
+                if (particles.length === 0) {
+                    console.warn("No bright pixels found in image. Checking fallback.");
+                    createFallbackParticles();
+                }
             };
             
-            img.onerror = function() { createFallbackParticles(); };
+            img.onerror = function(err) { 
+                console.error("Failed to load image from paths:", CONFIG.imageSrc, err);
+                createFallbackParticles(); 
+            };
             img.src = CONFIG.imageSrc;
         }
 
@@ -463,6 +486,7 @@
                 const finalX = p.x + p.repX;
                 const finalY = p.y + p.repY;
 
+                // 💡 严格遵循像素硬对齐渲染，还原图二的高清点阵质感
                 ctx.fillStyle = `rgba(43, 35, 29, ${p.alpha})`;
                 ctx.fillRect(
                     Math.round(finalX) - CONFIG.particleSize / 2, 
@@ -488,7 +512,7 @@
             mouse = { x: -9999, y: -9999, active: false };
         });
 
-        // 🚨 核心修复：在这里注入车钥匙，让整个引擎正式运转！
+        // 🚨 叫醒整个执行循环
         window.addEventListener("resize", initScene);
         initScene();
         drawLoop();
