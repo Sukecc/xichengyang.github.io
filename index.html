@@ -30,7 +30,7 @@
         }
 
         body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside {
-            font-family: "Lyean", serif;
+            font-family: "Lyean", "Georgia", serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -68,7 +68,14 @@
             grid-template-columns: 1fr 1.1fr; /* 略微调整比例让右侧画布施展拳脚 */
             gap: 60px; 
             margin-bottom: 120px; 
-            align-items: center; /* 🚨 修复核心：重新唤醒居中对齐，杜绝位置靠上偏位 */
+            align-items: center; /* 🎯 确保左侧与右侧整体在中间对齐 */
+        }
+
+        /* 🎯 新增右侧整包容器：让粒子+看板作为一体参与垂直对齐，防止被单独扯开位置 */
+        .hero-right-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         /* 右侧全新粒子舞台容器 */
@@ -186,6 +193,7 @@
 <body>
 
     <div class="container">
+        <!-- 导航 -->
         <header>
             <div style="font-weight: bold;"><a href="index.html" style="margin:0; text-decoration: none; color: inherit;">XICHENG YANG</a></div>
             <nav>
@@ -198,13 +206,14 @@
         <!-- 上半部分 Hero 网格 -->
         <main class="hero-section">
             <div>
+                <!-- 🎯 按要求修改：这里强制调用 Lyean Sans 字体，并拉大了底部 margin 开气口 -->
                 <div class="tag" style="font-family: 'Lyean Sans', sans-serif !important; margin-bottom: 35px;">Typeface Design · Research</div>
                 <h1>Hi :)<br>I’m Xicheng</h1>
                 <p style="font-size: 1.15rem; line-height: 1.6; color: #444; max-width: 560px;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
             </div>
             
-            <!-- 右侧画布以及层级对齐看版 -->
-            <div>
+            <!-- 右侧通过 Wrapper 整包包裹，保证跟左侧一整坨完美重心居中 -->
+            <div class="hero-right-wrapper">
                 <div class="particle-stage-box" id="particleStage">
                     <canvas id="particleCanvas"></canvas>
                 </div>
@@ -212,15 +221,15 @@
                 <!-- 元数据参数看板 DOM 节点 -->
                 <div class="hero-specimen-info-panel">
                     <div class="info-block">
-                        <span class="info-label">Typeface</span>
+                        <span class="info-label">Specimen Style</span>
                         <span class="info-value" id="info-name">TangutBux</span>
                     </div>
                     <div class="info-block">
-                        <span class="info-label">Script</span>
+                        <span class="info-label">Script System</span>
                         <span class="info-value" id="info-script">Tangut</span>
                     </div>
                     <div class="info-block">
-                        <span class="info-label">Translation</span>
+                        <span class="info-label">Glyph Translation</span>
                         <span class="info-value" id="info-translation">“Speak”</span>
                     </div>
                 </div>
@@ -281,17 +290,17 @@
                     </div>
                     <div class="list-item">
                         <div class="list-year">2026</div>
-                        <div>From archival forms to digital typeface: a framework for reviving extinct sinoform scripts — the Tangut case · <i>Grapholinguistics in the 21st century</i></div>
+                        <div>From archival forms to digital typeface: a framework for reviving extinct sinoform scripts — the Tangut case — <i>Grapholinguistics in the 21st century</i></div>
                         <div><a href="https://youtu.be/mMsx2mtu3QA?si=TTCHAoGwNBVPLM19" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                     <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2026</div>
-                        <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>ATypI Stanford</i></div>
+                        <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems — <i>ATypI Stanford</i></div>
                          <div><a href="https://youtu.be/Mn0K85HsV6w?si=_YwD1TjQIrwzrhcl" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                     <div class="list-item">
                         <div class="list-year">2024</div>
-                        <div>The development of modern Chinese punctuation and challenges in typography · <i>Typography Theory Practice</i></div>
+                        <div>The development of modern Chinese punctuation and challenges in typography — <i>Typography Theory Practice</i></div>
                         <div><a href="https://youtu.be/AYHgPJtJV1Y" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                 </div>
@@ -303,16 +312,16 @@
                     </div>
                     <div class="list-item">
                         <div class="list-year">2026</div>
-                        <div>Hanzi - Chinese Characters · <i>Granshan</i></div>
+                        <div>Hanzi - Chinese Characters — <i>Granshan</i></div>
                         <div><a href="https://granshan.com/insights/hanzi-chinese-characters" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                     <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2025</div>
-                        <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>LetterSeed 28. Ahn Graphics</i></div>
+                        <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems — <i>LetterSeed 28. Ahn Graphics</i></div>
                     </div>
                     <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2024</div>
-                        <div>The development of modern Chinese punctuation and challenges in typography · <i>Print culture, China Printing Museum.</i></div>
+                        <div>The development of modern Chinese punctuation and challenges in typography — <i>Print culture, China Printing Museum.</i></div>
                     </div>
                 </div>
             </div>
@@ -345,7 +354,7 @@
     </footer>
 
     <!-- ==========================================================================
-        【西夏字形精准网格点阵引擎 + 完美对齐修复版联动系统】
+        【西夏字形精准网格点阵引擎】
         ========================================================================== */ -->
     <script>
         const SPECIMEN_DATA = [
@@ -411,6 +420,7 @@
         let prevMouse = { x: -9999, y: -9999 };
         let mouseSpeed = 0;
 
+        // 🎯 核心逻辑优化：让图片在画布内保留一定比例安全空间，居中紧凑不溢出
         function initScene(dataIndex = 0) {
             width = stage.clientWidth;
             height = stage.clientHeight;
@@ -436,12 +446,19 @@
                 const oCtx = offscreen.getContext("2d");
                 
                 const imgRatio = img.width / img.height;
-                let targetW = width * 1; 
-                let targetH = targetW / imgRatio;
-                if (targetH > height * 1) {
-                    targetH = height * 1;
+                const stageRatio = width / height;
+
+                let targetW, targetH;
+
+                // 核心修改：使用 0.9 控制粒子在视窗内的缩放占比，四周自然留空更精致
+                if (imgRatio > stageRatio) {
+                    targetW = width * 0.9; 
+                    targetH = targetW / imgRatio;
+                } else {
+                    targetH = height * 0.9;
                     targetW = targetH * imgRatio;
                 }
+
                 const tx = (width - targetW) / 2;
                 const ty = (height - targetH) / 2;
                 
@@ -626,7 +643,7 @@
         drawLoop();
 
         // ==========================================================================
-        // 【横向鼠标滚轮互动逻辑】
+        // 【横向作品集卡片鼠标滑过无缝移动脚本】
         // ==========================================================================
         const scroller = document.getElementById('projectScroller');
         const scrollSection = document.getElementById('scrollSection');
