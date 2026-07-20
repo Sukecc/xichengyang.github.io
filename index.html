@@ -30,7 +30,7 @@
         }
 
         body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside {
-            font-family: "Lyean", "Georgia", serif;
+            font-family: "Lyean", serif;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -68,7 +68,7 @@
             grid-template-columns: 1fr 1.1fr; /* 略微调整比例让右侧画布施展拳脚 */
             gap: 60px; 
             margin-bottom: 120px; 
-            align-items: flex-start; /* 改为 flex-start 让左边对齐顶端 */
+            align-items: center; /* 🚨 修复核心：重新唤醒居中对齐，杜绝位置靠上偏位 */
         }
 
         /* 右侧全新粒子舞台容器 */
@@ -203,7 +203,7 @@
                 <p style="font-size: 1.15rem; line-height: 1.6; color: #444; max-width: 560px;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
             </div>
             
-            <!-- 右侧画布以及新增的联动看版 -->
+            <!-- 右侧画布以及层级对齐看版 -->
             <div>
                 <div class="particle-stage-box" id="particleStage">
                     <canvas id="particleCanvas"></canvas>
@@ -212,15 +212,15 @@
                 <!-- 元数据参数看板 DOM 节点 -->
                 <div class="hero-specimen-info-panel">
                     <div class="info-block">
-                        <span class="info-label">Specimen Style</span>
+                        <span class="info-label">Typeface</span>
                         <span class="info-value" id="info-name">TangutBux</span>
                     </div>
                     <div class="info-block">
-                        <span class="info-label">Script System</span>
+                        <span class="info-label">Script</span>
                         <span class="info-value" id="info-script">Tangut</span>
                     </div>
                     <div class="info-block">
-                        <span class="info-label">Glyph Translation</span>
+                        <span class="info-label">Translation</span>
                         <span class="info-value" id="info-translation">“Speak”</span>
                     </div>
                 </div>
@@ -345,10 +345,9 @@
     </footer>
 
     <!-- ==========================================================================
-        【西夏字形精准网格点阵引擎 + 🚨 完美对齐修复版联动系统】
+        【西夏字形精准网格点阵引擎 + 完美对齐修复版联动系统】
         ========================================================================== */ -->
     <script>
-        // 🚨 语法修复：补全了所有漏掉的逗号，保证 JS 能够顺利读取加载
         const SPECIMEN_DATA = [
             { 
                 imageSrc: "images/tangut_particle_src.webp", 
@@ -366,7 +365,7 @@
                 imageSrc: "images/tangut_particle_src_03.webp", 
                 name: "Lyean Regular Italic", 
                 script: "Latin script", 
-                translation: "" // 补全缺失字段，防止 Undefined 崩盘
+                translation: "" 
             },
             { 
                 imageSrc: "images/tangut_particle_src_04.webp", 
@@ -484,7 +483,6 @@
             img.src = SPECIMEN_DATA[dataIndex].imageSrc; 
         }
 
-        // 🚨 联动切换文本引擎（增加空字段智能兜底逻辑）
         function switchSpecimenTexts(nextIndex) {
             const nameEl = document.getElementById('info-name');
             const scriptEl = document.getElementById('info-script');
@@ -498,8 +496,6 @@
                 const data = SPECIMEN_DATA[nextIndex];
                 nameEl.textContent = data.name || "—";
                 scriptEl.textContent = data.script || "—";
-                
-                // 💡 智能判断：如果翻译为空字符串或不存在，用精细的“—”占位，不破坏排版
                 translationEl.textContent = data.translation ? data.translation : "—";
 
                 nameEl.classList.remove('fade-out');
@@ -630,7 +626,7 @@
         drawLoop();
 
         // ==========================================================================
-        // 【横向鼠标滚轮互动逻辑 - 完全恢复运行】
+        // 【横向鼠标滚轮互动逻辑】
         // ==========================================================================
         const scroller = document.getElementById('projectScroller');
         const scrollSection = document.getElementById('scrollSection');
