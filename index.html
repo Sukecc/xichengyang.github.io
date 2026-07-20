@@ -91,7 +91,7 @@
             cursor: pointer;
         }
 
-        /* 🚨 新增：Hero 底部切换信息看版样式 */
+        /* Hero 底部切换信息看版样式 */
         .hero-specimen-info-panel {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -209,19 +209,19 @@
                     <canvas id="particleCanvas"></canvas>
                 </div>
 
-                <!-- 🚨 完美整合：元数据参数看板 DOM 节点 -->
+                <!-- 元数据参数看板 DOM 节点 -->
                 <div class="hero-specimen-info-panel">
                     <div class="info-block">
                         <span class="info-label">Specimen Style</span>
-                        <span class="info-value" id="info-name">Lyean Hanzi Regular</span>
+                        <span class="info-value" id="info-name">TangutBux</span>
                     </div>
                     <div class="info-block">
                         <span class="info-label">Script System</span>
-                        <span class="info-value" id="info-script">Simplified Chinese</span>
+                        <span class="info-value" id="info-script">Tangut</span>
                     </div>
                     <div class="info-block">
                         <span class="info-label">Glyph Translation</span>
-                        <span class="info-value" id="info-translation">“Connection / To Link”</span>
+                        <span class="info-value" id="info-translation">“Speak”</span>
                     </div>
                 </div>
             </div>
@@ -345,50 +345,50 @@
     </footer>
 
     <!-- ==========================================================================
-        【西夏字形精准网格点阵引擎 + 🚨 多语系多图平滑切换联动系统】
+        【西夏字形精准网格点阵引擎 + 🚨 完美对齐修复版联动系统】
         ========================================================================== */ -->
     <script>
-        // 🚨 多图数据源配置（共 4 套样张信息，完全映射 Lyean 的核心文种及愿景）
+        // 🚨 语法修复：补全了所有漏掉的逗号，保证 JS 能够顺利读取加载
         const SPECIMEN_DATA = [
             { 
-                imageSrc: "images/tangut_particle_src.webp", // 图1：默认图
+                imageSrc: "images/tangut_particle_src.webp", 
                 name: "TangutBux", 
                 script: "Tangut", 
                 translation: "“Speak”" 
             },
             { 
-                imageSrc: "images/tangut_particle_src_02.webp", // 图2：汉字特写
+                imageSrc: "images/tangut_particle_src_02.webp", 
                 name: "Lyean Regular", 
                 script: "Simplified Chinese (Hanzi)", 
                 translation: "“Forever”" 
             },
             { 
-                imageSrc: "images/tangut_particle_src_03.webp", // 图3：拉丁文特写
+                imageSrc: "images/tangut_particle_src_03.webp", 
                 name: "Lyean Regular Italic", 
                 script: "Latin script", 
-                 
+                translation: "" // 补全缺失字段，防止 Undefined 崩盘
             },
             { 
-                imageSrc: "images/tangut_particle_src_04.webp", // 图4：阿拉伯文特写
+                imageSrc: "images/tangut_particle_src_04.webp", 
                 name: "Lyean Regular", 
-                script: "Arabic Script (Naskh Base)", 
-           
-            }
+                script: "Arabic Script (Naskh Base)",
+                translation: ""
+            },
             { 
-                imageSrc: "images/tangut_particle_src_05.webp", // 图5：日文特写
+                imageSrc: "images/tangut_particle_src_05.webp", 
                 name: "Lyean Regular", 
-                script: "Japanese hiragana", 
-               
-            }
-             { 
-                imageSrc: "images/tangut_particle_src_06.webp", // 图6：汉字特写
+                script: "Japanese hiragana",
+                translation: ""
+            },
+            { 
+                imageSrc: "images/tangut_particle_src_06.webp", 
                 name: "HanJiangYaKai", 
                 script: "Simplified Chinese (Hanzi)", 
                 translation: "“Feel”" 
             }
         ];
 
-        let currentDataIndex = 0; // 当前正在渲染的数据索引
+        let currentDataIndex = 0; 
 
         const CONFIG = {
             sampleGap: 4,             
@@ -412,7 +412,6 @@
         let prevMouse = { x: -9999, y: -9999 };
         let mouseSpeed = 0;
 
-        // 🚨 升级版：场景初始化核心，能动态吸收不同的图片数据并打碎生成点阵
         function initScene(dataIndex = 0) {
             width = stage.clientWidth;
             height = stage.clientHeight;
@@ -482,25 +481,26 @@
             };
             
             img.onerror = function(err) { createFallbackParticles(); };
-            img.src = SPECIMEN_DATA[dataIndex].imageSrc; // 加载对应索引的图片
+            img.src = SPECIMEN_DATA[dataIndex].imageSrc; 
         }
 
-        // 🚨 新增：文字看板过渡切换引擎（加入防抖延时淡入淡出）
+        // 🚨 联动切换文本引擎（增加空字段智能兜底逻辑）
         function switchSpecimenTexts(nextIndex) {
             const nameEl = document.getElementById('info-name');
             const scriptEl = document.getElementById('info-script');
             const translationEl = document.getElementById('info-translation');
 
-            // 1. 让旧文字隐身
             nameEl.classList.add('fade-out');
             scriptEl.classList.add('fade-out');
             translationEl.classList.add('fade-out');
 
-            // 2. 延迟 300ms 待完全透明后，偷换核心文字并重新显影
             setTimeout(() => {
-                nameEl.textContent = SPECIMEN_DATA[nextIndex].name;
-                scriptEl.textContent = SPECIMEN_DATA[nextIndex].script;
-                translationEl.textContent = SPECIMEN_DATA[nextIndex].translation;
+                const data = SPECIMEN_DATA[nextIndex];
+                nameEl.textContent = data.name || "—";
+                scriptEl.textContent = data.script || "—";
+                
+                // 💡 智能判断：如果翻译为空字符串或不存在，用精细的“—”占位，不破坏排版
+                translationEl.textContent = data.translation ? data.translation : "—";
 
                 nameEl.classList.remove('fade-out');
                 scriptEl.classList.remove('fade-out');
@@ -508,25 +508,19 @@
             }, 300);
         }
 
-        // 🚨 新增：防抖切图函数（防止鼠标晃动过快导致高频闪烁切换）
         let switchTimeout;
         function handleStageClickOrHover() {
             clearTimeout(switchTimeout);
             switchTimeout = setTimeout(() => {
-                // 循环切换索引：0 -> 1 -> 2 -> 3 -> 0
                 currentDataIndex = (currentDataIndex + 1) % SPECIMEN_DATA.length;
-                
-                // 粒子流打碎并加载新图重建
                 initScene(currentDataIndex);
-                // 文字看板无缝跟随淡入淡出更换
                 switchSpecimenTexts(currentDataIndex);
             }, 50); 
         }
 
-        // 绑定鼠标移入（Hover）触发换图的动作
         stage.addEventListener("mouseenter", function() {
             isHovered = true;
-            handleStageClickOrHover(); // 每次鼠标挪进舞台，平滑换下一张图
+            handleStageClickOrHover(); 
         });
 
         function createFallbackParticles() {
@@ -632,11 +626,11 @@
         });
 
         window.addEventListener("resize", () => initScene(currentDataIndex));
-        initScene(0); // 默认初始化第 0 张图
+        initScene(0); 
         drawLoop();
 
         // ==========================================================================
-        // 【横向鼠标滚轮互动逻辑】
+        // 【横向鼠标滚轮互动逻辑 - 完全恢复运行】
         // ==========================================================================
         const scroller = document.getElementById('projectScroller');
         const scrollSection = document.getElementById('scrollSection');
