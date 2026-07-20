@@ -198,7 +198,7 @@
         <!-- 上半部分 Hero 网格 -->
         <main class="hero-section">
             <div>
-                <div class="tag">Typeface Design · Research</div>
+                <div class="tag" style="font-family: 'Lyean Sans', sans-serif !important; margin-bottom: 35px;">Typeface Design · Research</div>
                 <h1>Hi :)<br>I’m Xicheng</h1>
                 <p style="font-size: 1.15rem; line-height: 1.6; color: #444; max-width: 560px;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
             </div>
@@ -436,10 +436,10 @@
                 const oCtx = offscreen.getContext("2d");
                 
                 const imgRatio = img.width / img.height;
-                let targetW = width * 1.2; 
+                let targetW = width * 1; 
                 let targetH = targetW / imgRatio;
-                if (targetH > height * 1.2) {
-                    targetH = height * 1.2;
+                if (targetH > height * 1) {
+                    targetH = height * 1;
                     targetW = targetH * imgRatio;
                 }
                 const tx = (width - targetW) / 2;
