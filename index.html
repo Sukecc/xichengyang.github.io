@@ -66,7 +66,7 @@
         .hero-section { 
             display: grid; 
             grid-template-columns: 1fr 1.1fr; /* 略微调整比例让右侧画布施展拳脚 */
-            gap: 80px; 
+            gap: 60px; 
             margin-bottom: 120px; 
             align-items: center;
         }
@@ -81,6 +81,8 @@
             position: relative;
             border: none;
             box-sizing: border-box;
+            border-left: 1px solid #e0dbcf; 
+    padding-left: 60px;
         }
         .particle-stage-box canvas {
             position: absolute;
@@ -294,11 +296,11 @@
     <script>
         const CONFIG = {
             imageSrc: "images/tangut_particle_src.webp", 
-            sampleGap: 6,             // 💡 采样步长：6像素。
-            particleSize: 3.5,        // 💡 粒子大小：3.5像素。比步长略小，能形成完美的 LED 整齐点阵感
-            repulsionRadius: 80,      
-            repulsionForce: 10,       
-            roamOpacity: 0.20,        
+            sampleGap: 4,             // 💡 采样步长：6像素。
+            particleSize: 2.5,        // 💡 粒子大小：3.5像素。比步长略小，能形成完美的 LED 整齐点阵感
+            repulsionRadius: 90,      
+            repulsionForce: 12,       
+            roamOpacity: 0.15,        
             returnSpeed: 0.1,         // 💡 加快砸回网格的速度，呈现硬朗的西夏文字骨架
         };
 
