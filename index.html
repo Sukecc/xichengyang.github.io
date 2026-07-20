@@ -451,12 +451,12 @@
 
                 let targetW, targetH;
 
-                // 核心修改：使用 0.9 控制粒子在视窗内的缩放占比，四周自然留空更精致
+                // 核心修改：使用 1 控制粒子在视窗内的缩放占比，四周自然留空更精致
                 if (imgRatio > stageRatio) {
-                    targetW = width * 0.9; 
+                    targetW = width * 1; 
                     targetH = targetW / imgRatio;
                 } else {
-                    targetH = height * 0.9;
+                    targetH = height * 1;
                     targetW = targetH * imgRatio;
                 }
 
