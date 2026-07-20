@@ -11,63 +11,35 @@
         @font-face {
             font-family: 'Lyean';
             src: url('fonts/Lyean-Regular.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
+            font-weight: normal; font-style: normal; font-display: swap;
         }
-
         @font-face {
             font-family: 'Lyean';
             src: url('fonts/Lyean-Italic.woff2') format('woff2');
-            font-weight: normal;
-            font-style: italic;
-            font-display: swap;
+            font-weight: normal; font-style: italic; font-display: swap;
         }
-
         @font-face {
             font-family: 'Lyean';
             src: url('fonts/Lyean-Bold.woff2') format('woff2');
-            font-weight: bold;
-            font-style: normal;
-            font-display: swap;
+            font-weight: bold; font-style: normal; font-display: swap;
         }
-
-        @font-face {
-            font-family: 'Lyean Optical';
-            src: url('fonts/Lyean-Optical.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Lyean';
-            src: url('fonts/Lyean-DisplayBold.woff2') format('woff2');
-            font-weight: 800;
-            font-style: normal;
-            font-display: swap;
-        }
-
         @font-face {
             font-family: 'Lyean Sans';
             src: url('fonts/Lyean-Sans.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
+            font-weight: normal; font-style: normal; font-display: swap;
         }
 
-        /* ==========================================================================
-           核心样式与全宽布局定义
-           ========================================================================== */
+        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside {
+            font-family: "Lyean", "Georgia", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
         body {
             margin: 0; padding: 0;
             background-color: #f6f3eb; /* 完美的纸张米白色 */
             color: #1a1a1a;
-            font-family: "Lyean", serif; 
-            -webkit-font-smoothing: antialiased;
         }
         
-        /* 响应式宽屏容器：占屏幕宽度的 90% */
         .container {
             max-width: 90vw; 
             margin: 0 auto; 
@@ -77,87 +49,76 @@
         /* 顶部导航 */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Lyean Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em;
-            margin-bottom: 80px; text-transform: uppercase;
+            text-transform: uppercase;
         }
-        header a { text-decoration: none; color: #1a1a1a; margin-left: 20px; }
-        header a:hover { color: #b85a4b; }
+        header div, header nav a {
+            font-family: 'Lyean Sans', sans-serif !important;
+            font-size: 0.8rem; letter-spacing: 0.1em;
+            text-decoration: none; color: #1a1a1a;
+        }
+        header nav a { margin-left: 20px; }
+        header nav a:hover { color: #b85a4b; }
         
-        /* 标签与标题 */
-        .tag { font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 15px; }
+        .tag { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 15px; }
         h1 { font-size: 4rem; font-weight: normal; line-height: 1.1; margin: 0 0 30px 0; }
         
         /* Hero 区域：两栏拆分 */
-        .hero-section { display: grid; grid-template-columns: 1.4fr 1fr; gap: 100px; margin-bottom: 120px; }
-        .specimen-box { background-color: #ede9df; border-radius: 4px; padding: 40px; }
+        .hero-section { 
+            display: grid; 
+            grid-template-columns: 1fr 1.1fr; /* 略微调整比例让右侧画布施展拳脚 */
+            gap: 80px; 
+            margin-bottom: 120px; 
+            align-items: center;
+        }
+
+        /* 🚨 右侧全新粒子舞台容器 */
+        .particle-stage-box {
+            width: 100%;
+            aspect-ratio: 1.1 / 1;
+            background-color: transparent; 
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            border: none;
+            box-sizing: border-box;
+        }
+        .particle-stage-box canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: block;
+            cursor: pointer;
+        }
 
         /* ==========================================================================
-           【上半部分的核心：动态横向滚动作品集区域】
+           【作品集横向滚动区域】
            ========================================================================== */
         .projects-header {
             display: flex; justify-content: space-between; align-items: flex-end;
             margin-bottom: 30px;
         }
         .section-title { font-size: 2.2rem; font-weight: normal; margin: 0; }
-        .more-link { font-family: 'Lyean Sans', sans-serif; font-size: 0.9rem; color: #b85a4b; text-decoration: none; letter-spacing: 0.05em; }
+        .more-link { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.9rem; color: #b85a4b; text-decoration: none; letter-spacing: 0.05em; }
         .more-link:hover { text-decoration: underline; }
 
-        /* 滚动条容器：通过 JS 控制平滑度 */
         .scroll-container {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            gap: 24px;
-            padding-bottom: 30px;
-            margin-bottom: 100px;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 24px; padding-bottom: 30px; margin-bottom: 100px;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
         }
-        /* 隐藏美化滚动条 */
         .scroll-container::-webkit-scrollbar { height: 6px; }
         .scroll-container::-webkit-scrollbar-track { background: #ede9df; }
         .scroll-container::-webkit-scrollbar-thumb { background: #b85a4b; border-radius: 3px; }
 
-        /* 单个项目卡片样式 */
-        .project-card {
-    flex: 0 0 320px; /* 略微缩窄宽度，让图片展示更紧凑 */
-    text-decoration: none;
-    color: inherit;
-    box-sizing: border-box;
-    transition: transform 0.3s ease;
-}
-.project-card:hover {
-    transform: translateY(-3px); /* 悬停时整个卡片往上提，非常灵动 */
-}
+        .project-card { flex: 0 0 320px; text-decoration: none; color: inherit; box-sizing: border-box; transition: transform 0.3s ease; }
+        .project-card:hover { transform: translateY(-3px); }
 
-/* 新增：作品缩略图容器（完美正方形） */
-.project-image-box {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* 强制保持 1:1 正方形 */
-    background-color: #ede9df; /* 加载前的占位底色 */
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 10px; /* 和下方文字的间距 */
-}
-.project-image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 保证图片完美铺满不变形 */
-    transition: transform 0.5s ease;
-}
-.project-card:hover .project-image-box img {
-    transform: scale(1.02); /* 悬停时图片微微放大 */
-}
-
-/* 调整卡片内标题的大小，使其更克制、不抢图的风头 */
-.project-card h3 {
-    font-size: 1.8rem;
-    font-weight: normal;
-    margin: 5px 0 0 0;
-}
+        .project-image-box { width: 100%; aspect-ratio: 1 / 1; background-color: #ede9df; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+        .project-image-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .project-card:hover .project-image-box img { transform: scale(1.02); }
+        .project-card h3 { font-size: 1.8rem; font-weight: normal; margin: 5px 0 0 0; }
 
         /* ==========================================================================
-           【下半部分的核心：Talks & Publications 列表】
+           【Talks & Publications】
            ========================================================================== */
         .public-work-section { margin-bottom: 120px; }
         .public-work-title { font-size: 3rem; font-weight: normal; max-width: 800px; line-height: 1.2; margin-bottom: 50px; }
@@ -166,20 +127,15 @@
         .list-box { background-color: #faf9f5; border: 1px solid #e0dbcf; padding: 40px; border-radius: 4px; }
         .list-box h4 { font-size: 1.8rem; font-weight: normal; margin: 0 0 20px 0; }
         
-        .list-item { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid #e0dbcf; font-size: 1.05rem; line-height: 1.4; }
-        .list-year { font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; color: #b85a4b; font-weight: bold; }
+        .list-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 20px; padding: 20px 0; border-top: 1px solid #e0dbcf; font-size: 1.05rem; line-height: 1.4; }
+        .list-year { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.85rem; color: #b85a4b; font-weight: bold; }
 
         /* ==========================================================================
-           【最底部：深色 Footer (Bio) 区域】
+           【Footer】
            ========================================================================== */
-        footer {
-            background-color: #1a1917; 
-            color: #f6f3eb;
-            padding: 80px 5vw;
-            margin-top: 60px;
-        }
+        footer { background-color: #1a1917; color: #f6f3eb; padding: 80px 5vw; margin-top: 60px; }
         .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 100px; margin-bottom: 80px; }
-        .footer-bio h2 { font-family: 'Lyean'; font-style: italic; font-weight: normal; font-size: 3rem; line-height: 1.2; margin: 0 0 30px 0; }
+        .footer-bio h2 { font-style: italic; font-weight: normal; font-size: 3rem; line-height: 1.2; margin: 0 0 30px 0; }
         .footer-bio p { color: #ccc; font-size: 1.1rem; line-height: 1.6; }
         
         .footer-contact { background-color: #262421; border: 1px solid #363430; padding: 40px; border-radius: 4px; }
@@ -202,147 +158,109 @@
             </nav>
         </header>
 
+        <!-- 上半部分 Hero 网格 -->
         <main class="hero-section">
             <div>
                 <div class="tag">Typeface Design · Research</div>
                 <h1>Hi :)<br>I’m Xicheng</h1>
-                <p style="font-size: 1.15rem; line-height: 1.6; color: #444;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
-            </div>
-            <div class="specimen-box" style="display: flex; flex-direction: column; justify-content: space-between;">
-        <div>
-            <div class="tag" style="color: #888; font-size: 0.65rem; margin-bottom: 20px;">Click text below to test font</div>
-            
-            <div contenteditable="true" spellcheck="false" style="font-family: 'Lyean'; font-weight: 800; font-size: 6.5rem; line-height: 1; outline: none; margin-bottom: 5px;">Type here</div>
-        </div>
-        
-        <div>
-            <hr style="border: none; border-top: 1px solid #dcd7ca; margin: 20px 0;">
-            
-            <div contenteditable="true" spellcheck="false" style="font-family: 'Lyean'; font-size: 1.25rem; line-height: 1.4; outline: none; color: #1a1a1a; min-height: 1.5em;">
-                Try here · 字体 · 012345
+                <p style="font-size: 1.15rem; line-height: 1.6; color: #444; max-width: 560px;">I'm Xicheng Yang, a typeface designer shaping retail and custom type systems, editorial lettering, and typographic research. This archive gathers selected projects, talks, publications, and notes from my practice.</p>
             </div>
             
-            <p style="font-family: 'Lyean', serif; font-size: 0.8rem; color: #888; margin-top: 15px; margin-bottom: 0;">
-                Lyean Typeface Live Preview
-            </p>
-        </div>
-    </div>
-</main>
+            <!-- 🚨 右侧核心变动：西夏文字形交互粒子画布 -->
+            <div class="particle-stage-box" id="particleStage">
+                <canvas id="particleCanvas"></canvas>
+            </div>
+        </main>
 
-      
-<section id="scrollSection">
-    <div class="projects-header">
-        <div class="section-title">Selected type projects</div>
-        <a href="projects.html" class="more-link">MORE →</a>
-    </div>
-    
-    <div class="scroll-container" id="projectScroller">
-        <a href="Lyean.html" class="project-card">
-            <div class="project-image-box">
-                <img src="images/Lyean.webp" alt="Lyean Typeface">
+        <!-- 作品横向展示区 -->
+        <section id="scrollSection">
+            <div class="projects-header">
+                <div class="section-title">Selected type projects</div>
+                <a href="projects.html" class="more-link">MORE →</a>
             </div>
-            <h3>Lyean</h3>
-            <div class="tag" style="margin-bottom: 6px;">Multi-script type family · 2022</div>
-        </a>
+            
+            <div class="scroll-container" id="projectScroller">
+                <a href="Lyean.html" class="project-card">
+                    <div class="project-image-box"><img src="images/Lyean.webp" alt="Lyean Typeface"></div>
+                    <h3>Lyean</h3>
+                    <div class="tag" style="margin-bottom: 6px;">Multi-script type family · 2022</div>
+                </a>
+                <a href="AraTangut.html" class="project-card">
+                    <div class="project-image-box"><img src="images/AraTangut.webp" alt="AraTangut Custom Font"></div>
+                    <h3>AraTangut</h3>
+                    <div class="tag" style="margin-bottom: 6px;">Custom font · 2023–present</div>
+                </a>
+                <a href="NotoSerifTangut.html" class="project-card">
+                    <div class="project-image-box"><img src="images/NotoSerifTangut.webp" alt="Noto Serif Tangut"></div>
+                    <h3>Noto Serif Tangut</h3>
+                    <div class="tag" style="margin-bottom: 6px;">Google font · 2021</div>
+                </a>
+                <a href="Shanghaisky.html" class="project-card">
+                    <div class="project-image-box"><img src="images/Shanghaisky.webp" alt="Shanghai Sky"></div>
+                    <h3>Shanghai Sky</h3>
+                    <div class="tag" style="margin-bottom: 6px;">Custom font · 2025</div>
+                </a>
+                <a href="Guqin.html" class="project-card">
+                    <div class="project-image-box"><img src="images/Guqin.webp" alt="Guqin Notation"></div>
+                    <h3>Guqin notation</h3>
+                    <div class="tag" style="margin-bottom: 6px;">Cultural preservation · 2024</div>
+                </a>
+                <a href="HJyakai.html" class="project-card">
+                    <div class="project-image-box"><img src="images/HJyakai.webp" alt="HanJiangYaKai"></div>
+                    <h3>HanJiangYaKai</h3>
+                    <div class="tag" style="margin-bottom: 6px;">Personal project · 2026</div>
+                </a>
+            </div> 
+        </section>
 
-        <a href="AraTangut.html" class="project-card">
-            <div class="project-image-box">
-                <img src="images/AraTangut.webp" alt="Lyean Typeface">
-            </div>
-            <h3>AraTangut</h3>
-            <div class="tag" style="margin-bottom: 6px;">Custom font · 2023–present</div>
-        </a>
-        
-        <a href="NotoSerifTangut.html" class="project-card">
-            <div class="project-image-box">
-                <img src="images/NotoSerifTangut.webp" alt="Lyean Typeface">
-            </div>
-            <h3>Noto Serif Tangut</h3>
-            <div class="tag" style="margin-bottom: 6px;">Google font · 2021</div>
-        </a>
-        
-        <a href="Shanghaisky.html" class="project-card">
-            <div class="project-image-box">
-                <img src="images/Shanghaisky.webp" alt="Lyean Typeface">
-            </div>
-            <h3>Shanghai Sky</h3>
-            <div class="tag" style="margin-bottom: 6px;">Custom font · 2025</div>
-        </a>
-        
-        <a href="Guqin.html" class="project-card">
-            <div class="project-image-box">
-                <img src="images/Guqin.webp" alt="Lyean Typeface">
-            </div>
-            <h3>Guqin notation</h3>
-            <div class="tag" style="margin-bottom: 6px;">Cultural preservation · 2024</div>
-        </a>
-        
-        <a href="HJyakai.html" class="project-card">
-            <div class="project-image-box">
-                <img src="images/HJyakai.webp" alt="Lyean Typeface">
-            </div>
-            <h3>HanJiangYaKai</h3>
-            <div class="tag" style="margin-bottom: 6px;">Personal project · 2026</div>
-        </a>
-        
-        </div> </section>
-
+        <!-- Talks 列表区 -->
         <section class="public-work-section">
             <div class="tag">Speaking & Writing</div>
             <div class="public-work-title">Public work around letters, tools, and reading culture.</div>
             
             <div class="list-grid">
-                <!-- 左盒：Presentations (精选3个最顶级国际会议) -->
                 <div class="list-box">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
                         <h4 style="margin: 0;">Presentations</h4>
                         <a href="talks.html" class="more-link" style="font-size: 0.8rem;">MORE ↗</a>
                     </div>
-                    
-                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: top;">
+                    <div class="list-item">
                         <div class="list-year">2026</div>
-                        <div>From archival forms to digital typeface: a systematic framework for reviving extinct sinoform scripts — the Tangut case · <i>Grapholinguistics in the 21st century</i></div>
-                    	<div><a href="https://grafematik2026.sciencesconf.org/?lang=en" target="_blank" style="font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
+                        <div>From archival forms to digital typeface: a framework for reviving extinct sinoform scripts — the Tangut case · <i>Grapholinguistics in the 21st century</i></div>
+                        <div><a href="https://grafematik2026.sciencesconf.org/?lang=en" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
-                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: top;">
+                    <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2026</div>
                         <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>ATypI Stanford</i></div>
                     </div>
-                   <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: top;">
+                    <div class="list-item">
                         <div class="list-year">2024</div>
                         <div>The development of modern Chinese punctuation and challenges in typography · <i>Typography Theory Practice</i></div>
-                    	<div><a href="https://youtu.be/AYHgPJtJV1Y" style="font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
+                        <div><a href="https://youtu.be/AYHgPJtJV1Y" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
                 </div>
                 
-                <!-- 右盒：Publications (精选3个，带链接提示) -->
                 <div class="list-box" style="background-color: #ede9df;">
                     <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;">
                         <h4 style="margin: 0;">Publications</h4>
                         <a href="talks.html" class="more-link" style="font-size: 0.8rem;">MORE ↗</a>
                     </div>
-                    
-                    <!-- 带有链接的文章，点击可直接跳转，右侧有优雅的 [Link ↗] -->
-                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: center;">
+                    <div class="list-item">
                         <div class="list-year">2026</div>
                         <div>Hanzi - Chinese Characters · <i>Granshan</i></div>
-                        <!-- 💡 记得把下面的 href="#" 换成你这篇文章的真实网址 -->
-                        <div><a href="https://granshan.com/insights/hanzi-chinese-characters" target="_blank" style="font-family: 'Lyean Sans', sans-serif; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
+                        <div><a href="https://granshan.com/insights/hanzi-chinese-characters" target="_blank" style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; color: #b85a4b; text-decoration: none; margin-left: 10px; border: none;">[Link ↗]</a></div>
                     </div>
-                    
-                    <div class="list-item" style="grid-template-columns: 60px 1fr auto; align-items: center;">
+                    <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2025</div>
                         <div>Remaking the Tangut script: new paradigms in designing digital typefaces for extinct writing systems · <i>LetterSeed 28. Ahn Graphics</i></div>
                     </div>
-                    
-                    <div class="list-item">
+                    <div class="list-item" style="grid-template-columns: 60px 1fr;">
                         <div class="list-year">2024</div>
-                        <div>The development of modern Chinese punctuation and challenges in typography · <i>Print culture, China Printing Museum, issue 2, 2023.</i></div>
+                        <div>The development of modern Chinese punctuation and challenges in typography · <i>Print culture, China Printing Museum.</i></div>
                     </div>
                 </div>
             </div>
         </section>
-        
     </div>
 
     <footer>
@@ -356,46 +274,263 @@
                 <div class="footer-contact">
                     <h4>For licensing, commissions, lectures, or collaborations.</h4>
                     <p style="font-size: 1.1rem; margin: 30px 0 10px 0;"><a href="mailto:threecczhu@gmail.com">threecczhu@gmail.com</a></p>
-                    <p style="font-family: 'Lyean Sans', sans-serif; font-size: 0.85rem; color: #888;">
-                        <a href="https://www.instagram.com/sukecc0206/" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 0px solid #666;">Instagram</a>
-                        <a href="https://www.linkedin.com/in/xicheng-yang-946343227/" style="color: #f6f3eb; text-decoration: none; margin-right:15px; border-bottom: 0px solid #666;">LinkedIn</a>
-                        <a href="https://x.com/threecczhu?s=21&t=TUlvxIVUFUdTaBI_Rd-r8A" style="color: #f6f3eb; text-decoration: none; border-bottom: 0px solid #666;">X</a>
+                    <p style="font-family: 'Lyean Sans', sans-serif !important; font-size: 0.85rem; color: #888;">
+                        <a href="https://www.instagram.com/sukecc0206/" style="color: #f6f3eb; text-decoration: none; margin-right:15px;">Instagram</a>
+                        <a href="https://www.linkedin.com/in/xicheng-yang-946343227/" style="color: #f6f3eb; text-decoration: none; margin-right:15px;">LinkedIn</a>
+                        <a href="https://x.com/threecczhu?s=21&t=TUlvxIVUFUdTaBI_Rd-r8A" style="color: #f6f3eb; text-decoration: none;">X</a>
                     </p>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <div style="font-family: 'Lyean Sans', sans-serif; color: #aaa;">© 2026 Xicheng Yang</div>
-                <div style="font-family: 'Lyean Sans', sans-serif; color: #aaa;">Type, spacing, reading.</div>
+                <div style="font-family: 'Lyean Sans', sans-serif !important; color: #aaa;">© 2026 Xicheng Yang</div>
+                <div style="font-family: 'Lyean Sans', sans-serif !important; color: #aaa;">Type, spacing, reading.</div>
             </div>
         </div>
     </footer>
 
+    <!-- ==========================================================================
+       【🚨 注入：原生 JS 重工业级西夏字形粒子物理演算法引擎】
+       ========================================================================== -->
     <script>
+       // ==========================================================================
+        // 【升级改良版：原生 JS 西夏字形粒子物理演算法引擎】
+        // ==========================================================================
+        const CONFIG = {
+            imageSrc: "images/tangut_particle_src.webp", 
+            particleCount: 2200,      // 稍微精简数量，让汇聚速度更有爆发力
+            particleSize: 3.5,          
+            repulsionRadius: 85,      
+            repulsionForce: 12,       
+            roamOpacity: 0.18,        
+            returnSpeed: 0.06,        // 更加优雅的吸附阻尼
+        };
+
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
+        const stage = document.getElementById("particleStage");
+
+        let particles = [];
+        let width = 0, height = 0;
+        let isHovered = false;
+        
+        let mouse = { x: -9999, y: -9999, active: false };
+        let smoothMouse = { x: -9999, y: -9999 };
+        let prevMouse = { x: -9999, y: -9999 };
+        let mouseSpeed = 0;
+
+        function initScene() {
+            const dpr = window.devicePixelRatio || 1;
+            width = stage.clientWidth;
+            height = stage.clientHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
+
+            particles = [];
+            const img = new Image();
+            
+            // 🚨 核心修复 1：兼容本地 file:// 协议和线上 https:// 协议的跨域流氓机制
+            if (!window.location.href.startsWith('file://')) {
+                img.crossOrigin = "anonymous"; 
+            }
+            
+            img.onload = function() {
+                const offscreen = document.createElement("canvas");
+                offscreen.width = width;
+                offscreen.height = height;
+                const oCtx = offscreen.getContext("2d");
+                
+                const imgRatio = img.width / img.height;
+                let targetW = width * 0.7; 
+                let targetH = targetW / imgRatio;
+                if (targetH > height * 0.7) {
+                    targetH = height * 0.7;
+                    targetW = targetH * imgRatio;
+                }
+                const tx = (width - targetW) / 2;
+                const ty = (height - targetH) / 2;
+                
+                oCtx.drawImage(img, tx, ty, targetW, targetH);
+                
+                let imgData;
+                try {
+                    imgData = oCtx.getImageData(0, 0, width, height).data;
+                } catch(e) { 
+                    // 🚨 核心修复 2：如果本地还是被浏览器拦截了，启动【极简硬核备用文字阵】打底，绝不让画面空白！
+                    createFallbackParticles();
+                    return; 
+                }
+
+                let validPoints = [];
+                const sampleGap = 2; 
+                for (let y = 0; y < height; y += sampleGap) {
+                    for (let x = 0; x < width; x += sampleGap) {
+                        const idx = (y * width + x) * 4;
+                        // 💡 针对黑底白字优化：只要 R 通道大于 100（即像素偏白），就判定为字形骨架
+                        if (imgData[idx] > 100) { 
+                            validPoints.push({ homeX: x, homeY: y });
+                        }
+                    }
+                }
+
+                if(validPoints.length === 0) { createFallbackParticles(); return; }
+
+                validPoints.sort(() => Math.random() - 0.5);
+                const limit = Math.min(validPoints.length, CONFIG.particleCount);
+
+                for (let i = 0; i < limit; i++) {
+                    const pt = validPoints[i];
+                    const rx = Math.random() * width;
+                    const ry = Math.random() * height;
+                    
+                    particles.push({
+                        x: rx, y: ry,
+                        homeX: pt.homeX, homeY: pt.homeY,
+                        idleX: rx, idleY: ry,
+                        vx: (Math.random() - 0.5) * 0.6,
+                        vy: (Math.random() - 0.5) * 0.6,
+                        repX: 0, repY: 0,
+                        alpha: CONFIG.roamOpacity,
+                        roamTargetX: Math.random() * width,
+                        roamTargetY: Math.random() * height
+                    });
+                }
+            };
+            
+            img.onerror = function() { createFallbackParticles(); };
+            img.src = CONFIG.imageSrc;
+        }
+
+        // 💡 备用救援机制：如果本地图片实在出不来，直接用代码绘制字形锚点，确保本地调试也能看到震撼效果
+        function createFallbackParticles() {
+            particles = [];
+            // 在画布中央生成一个由粒子组成的完美字形方阵作为调试基地
+            const count = 400; 
+            for (let i = 0; i < count; i++) {
+                const angle = (i / count) * Math.PI * 2;
+                const r = 60 + Math.sin(angle * 4) * 20; // 产生一个类似几何活字的花样轮廓
+                const hX = width / 2 + Math.cos(angle) * r;
+                const hY = height / 2 + Math.sin(angle) * r;
+                const rx = Math.random() * width;
+                const ry = Math.random() * height;
+                particles.push({
+                    x: rx, y: ry, homeX: hX, homeY: hY, idleX: rx, idleY: ry,
+                    vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+                    repX: 0, repY: 0, alpha: CONFIG.roamOpacity,
+                    roamTargetX: Math.random() * width, roamTargetY: Math.random() * height
+                });
+            }
+        }
+
+        function drawLoop() {
+            requestAnimationFrame(drawLoop);
+            if (!particles.length) return;
+
+            ctx.clearRect(0, 0, width, height);
+
+            mouseSpeed *= 0.88;
+            if (mouse.active) {
+                const lerpFactor = Math.max(0.08, 0.3 - mouseSpeed * 0.006);
+                if (smoothMouse.x < -9000) {
+                    smoothMouse.x = mouse.x; smoothMouse.y = mouse.y;
+                } else {
+                    smoothMouse.x += (mouse.x - smoothMouse.x) * lerpFactor;
+                    smoothMouse.y += (mouse.y - smoothMouse.y) * lerpFactor;
+                }
+            } else {
+                smoothMouse.x = -9999; smoothMouse.y = -9999;
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                let targetX = p.idleX;
+                let targetY = p.idleY;
+                let targetAlpha = CONFIG.roamOpacity;
+
+                if (isHovered) {
+                    targetX = p.homeX;
+                    targetY = p.homeY;
+                    targetAlpha = 0.85;
+                } else {
+                    const dtx = p.roamTargetX - p.x;
+                    const dty = p.roamTargetY - p.y;
+                    if (Math.sqrt(dtx*dtx + dty*dty) < 5) {
+                        p.roamTargetX = Math.random() * width;
+                        p.roamTargetY = Math.random() * height;
+                    }
+                    p.vx = p.vx * 0.98 + (p.roamTargetX - p.x) * 0.001;
+                    p.vy = p.vy * 0.98 + (p.roamTargetY - p.y) * 0.001;
+                    p.idleX += p.vx;
+                    p.idleY += p.vy;
+                }
+
+                p.x += (targetX - p.x) * CONFIG.returnSpeed;
+                p.y += (targetY - p.y) * CONFIG.returnSpeed;
+                p.alpha += (targetAlpha - p.alpha) * 0.1;
+
+                if (smoothMouse.x > -9000) {
+                    const dx = p.x - smoothMouse.x;
+                    const dy = p.y - smoothMouse.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < CONFIG.repulsionRadius && dist > 0) {
+                        const force = (1 - dist / CONFIG.repulsionRadius) * CONFIG.repulsionForce;
+                        p.repX += (dx / dist) * force;
+                        p.repY += (dy / dist) * force;
+                    }
+                }
+
+                p.repX *= 0.85; p.repY *= 0.85;
+                const finalX = p.x + p.repX;
+                const finalY = p.y + p.repY;
+
+                ctx.beginPath();
+                ctx.arc(finalX, finalY, CONFIG.particleSize / 2, 0, Math.PI * 2);
+                // 🎨 换成你高定个人站的主题深色 (#2b231d) 的 RGB 颜色值
+                ctx.fillStyle = `rgba(43, 35, 29, ${p.alpha})`;
+                ctx.fill();
+            }
+        }
+
+        stage.addEventListener("mousemove", function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            if (prevMouse.x > -9999) mouseSpeed = Math.sqrt((mx - prevMouse.x)**2 + (my - prevMouse.y)**2);
+            prevMouse = { x: mx, y: my };
+            mouse = { x: mx, y: my, active: true };
+        });
+
+        stage.addEventListener("mouseenter", function() { isHovered = true; });
+        stage.addEventListener("mouseleave", function() {
+            isHovered = false;
+            mouse = { x: -9999, y: -9999, active: false };
+        });
+
+        window.addEventListener("resize", initScene);
+        initScene();
+        drawLoop();
+        // ==========================================================================
+        // 【原本底下的横向鼠标滚轮互动逻辑】
+        // ==========================================================================
         const scroller = document.getElementById('projectScroller');
         const scrollSection = document.getElementById('scrollSection');
-        
-        let isHovered = false;
-        let mouseX = 0;
+        let isSectionHovered = false;
+        let scrollerMouseX = 0;
         let speed = 0;
         let animationFrame;
 
-        scrollSection.addEventListener('mouseenter', () => { isHovered = true; startLoop(); });
-        scrollSection.addEventListener('mouseleave', () => { isHovered = false; speed = 0; cancelAnimationFrame(animationFrame); });
+        scrollSection.addEventListener('mouseenter', () => { isSectionHovered = true; startLoop(); });
+        scrollSection.addEventListener('mouseleave', () => { isSectionHovered = false; speed = 0; cancelAnimationFrame(animationFrame); });
         
         scrollSection.addEventListener('mousemove', (e) => {
             const rect = scrollSection.getBoundingClientRect();
-            mouseX = e.clientX - rect.left;
+            scrollerMouseX = e.clientX - rect.left;
             const width = rect.width;
-            
-            // 计算鼠标相对于滚动区域中轴的位置
-            const threshold = 0.25; // 靠近两端 25% 范围内触发自动滚动
-            if (mouseX > width * (1 - threshold)) {
-                // 鼠标靠右，向右滑动
-                speed = ((mouseX - width * (1 - threshold)) / (width * threshold)) * 8; 
-            } else if (mouseX < width * threshold) {
-                // 鼠标靠左，向左滑动
-                speed = ((mouseX - width * threshold) / (width * threshold)) * 8;
+            const threshold = 0.25; 
+            if (scrollerMouseX > width * (1 - threshold)) {
+                speed = ((scrollerMouseX - width * (1 - threshold)) / (width * threshold)) * 8; 
+            } else if (scrollerMouseX < width * threshold) {
+                speed = ((scrollerMouseX - width * threshold) / (width * threshold)) * 8;
             } else {
                 speed = 0;
             }
@@ -403,7 +538,7 @@
 
         function startLoop() {
             function update() {
-                if (!isHovered) return;
+                if (!isSectionHovered) return;
                 scroller.scrollLeft += speed;
                 animationFrame = requestAnimationFrame(update);
             }
