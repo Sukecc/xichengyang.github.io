@@ -349,10 +349,10 @@
                 
                 // 等比缩放居中
                 const imgRatio = img.width / img.height;
-                let targetW = width * 0.75; 
+                let targetW = width * 1.2; 
                 let targetH = targetW / imgRatio;
-                if (targetH > height * 0.75) {
-                    targetH = height * 0.75;
+                if (targetH > height * 1.2) {
+                    targetH = height * 1.2;
                     targetW = targetH * imgRatio;
                 }
                 const tx = (width - targetW) / 2;
