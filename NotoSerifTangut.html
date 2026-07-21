@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noto Serif Tangut — Project Detail | XICHENG YANG</title>
+    <style>
+        /* ==========================================================================
+           【Lyean Serif & Sans 核心家族系统】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        /* 全局默认衬线体锁死为 Lyean，全局切断 Georgia 的杂质继承 */
+        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside, figcaption {
+            font-family: "Lyean", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0 0 0;
+        }
+        
+        /* 原子级强力穿透！保证 100% 的 Sans（无衬线）属性块都调用专属的 Lyean Sans */
+        header, header *, 
+        nav, nav *, 
+        .metadata-grid, .metadata-grid *, 
+        .specimen-tabs-wrapper, .specimen-tabs-wrapper *,
+        .gallery-chapter-title, .gallery-chapter-title *,
+        .outline-action-btn, .outline-action-btn *,
+        .award-stamp-trigger, .award-stamp-trigger *,
+        .hero-floating-awards .badge-label,
+        .credit-grid-wrapper, .credit-grid-wrapper *,
+        .marquee-caption, .marquee-caption *,
+        .tag {
+            font-family: 'Lyean Sans', sans-serif !important;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 60px; text-transform: uppercase;
+        }
+        header div, header nav a {
+            font-size: 0.8rem; letter-spacing: 0.1em;
+            text-decoration: none; color: #1a1a1a; 
+        }
+        header nav a { margin-left: 20px; }
+        header nav a:hover { color: #b85a4b; }
+
+        /* ==========================================================================
+           【全宽 Hero 大图 + 悬浮荣誉抽屉】
+           ========================================================================== */
+        .project-hero-cover {
+            width: 100vw; margin-left: calc(-50vw + 50%); height: 65vh;
+            background-color: #ede9df; position: relative; border-bottom: 1px solid #e0dbcf;
+        }
+        .project-hero-cover img.hero-main-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-floating-awards { position: absolute; bottom: -35px; right: 5vw; z-index: 100; cursor: pointer; outline: none; }
+        .award-stamp-trigger {
+            width: 70px; height: 70px; background-color: #2b231d; color: #f6f3eb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 4px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .award-stamp-trigger span { font-weight: 900; font-size: 1.1rem; }
+        .award-stamp-trigger svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; margin-top: 4px; opacity: 0.7; }
+
+        .award-expanded-panel {
+            position: absolute; bottom: 85px; right: 0; background-color: #f6f3eb; border: 1px solid #c4b9ae;
+            padding: 15px; border-radius: 6px; box-shadow: 0 10px 30px rgba(43,35,29,0.15);
+            opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+            width: 260px; 
+        }
+        .award-expanded-panel img { width: 100%; height: auto; display: block; border-radius: 2px; }
+
+        .hero-floating-awards:hover .award-stamp-trigger, .hero-floating-awards:focus .award-stamp-trigger { background-color: #b85b4b; transform: scale(1.05) rotate(3deg); }
+        .hero-floating-awards:hover .award-expanded-panel, .hero-floating-awards:focus .award-expanded-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .hero-floating-awards .badge-label { font-size: 0.65rem; font-weight: bold; line-height: 1.3; color: #6e5d4f; text-align: center; display: block; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* ==========================================================================
+           【五栏元数据网格 - 🎯 严格遵循指示精准对齐】
+           ========================================================================== */
+        .metadata-grid {
+            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 40px;
+            border-bottom: 1px solid #1a1a1a; padding: 40px 0; margin-top: 60px; margin-bottom: 60px;
+        }
+        .meta-label { font-size: 0.75rem; text-transform: uppercase; color: #b85a4b; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .meta-value { font-size: 1.05rem; line-height: 1.5; font-weight: bold; word-wrap: break-word; }
+        .meta-sub-item { font-size: 0.85rem; font-weight: normal; color: #555; margin-top: 4px; line-height: 1.3; }
+
+        /* ==========================================================================
+           【简介与精细名单看板区】
+           ========================================================================== */
+        .project-intro-container { display: grid; grid-template-columns: 3.1fr 1.9fr; gap: 60px; margin-bottom: 80px; align-items: flex-start; }
+        .intro-text { max-width: 800px; }
+        .intro-text h2 { font-size: 2.8rem; font-weight: normal; margin-top: 0; margin-bottom: 30px; line-height: 1.2; }
+        .intro-text p { font-size: 1.2rem; line-height: 1.7; color: #333; margin-bottom: 25px; }
+
+        /* 外部开源跳转按钮样式 */
+        .intro-links-group { display: flex; gap: 15px; margin-top: 40px; }
+        .outline-action-btn {
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border: 1px solid #1a1a1a;
+            background: transparent; color: #1a1a1a; text-decoration: none; border-radius: 4px;
+            font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+        .outline-action-btn:hover { background: #1a1a1a; color: #f6f3eb; }
+
+        /* 右侧高级 Credit 降噪看版（纯净团队名单，无荣誉项干扰） */
+        .credit-grid-wrapper {
+            border-left: 1px solid #e0dbcf; padding-left: 40px; box-sizing: border-box; margin-top: 10px;
+        }
+        .credit-section-block { margin-bottom: 35px; }
+        .credit-section-block:last-child { margin-bottom: 0; }
+        
+        .credit-header-label {
+            font-size: 0.72rem; color: #b85a4b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;
+            margin-bottom: 14px; border-bottom: 1px solid #ede9df; padding-bottom: 4px; display: block;
+        }
+        /* 双栏高密度规整网格 */
+        .credit-sub-grid {
+            display: grid; grid-template-columns: 130px 1fr; gap: 12px 16px; font-size: 0.85rem; line-height: 1.4;
+        }
+        .credit-role { color: #888; font-weight: bold; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.03em; padding-top: 2px; }
+        .credit-names { color: #555; font-weight: 500; }
+
+        /* ==========================================================================
+           【智能吸顶固定导航栏】
+           ========================================================================== */
+        .specimen-tabs-wrapper { position: relative; z-index: 500; margin: 40px 0 20px 0; }
+        .specimen-tabs-nav {
+            display: flex; justify-content: space-between; gap: 16px; 
+            border-bottom: 1px solid #c4b9ae; padding-bottom: 20px; background-color: #f6f3eb;
+            transition: padding 0.3s, box-shadow 0.3s;
+        }
+        .specimen-tabs-nav.is-sticky {
+            position: fixed; top: 0; left: 5vw; width: 90vw; padding-top: 20px; padding-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(246, 243, 235, 0.95);
+        }
+        .tab-item {
+            flex: 1; display: flex; flex-direction: column; padding: 14px 20px; cursor: pointer;
+            background: #ede9df; border: 1px solid #e0dbcf; border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom center;
+        }
+        .tab-num { font-size: 0.7rem; color: #6e5d4f; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .tab-name { font-weight: bold; font-size: 1rem; color: #1a1a1a; }
+        .tab-item:hover { transform: scale(1.04); background: #e3ded2; box-shadow: 0 6px 20px rgba(43,35,29,0.08); }
+        .tab-item.active { background: #2b231d; border-color: #2b231d; transform: scale(1.01); }
+        .tab-item.active .tab-num { color: #c4b9ae; }
+        .tab-item.active .tab-name { color: #f6f3eb; }
+
+        /* 画廊布局 */
+        .gallery-chapter-title {
+            font-size: 0.8rem; text-transform: uppercase;
+            color: #b85a4b; border-top: 1px solid #e0dbcf; padding-top: 40px; margin-top: 100px; margin-bottom: 40px;
+            letter-spacing: 0.1em; display: flex; justify-content: space-between; scroll-margin-top: 140px;
+        }
+        .specimen-full-img {
+            width: 100vw; margin-left: calc(-50vw + 50%); margin-bottom: 0; background-color: #ede9df; border-bottom: 1px solid #e0dbcf;
+        }
+        .specimen-full-img img { width: 100%; display: block; }
+        
+        /* 视频容器 */
+        .specimen-video-box {
+            width: 100vw; margin-left: calc(-50vw + 50%); background-color: #000; aspect-ratio: 16 / 9;
+        }
+        .specimen-video-box video { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+        /* A4 对比图专用排版网格 */
+        .a4-comparison-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;
+        }
+        .a4-card {
+            background-color: #ede9df; border: 1px solid #e0dbcf; border-radius: 4px; overflow: hidden;
+            aspect-ratio: 1 / 1.414; /* 黄金 A4 比例 */
+        }
+        .a4-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ==========================================================================
+           【Type in Use 全屏沉浸式物理缓动吸附长廊】
+           ========================================================================== */
+        .type-in-use-section {
+            width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: 80px 0 120px 0; background: #2b231d;
+            margin-top: 120px; 
+        }
+        .type-in-use-section .gallery-chapter-title {
+            width: 90vw; margin: 0 auto 50px auto; border-top: 1px solid #6e5d4f; color: #f6f3eb; padding-top: 30px;
+        }
+        .marquee-container { overflow: hidden; width: 100%; display: flex; position: relative; }
+        .marquee-track { display: flex; width: max-content; will-change: transform; }
+        .marquee-item { width: 55vw; flex-shrink: 0; padding: 0 25px; box-sizing: border-box; transition: opacity 0.6s ease, transform 0.6s ease; }
+        .marquee-img-box { width: 100%; aspect-ratio: 16 / 10; background-color: #ede9df; overflow: hidden; border: 1px solid #6e5d4f; margin-bottom: 20px; position: relative; }
+        .marquee-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* YouTube 视频播放叠加层 */
+        .marquee-video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center; text-decoration: none;
+        }
+        .play-icon-trigger {
+            width: 60px; height: 60px; background: rgba(246,243,235,0.9); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        .play-icon-trigger svg { width: 20px; height: 24px; fill: #2b231d; margin-left: 4px; }
+        .marquee-item:hover .play-icon-trigger { transform: scale(1.1); background: #b85a4b; }
+        .marquee-item:hover .play-icon-trigger svg { fill: #f6f3eb; }
+
+        .marquee-caption { font-size: 0.75rem; color: #c4b9ae; line-height: 1.5; padding: 0 4px; }
+        .marquee-caption strong { color: #f6f3eb; }
+
+        .marquee-track.is-focusing .marquee-item { opacity: 0.4; transform: scale(0.95); }
+        .marquee-track.is-focusing .marquee-item:hover { opacity: 1; transform: scale(1.02); }
+        .marquee-track.is-focusing .marquee-item:hover .marquee-img-box { border-color: #b85a4b; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 导航 -->
+        <header>
+            <div><a href="index.html" style="margin:0; text-decoration: none; color: inherit; font-weight: normal;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html" style="color: #b85a4b; font-weight: bold;">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <!-- 全宽 Cover -->
+        <div class="project-hero-cover">
+            <img class="hero-main-img" src="images/NotoTangut_hero_massive.webp" alt="Noto Serif Tangut Global Release Showcase">
+            
+            <aside class="hero-floating-awards" tabindex="0" aria-label="Noto Tangut Code Info">
+                <div class="award-stamp-trigger">
+                    <span>v2</span><span style="font-size:0.75rem; margin-top:-2px;">168</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="award-expanded-panel">
+                    <img src="images/noto-tangut-codebase.webp" alt="Google Noto Open Source Architecture">
+                </div>
+                <span class="badge-label">Google Fonts<br>Official</span>
+            </aside>
+        </div>
+
+        <!-- 🎯 完美对齐：标准五栏元数据网格（按最新数据锁死客观参数指标） -->
+        <section class="metadata-grid">
+            <div><div class="meta-label">Client</div><div class="meta-value">Google Fonts</div></div>
+            <div>
+                <div class="meta-label">Awards</div>
+                <div class="meta-value" style="font-size: 0.95rem; line-height: 1.45;">
+                    Cool Words Int'l Art Design — 3rd Prize (2021)
+                    <div class="meta-sub-item">Chang Sha-na Design Award Selection (2021)</div>
+                </div>
+            </div>
+            <div><div class="meta-label">Foundry</div><div class="meta-value">LIUZHAO STUDIO</div></div>
+            <div>
+                <div class="meta-label">Designer</div>
+                <div class="meta-value">Xicheng Yang<br><span class="meta-sub-item" style="font-weight: normal; color:#666; display:block; margin-top:2px;">Asst: Peilin Song</span><span class="meta-sub-item" style="font-weight: normal; color:#666; display:block;">Dir: Zhao Liu</span></div>
+            </div>
+            <div><div class="meta-label">Release Year</div><div class="meta-value">2021</div></div>
+        </section>
+
+        <!-- 简介区 -->
+        <section class="project-intro-container">
+            <!-- 左栏：Vision 核心故事描述 -->
+            <div class="intro-text">
+                <h2>Cultural Preservation via Open-Source Infrastructure.</h2>
+                <p>As the main designer, I led the modification of Monotype’s previous version, encompassing a character set of 6,915 characters. With support from Tangut scholars, we corrected wrong characters and improved font quality. This project highlights my design expertise and passion for cultural preservation.</p>
+                
+                <div class="intro-links-group">
+                    <a href="https://fonts.google.com/noto/specimen/Noto+Serif+Tangut?preview.script=Tang&preview.lang=txg_Tang" target="_blank" class="outline-action-btn">Google Fonts Repertoire ↗</a>
+                    <a href="https://github.com" target="_blank" class="outline-action-btn">GitHub Codebase Repository ↗</a>
+                </div>
+            </div>
+
+            <!-- 🎯 右栏：100% 还原无缩写完整 Credit 团队分工看版 -->
+            <div class="credit-grid-wrapper">
+                
+                <!-- 主创核心分工群 -->
+                <div class="credit-section-block">
+                    <span class="credit-header-label">Credit of Noto Serif Tangut 2.168</span>
+                    <div class="credit-sub-grid">
+                        <div class="credit-role">Design Director</div>
+                        <div class="credit-names">Zhao Liu</div>
+                        
+                        <div class="credit-role">Designer</div>
+                        <div class="credit-names">Xicheng Yang</div>
+                        
+                        <div class="credit-role">Design Assistant</div>
+                        <div class="credit-names">Peilin Song</div>
+                        
+                        <div class="credit-role">Engineering</div>
+                        <div class="credit-names">Eiso Chan</div>
+                        
+                        <div class="credit-role">Technical Support</div>
+                        <div class="credit-names">Kushim Jiang</div>
+
+                        <div class="credit-role">Foundry</div>
+                        <div class="credit-names">LIUZHAO STUDIO</div>
+                    </div>
+                </div>
+
+                <!-- 学术学者学术顾问群 -->
+                <div class="credit-section-block">
+                    <span class="credit-header-label">Adviser Credit</span>
+                    <div class="credit-sub-grid">
+                        <div class="credit-role">Scholars</div>
+                        <div class="credit-names">Bojun Sun, Changye Jia, Feipeng Sun, Jerry You, Andrew Christopher West</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+            【智能吸顶固定导航栏】
+            ========================================================================== */ -->
+        <div class="specimen-tabs-wrapper" id="tabsWrapper">
+            <div class="specimen-tabs-nav" id="stickyNav">
+                <div class="tab-item active" data-target="sec-scrolls">
+                    <span class="tab-num">Genre 01</span>
+                    <span class="tab-name">Bilingual Manuscripts</span>
+                </div>
+                <div class="tab-item" data-target="sec-comparisons">
+                    <span class="tab-num">Genre 02</span>
+                    <span class="tab-name">A4 Source Quality</span>
+                </div>
+                <div class="tab-item" data-target="sec-video">
+                    <span class="tab-num">Genre 03</span>
+                    <span class="tab-name">Anatomical Motion</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="specimen-gallery">
+            
+            <!-- 01. 长卷西夏文/汉字双语经文 -->
+            <div id="sec-scrolls">
+                <div class="gallery-chapter-title">
+                    <span>Genre 01 // Bilingual Manuscripts</span>
+                    <span style="color:#aaa;">Tangut and Hanzi Dual-script Sutra Layout Rendering</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/NotoTangut_bilingual_scroll.webp" alt="Noto Serif Tangut Bilingual Scripture Long Scroll"></div>
+            </div>
+
+            <!-- 02. A4 尺寸前后修正对比样张 -->
+            <div id="sec-comparisons">
+                <div class="gallery-chapter-title">
+                    <span>Genre 02 // A4 Source Quality Control</span>
+                    <span style="color:#aaa;">Comparative Study of Extinct Character Rectification</span>
+                </div>
+                
+                <div class="a4-comparison-grid">
+                    <div class="a4-card"><img src="images/NotoTangut_compare_A4_01.webp" alt="Glyph Modification Verification 1"></div>
+                    <div class="a4-card"><img src="images/NotoTangut_compare_A4_02.webp" alt="Glyph Modification Verification 2"></div>
+                </div>
+                <div class="a4-comparison-grid">
+                    <div class="a4-card"><img src="images/NotoTangut_compare_A4_03.webp" alt="Glyph Modification Verification 3"></div>
+                    <div class="a4-card"><img src="images/NotoTangut_compare_A4_04.webp" alt="Glyph Modification Verification 4"></div>
+                </div>
+            </div>
+
+            <!-- 03. 演示视频 -->
+            <div id="sec-video">
+                <div class="gallery-chapter-title">
+                    <span>Genre 03 // Anatomical Motion Video</span>
+                    <span style="color:#aaa;">Dynamic stroke vector analysis</span>
+                </div>
+                <div class="specimen-video-box">
+                    <video controls preload="none" src="videos/noto_tangut_specimen_perf.mp4" poster="images/noto_video_poster.webp"></video>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==========================================================================
+            【Type in Use 全屏沉浸式物理缓动吸附长廊】
+            ========================================================================== */ -->
+        <section class="type-in-use-section">
+            <div class="gallery-chapter-title" style="border-top: 1px solid #6e5d4f; color: #f6f3eb;">
+                <span>Selected Type in Use</span>
+                <span>Hover Any Card to Center Smoothly</span>
+            </div>
+
+            <div class="marquee-container" id="marqueeWindow">
+                <div class="marquee-track" id="marqueeTrack">
+                    
+                    <!-- 卡片 1: YouTube 视频 1 -->
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="https://img.youtube.com/vi/_0yJ58RZyvw/maxresdefault.jpg" alt="YouTube Case 1 Thumbnail">
+                            <a href="https://youtu.be/_0yJ58RZyvw?si=dvl0rdh4u6_AL-pw" target="_blank" class="marquee-video-overlay">
+                                <div class="play-icon-trigger">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="marquee-caption"><strong>Linguistic Documentary</strong> — Research media application running Noto Serif Tangut glyph engine.</div>
+                    </div>
+
+                    <!-- 卡片 2: 西夏陵景区实拍 1 -->
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="images/scenic_spot_use_01.webp" alt="Western Xia Tombs Signage">
+                        </div>
+                        <div class="marquee-caption"><strong>Wayfinding System</strong> — Official academic signage rendered in Noto Serif Tangut at Western Xia Tombs historical site.</div>
+                    </div>
+
+                    <!-- 卡片 3: YouTube 视频 2 -->
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="https://img.youtube.com/vi/IxGu89gbkSw/maxresdefault.jpg" alt="YouTube Case 2 Thumbnail">
+                            <a href="https://youtu.be/IxGu89gbkSw?si=4YEAfUbp18jdx84K" target="_blank" class="marquee-video-overlay">
+                                <div class="play-icon-trigger">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="marquee-caption"><strong>Digital Presentation</strong> — Academic presentation utilizing the official Google Noto Tangut v2.168 layout codebase.</div>
+                    </div>
+
+                    <!-- 卡片 4: 朋友发来的应用实拍 -->
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="images/peer_review_use_01.webp" alt="Academic Monograph Usage">
+                        </div>
+                        <div class="marquee-caption"><strong>Publication Output</strong> — Noto Serif Tangut applied within linguistic research paper margins and index catalogs.</div>
+                    </div>
+
+                    <!-- 【第二组卡片群：供横向无缝循环使用】 -->
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="https://img.youtube.com/vi/_0yJ58RZyvw/maxresdefault.jpg" alt="YouTube Case 1 Thumbnail">
+                            <a href="https://youtu.be/_0yJ58RZyvw?si=dvl0rdh4u6_AL-pw" target="_blank" class="marquee-video-overlay">
+                                <div class="play-icon-trigger">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="marquee-caption"><strong>Linguistic Documentary</strong> — Research media application running Noto Serif Tangut glyph engine.</div>
+                    </div>
+
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="images/scenic_spot_use_01.webp" alt="Western Xia Tombs Signage">
+                        </div>
+                        <div class="marquee-caption"><strong>Wayfinding System</strong> — Official academic signage rendered in Noto Serif Tangut at Western Xia Tombs historical site.</div>
+                    </div>
+
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="https://img.youtube.com/vi/IxGu89gbkSw/maxresdefault.jpg" alt="YouTube Case 2 Thumbnail">
+                            <a href="https://youtu.be/IxGu89gbkSw?si=4YEAfUbp18jdx84K" target="_blank" class="marquee-video-overlay">
+                                <div class="play-icon-trigger">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="marquee-caption"><strong>Digital Presentation</strong> — Academic presentation utilizing the official Google Noto Tangut v2.168 layout codebase.</div>
+                    </div>
+
+                    <div class="marquee-item">
+                        <div class="marquee-img-box">
+                            <img src="images/peer_review_use_01.webp" alt="Academic Monograph Usage">
+                        </div>
+                        <div class="marquee-caption"><strong>Publication Output</strong> — Noto Serif Tangut applied within linguistic research paper margins and index catalogs.</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- 原生滚动交互控制系统脚本 -->
+    <script>
+        /* ==========================================================================
+           1. 吸顶导航与高亮滚动联动
+           ========================================================================== */
+        const tabsWrapper = document.getElementById('tabsWrapper');
+        const stickyNav = document.getElementById('stickyNav');
+        const sections = [
+            { tab: document.querySelector('[data-target="sec-scrolls"]'), element: document.getElementById('sec-scrolls') },
+            { tab: document.querySelector('[data-target="sec-comparisons"]'), element: document.getElementById('sec-comparisons') },
+            { tab: document.querySelector('[data-target="sec-video"]'), element: document.getElementById('sec-video') }
+        ];
+
+        window.addEventListener('scroll', function() {
+            const wrapperTop = tabsWrapper.getBoundingClientRect().top;
+            if (wrapperTop <= 0) {
+                stickyNav.classList.add('is-sticky');
+                tabsWrapper.style.paddingBottom = stickyNav.offsetHeight + 'px';
+            } else {
+                stickyNav.classList.remove('is-sticky');
+                tabsWrapper.style.paddingBottom = '0px';
+            }
+
+            let currentActive = sections[0].tab;
+            sections.forEach(sec => {
+                const rect = sec.element.getBoundingClientRect();
+                if (rect.top <= 200) { currentActive = sec.tab; }
+            });
+            sections.forEach(sec => {
+                if(sec.tab === currentActive) { sec.tab.classList.add('active'); } 
+                else { sec.tab.classList.remove('active'); }
+            });
+        });
+
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    const titleElement = targetContent.querySelector('.gallery-chapter-title');
+                    titleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        /* ==========================================================================
+           2. 磁吸居中物理缓动长廊引擎
+           ========================================================================== */
+        const track = document.getElementById('marqueeTrack');
+        const win = document.getElementById('marqueeWindow');
+        const items = document.querySelectorAll('.marquee-item');
+        
+        let currentX = 0, targetX = 0;
+        const baseSpeed = 1.2;
+        let isHovered = false;
+        const ease = 0.06; 
+
+        function animate() {
+            if (!isHovered) {
+                targetX -= baseSpeed;
+                currentX = targetX;
+                const halfWidth = track.scrollWidth / 2;
+                if (Math.abs(currentX) >= halfWidth) {
+                    currentX = 0; targetX = 0;
+                }
+            } else {
+                currentX += (targetX - currentX) * ease;
+            }
+            track.style.transform = `translateX(${currentX}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        items.forEach((item) => {
+            item.addEventListener('mouseenter', () => {
+                isHovered = true;
+                track.classList.add('is-focusing');
+                const winWidth = win.offsetWidth;
+                const itemWidth = item.offsetWidth;
+                const itemLeft = item.offsetLeft;
+                targetX = (winWidth / 2) - (itemLeft + itemWidth / 2);
+            });
+        });
+
+        win.addEventListener('mouseleave', () => {
+            isHovered = false;
+            track.classList.remove('is-focusing');
+            targetX = currentX;
+        });
+
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>

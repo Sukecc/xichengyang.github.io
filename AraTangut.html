@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AraTangut — Project Detail | XICHENG YANG</title>
+    <style>
+        /* ==========================================================================
+           【AraTangut 核心家族系统 - 统一调用字体】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside, figcaption {
+            font-family: "Lyean", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb; /* 全站统一纸张温润色 */
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0 0 0;
+        }
+        
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 60px; text-transform: uppercase;
+        }
+        header div, header nav a {
+            font-family: 'Lyean Sans', sans-serif !important;
+            font-size: 0.8rem; letter-spacing: 0.1em;
+            text-decoration: none; color: #1a1a1a; 
+        }
+        header nav a { margin-left: 20px; }
+        header nav a:hover { color: #b85a4b; }
+
+        /* ==========================================================================
+           【全宽 Hero 大图 + 悬浮双荣誉抽屉】
+           ========================================================================== */
+        .project-hero-cover {
+            width: 100vw; margin-left: calc(-50vw + 50%); height: 65vh;
+            background-color: #ede9df; position: relative; border-bottom: 1px solid #e0dbcf;
+        }
+        .project-hero-cover img.hero-main-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-floating-awards { position: absolute; bottom: -35px; right: 5vw; z-index: 100; cursor: pointer; outline: none; }
+        .award-stamp-trigger {
+            width: 70px; height: 70px; background-color: #2b231d; color: #f6f3eb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 4px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .award-stamp-trigger span { font-family: 'Lyean Sans', sans-serif !important; font-weight: 900; font-size: 1.1rem; }
+        .award-stamp-trigger svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; margin-top: 4px; opacity: 0.7; }
+
+        .award-expanded-panel {
+            position: absolute; bottom: 85px; right: 0; background-color: #f6f3eb; border: 1px solid #c4b9ae;
+            padding: 15px; border-radius: 6px; box-shadow: 0 10px 30px rgba(43,35,29,0.15);
+            opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+            width: 260px; 
+        }
+        .award-expanded-panel img { width: 100%; height: auto; display: block; border-radius: 2px; }
+
+        .hero-floating-awards:hover .award-stamp-trigger, .hero-floating-awards:focus .award-stamp-trigger { background-color: #b85b4b; transform: scale(1.05) rotate(-3deg); }
+        .hero-floating-awards:hover .award-expanded-panel, .hero-floating-awards:focus .award-expanded-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .hero-floating-awards .badge-label { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.65rem; font-weight: bold; line-height: 1.3; color: #6e5d4f; text-align: center; display: block; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* ==========================================================================
+           【五栏元数据网格】
+           ========================================================================== */
+        .metadata-grid {
+            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 40px;
+            border-bottom: 1px solid #1a1a1a; padding: 40px 0; margin-top: 60px; margin-bottom: 60px;
+        }
+        .meta-label { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.75rem; text-transform: uppercase; color: #b85a4b; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .meta-value { font-size: 1.05rem; line-height: 1.5; font-weight: normal; word-wrap: break-word; }
+
+        /* ==========================================================================
+           【简介文字区】
+           ========================================================================== */
+        .project-intro-container { display: grid; grid-template-columns: 3.2fr 1.8fr; gap: 50px; margin-bottom: 80px; align-items: flex-start; }
+        .intro-text { max-width: 800px; }
+        .intro-text h2 { font-size: 2.8rem; font-weight: normal; margin-top: 0; margin-bottom: 30px; }
+        .intro-text p { font-size: 1.2rem; line-height: 1.7; color: #333; margin-bottom: 25px; }
+
+        /* ==========================================================================
+           【智能吸顶固定导航栏】
+           ========================================================================== */
+        .specimen-tabs-wrapper { position: relative; z-index: 500; margin: 40px 0 20px 0; }
+        .specimen-tabs-nav {
+            display: flex; justify-content: space-between; gap: 16px; 
+            border-bottom: 1px solid #c4b9ae; padding-bottom: 20px; background-color: #f6f3eb;
+            transition: padding 0.3s, box-shadow 0.3s;
+        }
+        .specimen-tabs-nav.is-sticky {
+            position: fixed; top: 0; left: 5vw; width: 90vw; padding-top: 20px; padding-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(246, 243, 235, 0.95);
+        }
+        .tab-item {
+            flex: 1; display: flex; flex-direction: column; padding: 14px 20px; cursor: pointer;
+            background: #ede9df; border: 1px solid #e0dbcf; border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom center;
+        }
+        .tab-num { font-family: 'Lyean Sans', sans-serif !important; font-size: 0.7rem; color: #6e5d4f; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .tab-name { font-family: 'Lyean Sans', sans-serif !important; font-weight: normal; font-size: 1rem; color: #1a1a1a; }
+        .tab-item:hover { transform: scale(1.04); background: #e3ded2; box-shadow: 0 6px 20px rgba(43,35,29,0.08); }
+        .tab-item.active { background: #2b231d; border-color: #2b231d; transform: scale(1.01); }
+        .tab-item.active .tab-num { color: #c4b9ae; }
+        .tab-item.active .tab-name { color: #f6f3eb; }
+
+        /* 画廊公共布局 */
+        .gallery-chapter-title {
+            font-family: 'Lyean Sans', sans-serif !important; font-size: 0.8rem; text-transform: uppercase;
+            color: #b85a4b; border-top: 1px solid #e0dbcf; padding-top: 40px; margin-top: 100px; margin-bottom: 40px;
+            letter-spacing: 0.1em; display: flex; justify-content: space-between; scroll-margin-top: 140px;
+        }
+        .specimen-full-img {
+            width: 100vw; margin-left: calc(-50vw + 50%); margin-bottom: 0; background-color: #ede9df; border-bottom: 1px solid #e0dbcf;
+        }
+        .specimen-full-img img { width: 100%; display: block; }
+
+        /* ==========================================================================
+           【🚨 全新设计：Type in Use 沉浸式竖版学术论文看版】
+           ========================================================================== */
+        .paper-use-section {
+            width: 100vw; margin-left: calc(-50vw + 50%); background: #2b231d; padding: 80px 0 140px 0; margin-top: 120px;
+        }
+        .paper-use-section .gallery-chapter-title {
+            width: 90vw; margin: 0 auto 60px auto; border-top: 1px solid #6e5d4f; color: #f6f3eb; padding-top: 30px;
+        }
+        
+        /* 论文展示舞台网格 */
+        .paper-display-grid {
+            max-width: 90vw; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 80px; align-items: center;
+        }
+
+        /* 💡 黄金 A4 比例书型悬浮卡片 */
+        .paper-book-mockup {
+            width: 100%; aspect-ratio: 1 / 1.414; /* 严格死锁标准 A4 纵向论文比例 */
+            background-color: #faf9f6; border-radius: 4px; overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+            position: relative; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: center left;
+        }
+        .paper-book-mockup img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 翻书的高级阴影遮罩 */
+        .paper-book-mockup::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 25px; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%); z-index: 2;
+        }
+
+        /* 鼠标悬停卡片有微微翘起的阻尼感 */
+        .paper-book-mockup:hover {
+            transform: scale(1.02) rotateY(-4deg);
+        }
+
+        /* 右侧论文下载卡片引导文案 */
+        .paper-download-guide { color: #c4b9ae; max-width: 550px; }
+        .paper-download-guide h3 {
+            font-size: 2.2rem; font-weight: normal; color: #f6f3eb; margin-top: 0; margin-bottom: 20px; line-height: 1.3;
+        }
+        .paper-download-guide p { font-size: 1.1rem; line-height: 1.7; margin-bottom: 40px; color: #aaa; }
+        
+        /* 极其精致的磁吸流下载按钮 */
+        .paper-download-btn {
+            display: inline-flex; align-items: center; gap: 15px; background-color: #b85a4b; color: #f6f3eb;
+            text-decoration: none; padding: 18px 35px; border-radius: 4px; font-family: 'Lyean Sans', sans-serif !important;
+            font-weight: bold; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(184, 90, 75, 0.2); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .paper-download-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.5; transition: transform 0.4s; }
+        .paper-download-btn:hover { background-color: #f6f3eb; color: #2b231d; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(246, 243, 235, 0.15); }
+        .paper-download-btn:hover svg { transform: translateY(3px); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 导航 -->
+        <header>
+            <div><a href="index.html" style="margin:0; text-decoration: none; color: inherit; font-weight: normal;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html" style="color: #b85a4b; font-weight: bold;">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <!-- 全宽 Hero Cover -->
+        <div class="project-hero-cover">
+            <img class="hero-main-img" src="images/AraTangut_hero_massive.webp" alt="AraTangut Massive Specimen Display">
+            
+            <!-- 右下角火漆双荣誉抽屉（合并了 NY TDC 和 TOKYO TDC） -->
+            <aside class="hero-floating-awards" tabindex="0" aria-label="AraTangut Awards Room">
+                <div class="award-stamp-trigger">
+                    <span>TDC</span><span style="font-size:0.65rem; margin-top:-2px;">69/24</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 4h8v3.2c0 3.4-1.6 5.6-4 6.3-2.4-.7-4-2.9-4-6.3V4Z"></path>
+                        <path d="M8 6H4.8c0 2.5 1.3 4.3 3.5 4.8"></path>
+                        <path d="M16 6h3.2c0 2.5-1.3 4.3-3.5 4.8"></path>
+                        <path d="M12 13.5V17"></path>
+                        <path d="M8.5 20h7"></path>
+                    </svg>
+                </div>
+                <div class="award-expanded-panel">
+                    <img src="images/aratangut-awards-expanded.webp" alt="New York TDC & Tokyo TDC Official Certificates">
+                </div>
+                <span class="badge-label">NY & TOKYO<br>EXCELLENT</span>
+            </aside>
+        </div>
+
+        <!-- 五栏元数据网格 -->
+        <section class="metadata-grid">
+            <div><div class="meta-label">Client</div><div class="meta-value">Prof. Shintaro Arakawa,<br> Tokyo University of Foreign Studies </div></div>
+            <div><div class="meta-label">Award</div><div class="meta-value">69th NY TDC & 2024 Tokyo TDC Excellent Work</div></div>
+            <div><div class="meta-label">Foundry</div><div class="meta-value">Willow Type Foundry</div></div>
+            <div><div class="meta-label">Designer</div><div class="meta-value">Xicheng Yang,<br>Kaito Osawa</div></div>
+            <div><div class="meta-label">Period</div><div class="meta-value">2022 to the Present</div></div>
+        </section>
+
+        <!-- 简介文字 -->
+        <section class="project-intro-container">
+            <div class="intro-text">
+                <h2>Between Mincho and Tangut Calligraphy.</h2>
+                <p>AraTangut is a custom font designed for the paper of Japanese Tangutologist Shintaro Arakawa. It creates a unique and ethnic flavour between Mincho and Tangut calligraphy. AraTangut helps to give new energy to language studies in Japan and encourages the production of typefaces for other scripts.</p>
+                
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+            【四大专业板块吸顶样张陈列】
+            ========================================================================== */ -->
+        <div class="specimen-tabs-wrapper" id="tabsWrapper">
+            <div class="specimen-tabs-nav" id="stickyNav">
+                <div class="tab-item active" data-target="specimen-01">
+                    <span class="tab-num">Sheet 01</span>
+                    <span class="tab-name">Glyph Structures</span>
+                </div>
+                <div class="tab-item" data-target="specimen-02">
+                    <span class="tab-num">Sheet 02</span>
+                    <span class="tab-name">Text Texture</span>
+                </div>
+                <div class="tab-item" data-target="specimen-03">
+                    <span class="tab-num">Sheet 03</span>
+                    <span class="tab-name">Mincho Contrast</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="specimen-gallery">
+            <!-- 样张 01（满宽 4K 大图瀑布流） -->
+            <div id="specimen-01">
+                <div class="gallery-chapter-title">
+                    <span>Sheet 01 // Glyph Structures</span>
+                    <span style="color:#aaa;">Calligraphic Stroke Reinterpretation</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/AraTangut_specimen_01.webp" alt="AraTangut Specimen Sheet 1"></div>
+            </div>
+
+            <!-- 样张 02 -->
+            <div id="specimen-02">
+                <div class="gallery-chapter-title">
+                    <span>Sheet 02 // Text Texture</span>
+                    <span style="color:#aaa;">Multi-script Sinoform and Japanese Mix-typesetting</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/AraTangut_specimen_02.webp" alt="AraTangut Specimen Sheet 2"></div>
+            </div>
+
+            <!-- 样张 03 -->
+            <div id="specimen-03">
+                <div class="gallery-chapter-title">
+                    <span>Sheet 03 // Mincho Contrast</span>
+                    <span style="color:#aaa;">Ethnic Flavour & Weight Balance</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/AraTangut_specimen_03.webp" alt="AraTangut Specimen Sheet 3"></div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+            【🎨 沉浸式升级：Type in Use 学术论文垂直磁吸看版】
+            ========================================================================== */ -->
+        <section class="paper-use-section">
+            <div class="gallery-chapter-title">
+                <span>Selected Type in Use</span>
+                <span>Real-world Academic Rendering</span>
+            </div>
+
+            <div class="paper-display-grid">
+                <!-- 左侧：A4纵向经典学术论文卡片，带高质感翻页阴影 -->
+                <div class="paper-book-mockup">
+                    <img src="images/arakawa_paper_cover_mockup.webp" alt="Professor Shintaro Arakawa's Tangut Research Paper Cover">
+                </div>
+
+                <!-- 右侧：下载指引与下载动作 -->
+                <div class="paper-download-guide">
+                    <h3>Typeface rendering in Professor Shintaro Arakawa's latest linguistic treatises.</h3>
+                    <p>AraTangut was built out of a direct necessity to empower academic literature. See how the fine-tuned contrasts between Mincho styling and ancient Tangut strokes resolve legibility challenges in high-density multi-script environments.</p>
+                    
+                    <!-- 极其硬朗的磁吸跳转下载按钮（把链接换成教授论文的真实在线下载URL） -->
+                    <a href="https://example.com/prof_arakawa_paper.pdf" target="_blank" class="paper-download-btn">
+                        <span>Download Academic Paper (PDF)</span>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 5v14M19 12l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- 吸顶与滚动联动控制脚本 -->
+    <script>
+        const tabsWrapper = document.getElementById('tabsWrapper');
+        const stickyNav = document.getElementById('stickyNav');
+        const sections = [
+            { tab: document.querySelector('[data-target="specimen-01"]'), element: document.getElementById('specimen-01') },
+            { tab: document.querySelector('[data-target="specimen-02"]'), element: document.getElementById('specimen-02') },
+            { tab: document.querySelector('[data-target="specimen-03"]'), element: document.getElementById('specimen-03') }
+        ];
+
+        window.addEventListener('scroll', function() {
+            const wrapperTop = tabsWrapper.getBoundingClientRect().top;
+            if (wrapperTop <= 0) {
+                stickyNav.classList.add('is-sticky');
+                tabsWrapper.style.paddingBottom = stickyNav.offsetHeight + 'px';
+            } else {
+                stickyNav.classList.remove('is-sticky');
+                tabsWrapper.style.paddingBottom = '0px';
+            }
+
+            let currentActive = sections[0].tab;
+            sections.forEach(sec => {
+                const rect = sec.element.getBoundingClientRect();
+                if (rect.top <= 200) { currentActive = sec.tab; }
+            });
+            sections.forEach(sec => {
+                if(sec.tab === currentActive) { sec.tab.classList.add('active'); } 
+                else { sec.tab.classList.remove('active'); }
+            });
+        });
+
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    const titleElement = targetContent.querySelector('.gallery-chapter-title');
+                    titleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
