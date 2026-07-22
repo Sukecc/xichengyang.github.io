@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XICHENG YANG — Full Site Asset Checklist & Naming Engine</title>
+    <style>
+        /* ==========================================================================
+           【Lyean Sans 纯净美学防御骨架】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        body, input, button, select, span, div, h1, h2, h3, p, code {
+            font-family: 'Lyean Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+            margin: 0; padding: 0 0 100px 0;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* 智能吸顶顶栏 */
+        .dashboard-header {
+            position: sticky; top: 0; background: rgba(246, 243, 235, 0.96);
+            padding: 20px 0; border-bottom: 1px solid #e0dbcf; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-title-zone h1 { margin: 0; font-size: 1.6rem; font-weight: normal; letter-spacing: -0.02em; }
+        .header-title-zone p { margin: 4px 0 0 0; font-size: 0.75rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* 核心进度追踪器 */
+        .progress-container {
+            display: flex; align-items: center; gap: 20px; width: 450px;
+        }
+        .progress-bar-bg {
+            flex: 1; height: 8px; background: #ede9df; border-radius: 4px; overflow: hidden;
+            border: 1px solid #e0dbcf;
+        }
+        .progress-bar-fill {
+            height: 100%; width: 0%; background: #b85a4b; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .progress-text { font-size: 0.85rem; font-weight: bold; color: #b85a4b; min-width: 90px; text-align: right; }
+
+        /* 大师级项目区块布局 */
+        .project-section {
+            background: #ede9df; border: 1px solid #e0dbcf; border-radius: 6px;
+            margin-top: 35px; padding: 25px 30px; transition: box-shadow 0.3s;
+        }
+        .project-section:hover { box-shadow: 0 10px 30px rgba(43,35,29,0.05); }
+
+        .project-meta-head {
+            display: flex; justify-content: space-between; align-items: baseline;
+            border-bottom: 1px solid #c4b9ae; padding-bottom: 12px; margin-bottom: 18px;
+        }
+        .project-meta-head h2 { margin: 0; font-size: 1.3rem; font-weight: bold; }
+        .project-meta-head .page-url { font-size: 0.78rem; color: #888; font-family: monospace !important; }
+
+        /* 任务清单表格 */
+        .task-table { width: 100%; border-collapse: collapse; }
+        .task-table th {
+            text-align: left; font-size: 0.7rem; color: #b85a4b; text-transform: uppercase;
+            letter-spacing: 0.05em; padding-bottom: 10px; border-bottom: 1px solid #c4b9ae;
+        }
+        .task-table td { padding: 12px 0; border-bottom: 1px solid rgba(196,185,174,0.4); font-size: 0.85rem; vertical-align: middle; }
+        .task-table tr:last-child td { border-bottom: none; }
+
+        /* 自定义多选框样式 */
+        .checkbox-wrapper { display: inline-flex; align-items: center; cursor: pointer; }
+        .checkbox-wrapper input[type="checkbox"] {
+            appearance: none; -webkit-appearance: none;
+            width: 17px; height: 17px; border: 1px solid #1a1a1a; border-radius: 3px;
+            margin-right: 10px; display: inline-grid; place-content: center;
+            background: #f6f3eb; transition: all 0.2s ease; cursor: pointer;
+        }
+        .checkbox-wrapper input[type="checkbox"]::before {
+            content: ""; width: 9px; height: 9px; transform: scale(0);
+            background-color: #f6f3eb; border-radius: 1px; transition: transform 0.2s ease;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+        .checkbox-wrapper input[type="checkbox"]:checked { background: #b85a4b; border-color: #b85a4b; }
+        .checkbox-wrapper input[type="checkbox"]:checked::before { transform: scale(1); }
+        .checkbox-wrapper input[type="checkbox"]:checked + .task-title {
+            color: #888; text-decoration: line-through;
+        }
+
+        .task-title { font-weight: bold; color: #1a1a1a; transition: color 0.2s; }
+        
+        .filename-code {
+            background: #f6f3eb; color: #b85a4b; padding: 3px 6px; border-radius: 3px;
+            font-family: monospace !important; font-size: 0.8rem; border: 1px solid #e0dbcf;
+            font-weight: bold;
+        }
+
+        .size-badge {
+            background: #2b231d; color: #f6f3eb; padding: 3px 6px; border-radius: 3px;
+            font-size: 0.72rem; font-family: monospace !important; font-weight: bold; letter-spacing: 0.03em;
+        }
+        .task-desc { color: #555; font-size: 0.82rem; line-height: 1.4; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- 吸顶仪表面板 -->
+        <header class="dashboard-header">
+            <div class="header-title-zone">
+                <h1>Full Site Asset Checklist & Naming Engine</h1>
+                <p>All Pages & Project Images // Illustrator Artboards & Exact File Naming</p>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0 / 0 (0%)</div>
+            </div>
+        </header>
+
+        <main id="checklistRoot">
+            <!-- 动态渲染全站所有图片清单 -->
+        </main>
+
+    </div>
+
+    <script>
+        /* ==========================================================================
+           【全站核心切图数据库 - 覆盖所有页面、图片命名与画板参数】
+           ========================================================================== */
+        const dataset = [
+            {
+                projectName: "00. Hub Pages — Selected Projects Gallery Cards",
+                pageUrl: "projects.html & index.html",
+                tasks: [
+                    { id: "hub_lyean", title: "Lyean 主卡片缩略图", file: "images/Lyean.webp", size: "1600 × 1200 px", desc: "4:3 比例，TYPEFACE DESIGN 分类。" },
+                    { id: "hub_aratangut", title: "AraTangut 主卡片缩略图", file: "images/AraTangut.webp", size: "1600 × 1200 px", desc: "4:3 比例，西夏文研究级复刻。" },
+                    { id: "hub_shanghaisky", title: "Shanghai Sky 主卡片缩略图", file: "images/Shanghaisky.webp", size: "1600 × 1200 px", desc: "4:3 比例，第70届纽约 TDC 获奖作品。" },
+                    { id: "hub_noto", title: "Noto Serif Tangut 主卡片缩略图", file: "images/NotoSerifTangut.webp", size: "1600 × 1200 px", desc: "4:3 比例，Google Fonts 6,915字集重构。" },
+                    { id: "hub_guqin", title: "Guqin Notation 主卡片缩略图", file: "images/guqin_tool.webp", size: "1600 × 1200 px", desc: "4:3 比例，非码位古琴减字谱数据库。" },
+                    { id: "hub_tangutbux", title: "TangutBux 主卡片缩略图", file: "images/TangutBux_thumb.webp", size: "1600 × 1200 px", desc: "4:3 比例，博士课题 (PhD) 木刻复刻样张。" },
+                    { id: "hub_hanjiang", title: "HanJiangYaKai 主卡片缩略图", file: "images/hanjiang_thumb.webp", size: "1600 × 1200 px", desc: "4:3 比例，第13届方正奖入围 WIP 作品。" },
+                    { id: "hub_exhibition", title: "Way of Type 大展主卡片缩略图", file: "images/exhibition_design_thumb.webp", size: "1600 × 1200 px", desc: "4:3 比例，雷丁大学×央美跨国大展视觉。" },
+                    { id: "hub_search", title: "Tangut Search Utility 主卡片缩略图", file: "images/tangut_tool.webp", size: "1600 × 1200 px", desc: "4:3 比例，西夏文前端拆解检索黑科技工具。" },
+                    { id: "hub_excel", title: "Excel Tangut Tool 主卡片缩略图", file: "images/excel_tangut_matrix.webp", size: "1600 × 1200 px", desc: "4:3 比例，内部数据宏自动化字典截图肌理。" }
+                ]
+            },
+            {
+                projectName: "01. Project Detail — Lyean",
+                pageUrl: "Lyean.html",
+                tasks: [
+                    { id: "p1_hero", title: "全宽 Hero 封面大图", file: "images/Lyean_hero_massive.webp", size: "2880 × 1260 px", desc: "高冲击力反向白底重工业版式，大字顶天立地破格排布。" },
+                    { id: "p1_drawer", title: "悬浮抽屉展开高清证章", file: "images/lyean-tdc-award.webp", size: "520 × 520 px", desc: "1:1 正方形，TDC 大奖证明图。" },
+                    { id: "p1_spec1", title: "System 01 完整大样张", file: "images/Lyean_specimen_01.webp", size: "2880 × 高度自适应", desc: "多语种版式韵律，纵向度量衡大字工业标签。" },
+                    { id: "p1_spec2", title: "System 02 完整大样张", file: "images/Lyean_specimen_02.webp", size: "2880 × 高度自适应", desc: "全字族骨架细节陈列矩阵。" }
+                ]
+            },
+            {
+                projectName: "02. Project Detail — AraTangut",
+                pageUrl: "AraTangut.html",
+                tasks: [
+                    { id: "p2_hero", title: "全宽 Hero 封面大图", file: "images/AraTangut_hero_massive.webp", size: "2880 × 1260 px", desc: "西夏文字形中心风暴排版，最左侧边缘大字旋转90度标签。" },
+                    { id: "p2_drawer", title: "悬浮抽屉展开高清证章", file: "images/aratangut-scholar-stamp.webp", size: "520 × 520 px", desc: "1:1 正方形，荒川慎太郎教授合作文献凭据。" },
+                    { id: "p2_spec1", title: "System 01 完整大样张", file: "images/AraTangut_specimen_01.webp", size: "2880 × 高度自适应", desc: "荒川慎太郎教授学术复刻细节样张。" },
+                    { id: "p2_spec2", title: "System 02 完整大样张", file: "images/AraTangut_specimen_02.webp", size: "2880 × 高度自适应", desc: "消失文献字符修复压力测试对照图。" }
+                ]
+            },
+            {
+                projectName: "03. Project Detail — Shanghai Sky",
+                pageUrl: "Shanghaisky.html",
+                tasks: [
+                    { id: "p3_hero", title: "全宽 Hero 封面大图", file: "images/ShanghaiSky_hero_massive.webp", size: "2880 × 1260 px", desc: "民国图案字韵味大图，右侧留空避让第70届纽约 TDC 标章。" },
+                    { id: "p3_drawer", title: "悬浮抽屉展开高清证章", file: "images/shanghaisky-tdc70-certificate.webp", size: "520 × 520 px", desc: "1:1 正方形，NEW YORK TDC 70 官方 Certificate 图。" },
+                    { id: "p3_spec1", title: "Sheet 01 多语种大样张", file: "images/ShanghaiSky_specimen_01.webp", size: "2880 × 高度自适应", desc: "汉、拉、日、满多文种交叉排版呈现。" },
+                    { id: "p3_spec2", title: "Sheet 02 历史根源大样张", file: "images/ShanghaiSky_specimen_02.webp", size: "2880 × 高度自适应", desc: "民国上海传统美术字现代转译文献稿。" },
+                    { id: "p3_poster1", title: "24节气高精海报 01 (大图)", file: "images/shanghaisky_use_poster_01.webp", size: "1200 × 1697 px", desc: "A4 黄金比例，你独立绘制的第一张龙年一等奖海报。" },
+                    { id: "p3_poster2", title: "24节气高精海报 02 (大图)", file: "images/shanghaisky_use_poster_02.webp", size: "1200 × 1697 px", desc: "A4 黄金比例，你独立绘制的第二张龙年一等奖海报。" },
+                    { id: "p3_micro_01", title: "节气微缩矩阵图 01", file: "images/seasons_micro_01.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 1。" },
+                    { id: "p3_micro_02", title: "节气微缩矩阵图 02", file: "images/seasons_micro_02.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 2。" },
+                    { id: "p3_micro_03", title: "节气微缩矩阵图 03", file: "images/seasons_micro_03.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 3。" },
+                    { id: "p3_micro_04", title: "节气微缩矩阵图 04", file: "images/seasons_micro_04.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 4。" },
+                    { id: "p3_micro_05", title: "节气微缩矩阵图 05", file: "images/seasons_micro_05.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 5。" },
+                    { id: "p3_micro_06", title: "节气微缩矩阵图 06", file: "images/seasons_micro_06.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 6。" },
+                    { id: "p3_micro_07", title: "节气微缩矩阵图 07", file: "images/seasons_micro_07.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 7。" },
+                    { id: "p3_micro_08", title: "节气微缩矩阵图 08", file: "images/seasons_micro_08.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 8。" },
+                    { id: "p3_micro_09", title: "节气微缩矩阵图 09", file: "images/seasons_micro_09.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 9。" },
+                    { id: "p3_micro_10", title: "节气微缩矩阵图 10", file: "images/seasons_micro_10.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 10。" },
+                    { id: "p3_micro_11", title: "节气微缩矩阵图 11", file: "images/seasons_micro_11.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 11。" },
+                    { id: "p3_micro_12", title: "节气微缩矩阵图 12", file: "images/seasons_micro_12.webp", size: "400 × 566 px", desc: "微型矩阵墙拼贴卡片 12。" }
+                ]
+            },
+            {
+                projectName: "04. Project Detail — Noto Serif Tangut",
+                pageUrl: "NotoSerifTangut.html",
+                tasks: [
+                    { id: "p4_hero", title: "全宽 Hero 封面大图", file: "images/NotoTangut_hero_massive.webp", size: "2880 × 1260 px", desc: "Google Fonts 开源骨架大排场设计。" },
+                    { id: "p4_drawer", title: "悬浮抽屉展开高清证章", file: "images/noto-tangut-codebase.webp", size: "520 × 520 px", desc: "1:1 正方形，Google 架构 codebase 关系图。" },
+                    { id: "p4_scroll", title: "西夏文/汉字双语经文长卷", file: "images/NotoTangut_bilingual_scroll.webp", size: "2880 × 高度自适应", desc: "双语长卷跨度超高精图片。" },
+                    { id: "p4_a4_1", title: "A4 对比样张 Card 01", file: "images/NotoTangut_compare_A4_01.webp", size: "1200 × 1697 px", desc: "标准 A4 比例，字形修正验证图 1。" },
+                    { id: "p4_a4_2", title: "A4 对比样张 Card 02", file: "images/NotoTangut_compare_A4_02.webp", size: "1200 × 1697 px", desc: "标准 A4 比例，字形修正验证图 2。" },
+                    { id: "p4_a4_3", title: "A4 对比样张 Card 03", file: "images/NotoTangut_compare_A4_03.webp", size: "1200 × 1697 px", desc: "标准 A4 比例，字形修正验证图 3。" },
+                    { id: "p4_a4_4", title: "A4 对比样张 Card 04", file: "images/NotoTangut_compare_A4_04.webp", size: "1200 × 1697 px", desc: "标准 A4 比例，字形修正验证图 4。" },
+                    { id: "p4_v_poster", title: "演示视频占位封面 Poster", file: "images/noto_video_poster.webp", size: "1920 × 1080 px", desc: "视频未播放时的 HD 封面大图。" },
+                    { id: "p4_v_file", title: "演示视频文件 (MP4)", file: "videos/noto_tangut_specimen_perf.mp4", size: "1280 × 720 px", desc: "动态笔画矢量演变演示视频。" }
+                ]
+            },
+            {
+                projectName: "05. Project Detail — Guqin Notation System",
+                pageUrl: "GuqinNotation.html",
+                tasks: [
+                    { id: "p5_hero", title: "全宽 Hero 封面大图", file: "images/Guqin_hero_massive.webp", size: "2880 × 1260 px", desc: "20万级巨量减字谱合成技术矩阵主视觉。" },
+                    { id: "p5_drawer", title: "悬浮抽屉展开高清证章", file: "images/guqin-unicode-repertoire.webp", size: "520 × 520 px", desc: "1:1 正方形，ISO 国际编码底座凭证图。" },
+                    { id: "p5_spec1", title: "Sheet 01 减字谱合成大样张", file: "images/Guqin_specimen_01.webp", size: "2880 × 高度自适应", desc: "非码位动态笔画叠加规则演示样张。" },
+                    { id: "p5_spec2", title: "Sheet 02 古法结构考证样张", file: "images/Guqin_specimen_02.webp", size: "2880 × 高度自适应", desc: "遵循古代琴谱减字构造的文献分析图。" }
+                ]
+            },
+            {
+                projectName: "06. Project Detail — TangutBux (PhD Research)",
+                pageUrl: "TangutBux.html",
+                tasks: [
+                    { id: "p6_hero", title: "全宽 Hero 封面大图", file: "images/TangutBux_hero_massive.webp", size: "2880 × 1260 px", desc: "博士研究核心，卜姓刻工古木刻复刻工业质感风暴中心版式。" },
+                    { id: "p6_drawer", title: "悬浮抽屉展开高清证章", file: "images/tangutbux-alphabette-header.webp", size: "520 × 520 px", desc: "1:1 正方形，Alphabette 顶级字型平台 Deployed 应用实拍截图。" },
+                    { id: "p6_a4_1", title: "A4 压力测试样张 Card 01", file: "images/TangutBux_proof_A4_01.webp", size: "1200 × 1697 px", desc: "标准 A4 纸张比例，字形极限排版证明一。" },
+                    { id: "p6_a4_2", title: "A4 压力测试样张 Card 02", file: "images/TangutBux_proof_A4_02.webp", size: "1200 × 1697 px", desc: "标准 A4 纸张比例，字形极限排版证明二。" },
+                    { id: "p6_v_poster", title: "可变轴动画视频封面 Poster", file: "images/tangutbux_video_poster.webp", size: "1920 × 1080 px", desc: "视频未播放时的 HD 封面图。" },
+                    { id: "p6_v_file", title: "可变轴动画视频文件 (MP4)", file: "videos/tangutbux_variable_slider.mp4", size: "1280 × 720 px", desc: "展示可变字体滑块动态拉伸演示。" }
+                ]
+            },
+            {
+                projectName: "07. Project Detail — HanJiangYaKai",
+                pageUrl: "HanJiangYaKai.html",
+                tasks: [
+                    { id: "p7_hero", title: "全宽 Hero 封面大图", file: "images/HanJiangYaKai_hero_massive.webp", size: "2880 × 1260 px", desc: "第13届方正奖入围主视觉展示。" },
+                    { id: "p7_drawer", title: "悬浮抽屉展开高清证章", file: "images/hanjiangyakai-founder-shortlist.webp", size: "520 × 520 px", desc: "1:1 正方形，方正奖入围通知凭据图。" },
+                    { id: "p7_spec1", title: "Sheet 01 竞赛提交大样张", file: "images/HanJiangYaKai_specimen_01.webp", size: "2880 × 高度自适应", desc: "你提交方正奖的官方排版样张。" }
+                ]
+            },
+            {
+                projectName: "08. Project Detail — Way of Type Exhibition Design",
+                pageUrl: "ExhibitionDesign.html",
+                tasks: [
+                    { id: "p8_hero", title: "全宽 Hero 封面大图", file: "images/Exhibition_hero_massive.webp", size: "2880 × 1260 px", desc: "雷丁大学展厅主视觉，极具先锋排版学气息的图形。" },
+                    { id: "p8_spec1", title: "System 01 导视VI系统大图", file: "images/Exhibition_specimen_01.webp", size: "2880 × 高度自适应", desc: "双语导视、中英文排版规范度量样张。" },
+                    { id: "p8_spec2", title: "System 02 展陈空间系统大图", file: "images/Exhibition_specimen_02.webp", size: "2880 × 高度自适应", desc: "信息建筑架构在展厅内部的空间效果渲染。" },
+                    { id: "p8_live1", title: "雷丁大学展厅实录照片 01", file: "images/exhibition_live_uk_01.webp", size: "1200 × 900 px", desc: "4:3 或 16:9 现场纪实文献照片一。" },
+                    { id: "p8_live2", title: "雷丁大学展厅实录照片 02", file: "images/exhibition_live_uk_02.webp", size: "1200 × 900 px", desc: "4:3 或 16:9 现场纪实文献照片二。" }
+                ]
+            },
+            {
+                projectName: "09. Project Detail — Tangut Search Utility",
+                pageUrl: "TangutSearchUtility.html",
+                tasks: [
+                    { id: "p9_hero", title: "全宽 Hero 封面大图", file: "images/SearchUtility_hero_massive.webp", size: "2880 × 1260 px", desc: "独家前端拆解算法操作台主视觉。" },
+                    { id: "p9_spec1", title: "Search Utility 软件交互样张", file: "images/SearchUtility_specimen_01.webp", size: "2880 × 高度自适应", desc: "拆解部首、实时检索响应的 UI 架构高精度截图。" }
+                ]
+            },
+            {
+                projectName: "10. Project Detail — EXCEL Tangut Tool (Copy copy Tangut)",
+                pageUrl: "EXCELtangutTool.html",
+                tasks: [
+                    { id: "p10_hero", title: "全宽 Hero 封面大图", file: "images/ExcelTool_hero_massive.webp", size: "2880 × 1260 px", desc: "内部自动化宏字典与数据清洗矩阵主视觉。" },
+                    { id: "p10_spec1", title: "Excel Tool 软件交互样张", file: "images/ExcelTool_specimen_01.webp", size: "2880 × 高度自适应", desc: "内部宏自动化字典与庞大逻辑图表截图。" }
+                ]
+            }
+        ];
+
+        /* ==========================================================================
+           【交互与数据状态持久化引擎】
+           ========================================================================== */
+        const root = document.getElementById('checklistRoot');
+
+        // 初始化渲染
+        function renderChecklist() {
+            let html = "";
+            dataset.forEach(proj => {
+                html += `
+                    <section class="project-section">
+                        <div class="project-meta-head">
+                            <h2>${proj.projectName}</h2>
+                            <span class="page-url">Target: ${proj.pageUrl}</span>
+                        </div>
+                        <table class="task-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 32%;">Asset Name</th>
+                                    <th style="width: 25%;">Filename / Path</th>
+                                    <th style="width: 18%;">AI Artboard Size</th>
+                                    <th style="width: 25%;">Visual Specification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                proj.tasks.forEach(task => {
+                    const isChecked = localStorage.getItem(task.id) === 'true' ? 'checked' : '';
+                    html += `
+                        <tr>
+                            <td>
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" id="${task.id}" ${isChecked} onchange="toggleTask('${task.id}')">
+                                    <span class="task-title">${task.title}</span>
+                                </label>
+                            </td>
+                            <td><code class="filename-code">${task.file}</code></td>
+                            <td><span class="size-badge">${task.size}</span></td>
+                            <td><span class="task-desc">${task.desc}</span></td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                            </tbody>
+                        </table>
+                    </section>
+                `;
+            });
+            root.innerHTML = html;
+            updateProgress();
+        }
+
+        // 状态切换与自动保存
+        window.toggleTask = function(id) {
+            const checkbox = document.getElementById(id);
+            localStorage.setItem(id, checkbox.checked);
+            updateProgress();
+        };
+
+        // 动态计算核心进度百分比
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checkedboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            
+            const total = checkboxes.length;
+            const completed = checkedboxes.length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').innerText = `${completed} / ${total} (${percentage}%)`;
+        }
+
+        // 启动引擎
+        renderChecklist();
+    </script>
+</body>
+</html>

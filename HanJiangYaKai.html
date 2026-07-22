@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HanJiangYaKai — Project Detail | XICHENG YANG</title>
+    <style>
+        /* ==========================================================================
+           【Lyean Serif & Sans 核心家族系统】
+           ========================================================================== */
+        @font-face {
+            font-family: 'Lyean';
+            src: url('fonts/Lyean-Regular.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Lyean Sans';
+            src: url('fonts/Lyean-Sans.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        /* 全局默认衬线体锁死为 Lyean，全局切断 Georgia 的杂质继承 */
+        body, div, p, span, h1, h2, h3, h4, ul, li, strong, aside, figcaption {
+            font-family: "Lyean", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        body {
+            margin: 0; padding: 0;
+            background-color: #f6f3eb;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 90vw; margin: 0 auto; padding: 60px 0 0 0;
+        }
+        
+        /* 原子级强力穿透！保证 100% 的 Sans（无衬线）属性块都调用专属的 Lyean Sans */
+        header, header *, 
+        nav, nav *, 
+        .metadata-grid, .metadata-grid *, 
+        .specimen-tabs-wrapper, .specimen-tabs-wrapper *,
+        .gallery-chapter-title, .gallery-chapter-title *,
+        .credit-grid-wrapper, .credit-grid-wrapper *,
+        .experimental-specs-grid, .infrastructure-specs-grid *,
+        .tag {
+            font-family: 'Lyean Sans', sans-serif !important;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 60px; text-transform: uppercase;
+        }
+        header div, header nav a {
+            font-size: 0.8rem; letter-spacing: 0.1em;
+            text-decoration: none; color: #1a1a1a; 
+        }
+        header nav a { margin-left: 20px; }
+        header nav a:hover { color: #b85a4b; }
+
+        /* ==========================================================================
+           【全宽 Hero 大图 + 悬浮荣誉抽屉】
+           ========================================================================== */
+        .project-hero-cover {
+            width: 100vw; margin-left: calc(-50vw + 50%); height: 65vh;
+            background-color: #ede9df; position: relative; border-bottom: 1px solid #e0dbcf;
+        }
+        .project-hero-cover img.hero-main-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-floating-awards { position: absolute; bottom: -35px; right: 5vw; z-index: 100; cursor: pointer; outline: none; }
+        .award-stamp-trigger {
+            width: 70px; height: 70px; background-color: #2b231d; color: #f6f3eb;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 4px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .award-stamp-trigger span { font-weight: 900; font-size: 1.1rem; }
+        .award-stamp-trigger svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; margin-top: 4px; opacity: 0.7; }
+
+        .award-expanded-panel {
+            position: absolute; bottom: 85px; right: 0; background-color: #f6f3eb; border: 1px solid #c4b9ae;
+            padding: 15px; border-radius: 6px; box-shadow: 0 10px 30px rgba(43,35,29,0.15);
+            opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.95);
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+            width: 260px; 
+        }
+        .award-expanded-panel img { width: 100%; height: auto; display: block; border-radius: 2px; }
+
+        .hero-floating-awards:hover .award-stamp-trigger, .hero-floating-awards:focus .award-stamp-trigger { background-color: #b85b4b; transform: scale(1.05) rotate(-3deg); }
+        .hero-floating-awards:hover .award-expanded-panel, .hero-floating-awards:focus .award-expanded-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .hero-floating-awards .badge-label { font-size: 0.65rem; font-weight: bold; line-height: 1.3; color: #6e5d4f; text-align: center; display: block; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* ==========================================================================
+           【五栏元数据网格 - 🎯 完美规整化参数，最后一栏填补为 WIP 进程】
+           ========================================================================== */
+        .metadata-grid {
+            display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 40px;
+            border-bottom: 1px solid #1a1a1a; padding: 40px 0; margin-top: 60px; margin-bottom: 60px;
+        }
+        .meta-label { font-size: 0.75rem; text-transform: uppercase; color: #b85a4b; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .meta-value { font-size: 1.05rem; line-height: 1.5; font-weight: bold; word-wrap: break-word; }
+
+        /* ==========================================================================
+           【简介与精细名单看板区】
+           ========================================================================== */
+        .project-intro-container { display: grid; grid-template-columns: 3.1fr 1.9fr; gap: 60px; margin-bottom: 80px; align-items: flex-start; }
+        .intro-text { max-width: 800px; }
+        .intro-text h2 { font-size: 2.8rem; font-weight: normal; margin-top: 0; margin-bottom: 30px; line-height: 1.2; }
+        .intro-text p { font-size: 1.2rem; line-height: 1.7; color: #333; margin-bottom: 25px; }
+
+        /* 右侧团队分工看板样式 */
+        .credit-grid-wrapper {
+            border-left: 1px solid #e0dbcf; padding-left: 40px; box-sizing: border-box; margin-top: 10px;
+        }
+        .credit-section-block { margin-bottom: 35px; }
+        .credit-section-block:last-child { margin-bottom: 0; }
+        
+        .credit-header-label {
+            font-size: 0.72rem; color: #b85a4b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em;
+            margin-bottom: 14px; border-bottom: 1px solid #ede9df; padding-bottom: 4px; display: block;
+        }
+        .credit-sub-grid {
+            display: grid; grid-template-columns: 125px 1fr; gap: 12px 16px; font-size: 0.85rem; line-height: 1.45;
+        }
+        .credit-role { color: #888; font-weight: bold; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.03em; padding-top: 2px; }
+        .credit-names { color: #555; font-weight: 500; }
+
+        /* ==========================================================================
+           【智能吸顶固定导航栏】
+           ========================================================================== */
+        .specimen-tabs-wrapper { position: relative; z-index: 500; margin: 40px 0 20px 0; }
+        .specimen-tabs-nav {
+            display: flex; justify-content: space-between; gap: 16px; 
+            border-bottom: 1px solid #c4b9ae; padding-bottom: 20px; background-color: #f6f3eb;
+            transition: padding 0.3s, box-shadow 0.3s;
+        }
+        .specimen-tabs-nav.is-sticky {
+            position: fixed; top: 0; left: 5vw; width: 90vw; padding-top: 20px; padding-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(246, 243, 235, 0.95);
+        }
+        .tab-item {
+            flex: 1; display: flex; flex-direction: column; padding: 14px 20px; cursor: pointer;
+            background: #ede9df; border: 1px solid #e0dbcf; border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom center;
+        }
+        .tab-num { font-size: 0.7rem; color: #6e5d4f; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .tab-name { font-weight: bold; font-size: 1rem; color: #1a1a1a; }
+        .tab-item:hover { transform: scale(1.04); background: #e3ded2; box-shadow: 0 6px 20px rgba(43,35,29,0.08); }
+        .tab-item.active { background: #2b231d; border-color: #2b231d; transform: scale(1.01); }
+        .tab-item.active .tab-num { color: #c4b9ae; }
+        .tab-item.active .tab-name { color: #f6f3eb; }
+
+        /* 画廊布局 */
+        .gallery-chapter-title {
+            font-size: 0.8rem; text-transform: uppercase;
+            color: #b85a4b; border-top: 1px solid #e0dbcf; padding-top: 40px; margin-top: 100px; margin-bottom: 40px;
+            letter-spacing: 0.1em; display: flex; justify-content: space-between; scroll-margin-top: 140px;
+        }
+        .specimen-full-img {
+            width: 100vw; margin-left: calc(-50vw + 50%); margin-bottom: 0; background-color: #ede9df; border-bottom: 1px solid #e0dbcf;
+        }
+        .specimen-full-img img { width: 100%; display: block; }
+
+        /* ==========================================================================
+           【Type System 实验规范技术文献展示区】
+           ========================================================================== */
+        .experimental-use-section {
+            width: 100vw; margin-left: calc(-50vw + 50%); background: #1a1a1a; padding: 90px 0 140px 0; margin-top: 120px; color: #f6f3eb;
+        }
+        .experimental-use-section .gallery-chapter-title {
+            width: 90vw; margin: 0 auto 60px auto; border-top: 1px solid #333; color: #f6f3eb; padding-top: 30px;
+        }
+        .experimental-specs-grid {
+            max-width: 90vw; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px;
+        }
+        .spec-tech-card {
+            border-top: 1px solid #b85a4b; padding-top: 25px;
+        }
+        .spec-tech-num { font-size: 0.75rem; color: #b85a4b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; display: block; }
+        .spec-tech-title { font-size: 1.4rem; font-weight: normal; color: #f6f3eb; margin-bottom: 15px; }
+        .spec-tech-desc { font-size: 0.95rem; color: #a3a3a3; line-height: 1.5; font-family: "Lyean", serif !important; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 导航 -->
+        <header>
+            <div><a href="index.html" style="margin:0; text-decoration: none; color: inherit; font-weight: normal;">XICHENG YANG</a></div>
+            <nav>
+                <a href="projects.html" style="color: #b85a4b; font-weight: bold;">PROJECTS</a>
+                <a href="talks.html">TALKS</a>
+                <a href="bio.html">BIO</a>
+            </nav>
+        </header>
+
+        <!-- 全宽 Hero Cover -->
+        <div class="project-hero-cover">
+            <img class="hero-main-img" src="images/HanJiangYaKai_hero_massive.webp" alt="HanJiangYaKai Experimental Specimen Display">
+            
+            <!-- 右下角方正奖入围标志章 -->
+            <aside class="hero-floating-awards" tabindex="0" aria-label="Founder Award Shortlist Stamp">
+                <div class="award-stamp-trigger">
+                    <span>FDR</span><span style="font-size:0.65rem; margin-top:-2px;">13th</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 4h8v3.2c0 3.4-1.6 5.6-4 6.3-2.4-.7-4-2.9-4-6.3V4Z"></path>
+                        <path d="M8 6H4.8c0 2.5 1.3 4.3 3.5 4.8"></path>
+                        <path d="M16 6h3.2c0 2.5-1.3 4.3-3.5 4.8"></path>
+                        <path d="M12 13.5V17"></path>
+                        <path d="M8.5 20h7"></path>
+                    </svg>
+                </div>
+                <div class="award-expanded-panel">
+                    <img src="images/hanjiangyakai-founder-shortlist.webp" alt="The 13th Founder Award Official Shortlist Notification">
+                </div>
+                <span class="badge-label">Founder Award<br>Shortlisted Work</span>
+            </aside>
+        </div>
+
+        <!-- 五栏元数据网格 - 🎯 纯技术客观参数对齐 -->
+        <section class="metadata-grid">
+            <div><div class="meta-label">Client</div><div class="meta-value">Independent Concept / No Client</div></div>
+            <div><div class="meta-label">Awards</div><div class="meta-value">Shortlisted in the 13th Founder Award (汉字学生组入围)</div></div>
+            <div><div class="meta-label">Project Type</div><div class="meta-value">Experimental Typeface Concept</div></div>
+            <div><div class="meta-label">Period</div><div class="meta-value">2025 to the Present</div></div>
+            <div><div class="meta-label">Development Status</div><div class="meta-value">In Progress (WIP)</div></div>
+        </section>
+
+        <!-- 简介区 -->
+        <section class="project-intro-container">
+            <!-- 左栏：Vision 核心科技突破 -->
+            <div class="intro-text">
+                <h2>An Exploration of Contemporary Kai Style Duality.</h2>
+                <p>HanJiangYaKai is an ongoing experimental typeface project that re-examines the structured elegance and kinetic tension of traditional Hanzi script. Merging classic calligraphic weight with sharp geometric refinement, the concept challenges conventional script proportions, exploring new spatial dynamics within a highly curating limited glyph repository.</p>
+            </div>
+
+            <!-- 右栏：完整无缩写主创团队分工名单看版 -->
+            <div class="credit-grid-wrapper">
+                <div class="credit-section-block">
+                    <span class="credit-header-label">Credit of HanJiangYaKai</span>
+                    <div class="credit-sub-grid">
+                        <div class="credit-role">Designers</div>
+                        <div class="credit-names">Xicheng Yang, Yue Chen</div>
+                        
+                        <div class="credit-role">Status</div>
+                        <div class="credit-names">Incubating Repertoire (30+ Initial Characters)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+            // 吸顶样张陈列 — 预留你当时投方正奖的那套高清排版图
+            ========================================================================== */ -->
+        <div class="specimen-tabs-wrapper" id="tabsWrapper">
+            <div class="specimen-tabs-nav" id="stickyNav">
+                <div class="tab-item active" data-target="specimen-01">
+                    <span class="tab-num">Sheet 01</span>
+                    <span class="tab-name">Competition Sheet</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="specimen-gallery">
+            <div id="specimen-01">
+                <div class="gallery-chapter-title">
+                    <span>Sheet 01 // Official Submission Sheet</span>
+                    <span style="color:#aaa;">The 13th Founder Type Design Award curation matrix</span>
+                </div>
+                <div class="specimen-full-img"><img src="images/HanJiangYaKai_specimen_01.webp" alt="HanJiangYaKai Competition Submission Sheet"></div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+           【Type System 实验规范技术文献展示区】
+           ========================================================================== */ -->
+        <section class="experimental-use-section">
+            <div class="gallery-chapter-title">
+                <span>Design Specifications & Concept</span>
+                <span>The Geometry of Kinetic Kai Vectoring</span>
+            </div>
+
+            <div class="experimental-specs-grid">
+                <!-- 模块 1 -->
+                <div class="spec-tech-card">
+                    <span class="spec-tech-num">Concept 01</span>
+                    <h4 class="spec-tech-title">Skeletal Skeletal Tension</h4>
+                    <p class="spec-tech-desc">Extracting core fluid weights from ancient brush scripts and translating them into sharply controlled vector terminals for display environments.</p>
+                </div>
+
+                <!-- 模块 2 -->
+                <div class="spec-tech-card">
+                    <span class="spec-tech-num">Concept 02</span>
+                    <h4 class="spec-tech-title">Curated Curated Repository</h4>
+                    <p class="spec-tech-desc">Operating intentionally within a 30+ focal character envelope to rigorously isolate stroke modulation variables prior to expansive scale-up.</p>
+                </div>
+
+                <!-- 模块 3 -->
+                <div class="spec-tech-card">
+                    <span class="spec-tech-num">Concept 03</span>
+                    <h4 class="spec-tech-title">Award Architecture</h4>
+                    <p class="spec-tech-desc">Recognized at incubation phase by the Founder Award committee, affirming the typeface's innovative spatial taxonomy and academic value.</p>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- 吸顶及滚动激活控制脚本 -->
+    <script>
+        const tabsWrapper = document.getElementById('tabsWrapper');
+        const stickyNav = document.getElementById('stickyNav');
+        const sections = [
+            { tab: document.querySelector('[data-target="specimen-01"]'), element: document.getElementById('specimen-01') }
+        ];
+
+        window.addEventListener('scroll', function() {
+            const wrapperTop = tabsWrapper.getBoundingClientRect().top;
+            if (wrapperTop <= 0) {
+                stickyNav.classList.add('is-sticky');
+                tabsWrapper.style.paddingBottom = stickyNav.offsetHeight + 'px';
+            } else {
+                stickyNav.classList.remove('is-sticky');
+                tabsWrapper.style.paddingBottom = '0px';
+            }
+
+            let currentActive = sections[0].tab;
+            sections.forEach(sec => {
+                const rect = sec.element.getBoundingClientRect();
+                if (rect.top <= 200) { currentActive = sec.tab; }
+            });
+            sections.forEach(sec => {
+                if(sec.tab === currentActive) { sec.tab.classList.add('active'); } 
+                else { sec.tab.classList.remove('active'); }
+            });
+        });
+
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    const titleElement = targetContent.querySelector('.gallery-chapter-title');
+                    titleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
