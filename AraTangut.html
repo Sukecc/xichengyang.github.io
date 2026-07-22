@@ -50,10 +50,28 @@
            【全宽 Hero 大图 + 悬浮双荣誉抽屉】
            ========================================================================== */
         .project-hero-cover {
-            width: 100vw; margin-left: calc(-50vw + 50%); height: 65vh;
-            background-color: #ede9df; position: relative; border-bottom: 1px solid #e0dbcf;
-        }
-        .project-hero-cover img.hero-main-img { width: 100%; height: 100%; object-fit: cover; }
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    position: relative;
+    border-bottom: 1px solid #e0dbcf;
+    
+    /* 核心机制 1：强制容器锁死为你 AI 画板的 16:7 比例 */
+    aspect-ratio: 16 / 7; 
+    
+    /* 核心机制 2：切断原本死板的 65vh 高度限制，让高度随宽度自适应 */
+    height: auto !important; 
+    min-height: 40vh;
+}
+
+.project-hero-cover img.hero-main-img {
+    width: 100%;
+    height: 100%;
+    
+    /* 核心机制 3：从 cover 改为 contain，确保整张图完整塞进容器，绝对不切边 */
+    object-fit: contain; 
+    
+    display: block;
+}
 
         .hero-floating-awards { position: absolute; bottom: -35px; right: 5vw; z-index: 100; cursor: pointer; outline: none; }
         .award-stamp-trigger {
